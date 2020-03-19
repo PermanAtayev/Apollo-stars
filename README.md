@@ -1,2 +1,2 @@
-# stars-2.0
-CS353 database class object
+# Apollo STARS
+CS-353 Database Project
