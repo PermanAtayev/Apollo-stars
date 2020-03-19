@@ -1,10 +1,9 @@
 const express = require('express');
 const app = express();
+const port = 3000;
 
-app.get("/", (req, res) => {
-    return res.send("Welcome to stars 2.0");
+app.get('/', function(req, res){
+    res.send("Apollo Stars");
 });
 
-app.use(express.json());
-
-module.exports = app;
+app.listen(port, () => console.log('listening on port ' + port));
