@@ -1,4 +1,4 @@
-# book_selling
+# srs_2.0
 
 ## Project setup
 ```
