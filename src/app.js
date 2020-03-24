@@ -2,7 +2,11 @@
 const express = require('express');
 const fs = require('fs');
 const { Client } = require('pg');
+
+// create express app
 const app = express();
+
+// connect to local port (app needs to be transitioned from local to heroku)
 const port = 3000;
 
 // home router
