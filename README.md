@@ -1,4 +1,4 @@
-# srs_2.0
+# apollo
 
 ## Project setup
 ```
