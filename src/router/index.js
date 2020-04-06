@@ -28,7 +28,7 @@ Vue.use(VueRouter);
   {
     path: '/ta',
     name: 'TA',
-    component: () => import('../views/TA')
+    component: () => import('../views/TA'),
   }
 ];
 

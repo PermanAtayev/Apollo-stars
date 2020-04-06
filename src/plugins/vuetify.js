@@ -9,9 +9,13 @@ export default new Vuetify({
     icons: {
         iconfont: 'md' || 'fa', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
       },
-      themes: {
-        light: {
-        }
+      theme: {
+        themes: {
+         light: {
+          primary: "#009688",
+          secondary: "#E0E0E0",
+         } ,
+        } ,
     },
     
 });
