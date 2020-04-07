@@ -1,65 +1,33 @@
 <template>
-    <v-app>
-        <Navbar :drawerItems="actions" />
-        <h3 class="subheading grey--text ma-5">Courses</h3>
-        <v-container class="my5">
-            <v-card flat>
-                <v-layout row wrap v-for="course in courses" :key="course.code">
-                    <v-flex xs12 md4>
-                        <div class="caption grey--text">Name</div>
-                        <div>{{ course.name }}</div>
-                    </v-flex>
-                    <v-divider></v-divider>
-                    <v-flex xs6 sm3 md2>
-                        <div class="caption grey--text">Code</div>
-                        <div>{{ course.code }}</div>
-                    </v-flex>
-                    <v-divider></v-divider>
-                    <v-flex xs6 sm3 md4>
-                        <div class="caption grey--text">Instructor</div>
-                        <div>{{ course.instructor }}</div>
-                    </v-flex>
-                    <v-divider></v-divider>
-                    <v-flex xs6 sm3 md1>
-                        <div class="caption grey--text">Section</div>
-                        <div>{{ course.section }}</div>
-                    </v-flex>
-                    <v-divider></v-divider>
-                    <v-flex xs6 sm3 md1>
-                        <div class="caption grey--text">Credits</div>
-                        <div>{{ course.credits }}</div>
-                    </v-flex>
-                    <v-divider></v-divider>
-                    <v-flex xs6 sm3 md2>
-                        <div>
-                            <v-btn small rounded outlined class="my-3" color="warning">Withdraw</v-btn>
-                        </div>
-                    </v-flex>
-                    <v-flex xs6 sm3 md2>
-                        <div>
-                            <v-btn small rounded outlined class="my-3" color="teal">Grades</v-btn>
-                        </div>
-                    </v-flex>
-                </v-layout>
-            </v-card>
-        </v-container>
-        <Foot />
-    </v-app>
+  <v-app>
+    <Navbar :drawerItems="actions" v-on:navBarSelection="onNavBarSelect" />
+    <h3 class="subheading grey--text ma-5">{{ currentPage }}</h3>
+    <keep-alive>
+      <component :is="currentPage" v-bind="currentProperties"></component>
+    </keep-alive>
+    <v-spacer></v-spacer>
+    <Foot />
+  </v-app>
 </template>
 
 <script>
     import Navbar from '@/components/Navbar' 
     import Foot from "@/components/Foot";
+    import CourseTable from "@/components/CourseTable";
+    import TaCourseTable from "@/components/TaCourseTable";
+
     export default {
         name: "TA",
         data() {
             return {
-
+                
+                currentPage: "Courses",
+                
                 actions: [ //will add the route later
                     {title: "Courses", icon: "class"},
                     {title: "Register", icon: "add_box"},
                     {title: "Information", icon: "person"},
-                    {title: "Tasks", icon: "chrome_reader_mode"},
+                    {title: "TA Courses", icon: "chrome_reader_mode"},
                 ],
 
                 courses: [
@@ -69,12 +37,48 @@
                     {name: "Computer Organization", code: "CS 224", instructor: "Albert Einstein", section: "10", credits: "6"},
                     {name: "Operating Systems", code: "CS 342", instructor: "Selim Aksoy", section: "1", credits: "1"},
                 ],
+                
+                taCourses: [
+                    {name: "Algorithms and Programming I", code: "CS 101", instructor: "David Davenport"},
+                    {name: "Calculus III", code: "MATH 103", instructor: "Tekno Tekman"},
+                    {name: "Programming Languages", code: "CS 315", instructor: "Karani Kardas"},
+                ],
+                taTasks: [
+                    {code: "CS 101", task: "Mark Attendence", deadline: '10/4/2020' },
+                    {code: "CS 101", task: "Grade Homework", deadline: '15/4/2020' },
+                    {code: "CS 101", task: "Grade Lab", deadline: '20/4/2020' },
+                    {code: "CS 315", task: "Mark Attendence", deadline: '25/4/2020' },
+                    {code: "CS 315", task: "Grade Quiz", deadline: '22/4/2020' },
+                    {code: "MATH 103", task: "Grade Midterm", deadline: '1/5/2020' },
+
+                ],
+
 
             };
         },
-
-        components: { Navbar, Foot
+        computed: {
+            currentProperties: function() {
+                if (this.currentPage === 'Courses') {
+                    return {courses: this.courses}
+                }
+                else if(this.currentPage === 'TA Courses'){
+                    return {courses: this.taCourses, tasks: this.taTasks}
+                }
+                else 
+                    return {}
+            }
         },
+
+        components: { Navbar, Foot, "Courses": CourseTable, 
+        "TA Courses": TaCourseTable
+        },
+
+        methods: {
+            onNavBarSelect(value){
+                this.currentPage = value
+            }
+
+        }
 
         //life cycle hooks
     }
@@ -84,5 +88,4 @@
 </script>
 
 <style scoped>
-
 </style>

@@ -1,8 +1,9 @@
 <template>
-    <v-footer absolute="absolute" class="font-weight-medium" color="primary" padless="padless">
-      <v-col class="text-center" cols="12">
+    <v-footer class="font-weight-medium" color="primary" padless="padless">
+      <v-col class="text-center text uppercase white--text" cols="12">
         {{ new Date().getFullYear() }} —
-        <strong>Apollo Stars</strong>
+        <span class="font-weight-light">Apollo</span>
+        <span>Stars</span>
       </v-col>
     </v-footer>
 </template>
