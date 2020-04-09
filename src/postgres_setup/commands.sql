@@ -182,7 +182,7 @@ WHERE
   AND Assists.ta_id = TA.ta_id;
 -- authorize TA's for doing specific tasks such as submitting hw grades, attendance etc.
 INSERT INTO Auth_TA
-VALUES(_task_desc, _course_id, FALSE);
+VALUES(_instructor_id, _ta_id, _task_desc, _course_id, FALSE);
 -- list possible tasks for a TA for a specific course
 SELECT
   task_desc
