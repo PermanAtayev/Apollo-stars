@@ -89,7 +89,7 @@ CREATE TABLE Student_Sec (
   PRIMARY KEY (section_id, student_id),
   FOREIGN KEY (section_id, course_id) REFERENCES Section(section_id, course_id) ON DELETE CASCADE
 );
-CREATE TABLE assists (
+CREATE TABLE Assists (
   course_id INT REFERENCES Course(course_id) ON DELETE CASCADE,
   ta_id INT REFERENCES Person(id) ON DELETE CASCADE,
   PRIMARY KEY (course_id, ta_id)
