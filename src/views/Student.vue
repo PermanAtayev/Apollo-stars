@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Navbar :drawerItems="actions" v-on:navBarSelection="onNavBarSelect" />
+    <Navbar :isStudent="true" :drawerItems="actions" v-on:navBarSelection="onNavBarSelect" />
     <h3 class="subheading grey--text ma-5">{{ currentPage }}</h3>
     <keep-alive>
       <component :is="currentPage" v-bind="currentProperties"></component>

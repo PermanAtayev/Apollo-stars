@@ -1,5 +1,9 @@
 <template>
-    <v-container class="my5">
+    <v-container class="my-5">
+        <v-layout row wrap mb-3>
+            <ExamPopup />
+            <AssignmentsPopup />
+        </v-layout>
             <v-card flat >
                 <v-layout row wrap v-for="course in courses" :key="course.code">
                     <v-flex xs12 md4>
@@ -45,12 +49,14 @@
 
 <script>
 import Popup from "@/components/Popup"
+import AssignmentsPopup from "@/components/AssignmentsPopup"
+import ExamPopup from "@/components/ExamPopup"
 export default {
     props: {
         courses: Object
     },
 
-    components: { Popup,
+    components: { Popup, AssignmentsPopup, ExamPopup
     }
 
 }
