@@ -1,19 +1,19 @@
 <template>
   <nav>
     <v-toolbar flat color="primary" app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon dark @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="text uppercase white--text">
         <span class="font-weight-light">Apollo</span>
         <span>Stars</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn flat color="white">
+      <v-btn  flat color="white">
         <span>Log out</span>
         <v-icon right>exit_to_app</v-icon>
       </v-btn>
     </v-toolbar>
 
-    <v-navigation-drawer v-model="drawer" app color="secondary">
+    <v-navigation-drawer v-model="drawer" app color="grey lighten-3">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title">Actions</v-list-item-title>

@@ -1,5 +1,4 @@
 <template>
-  <v-content>
     <v-container class="my5">
       <v-card flat>
         <v-expansion-panels>
@@ -33,7 +32,8 @@
                 </v-flex>
                 <v-flex xs6 sm3 md2 v-if="task.code == course.code">
                     <div>
-                        <v-btn small rounded dark class="my-3" color="teal">Complete Now</v-btn>
+                        <!-- <v-btn small rounded outlined dark class="my-3" color="teal">Complete Now</v-btn> -->
+                        <TaskPopup />
                     </div>
                 </v-flex>
               </v-layout>
@@ -42,15 +42,17 @@
         </v-expansion-panels>
       </v-card>
     </v-container>
-  </v-content>
 </template>
 
 <script>
+import TaskPopup from "@/components/TaskPopup"
 export default {
   props: {
     courses: Object,
     tasks: Object
   },
+      components: { TaskPopup,
+    }
   
 //   computed: {
 //       tasksForCourses: function(){

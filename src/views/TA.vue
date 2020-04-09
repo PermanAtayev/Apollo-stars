@@ -15,6 +15,7 @@
     import Foot from "@/components/Foot";
     import CourseTable from "@/components/CourseTable";
     import TaCourseTable from "@/components/TaCourseTable";
+    import PersonDetails from "@/components/PersonDetails";
 
     export default {
         name: "TA",
@@ -52,7 +53,7 @@
                     {code: "MATH 103", task: "Grade Midterm", deadline: '1/5/2020' },
 
                 ],
-
+                details: {name: "Balaj Saleem", id: 21701041, gpa: 3.2, email:"balaj.saleem@ug.bilkent.edu.tr", password: "12345678", year: "Third Year", dorm: "77"},
 
             };
         },
@@ -64,13 +65,16 @@
                 else if(this.currentPage === 'TA Courses'){
                     return {courses: this.taCourses, tasks: this.taTasks}
                 }
+                else if(this.currentPage === 'Information'){
+                    return {details: this.details}
+                }
                 else 
                     return {}
             }
         },
 
         components: { Navbar, Foot, "Courses": CourseTable, 
-        "TA Courses": TaCourseTable
+        "TA Courses": TaCourseTable, "Information": PersonDetails,
         },
 
         methods: {

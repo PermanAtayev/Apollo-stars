@@ -1,5 +1,4 @@
 <template>
-<v-content>
     <v-container class="my5">
             <v-card flat >
                 <v-layout row wrap v-for="course in courses" :key="course.code">
@@ -35,19 +34,24 @@
                     </v-flex>
                     <v-flex xs6 sm3 md2>
                         <div>
-                            <v-btn small rounded outlined class="my-3" color="teal">Grades</v-btn>
+                            <!-- <v-btn small rounded outlined class="my-3" color="teal">Grades</v-btn> -->
+                            <Popup />
                         </div>
                     </v-flex>
                 </v-layout>
             </v-card>
         </v-container>
-        </v-content>
 </template>
 
 <script>
+import Popup from "@/components/Popup"
 export default {
     props: {
         courses: Object
+    },
+
+    components: { Popup,
     }
+
 }
 </script>
