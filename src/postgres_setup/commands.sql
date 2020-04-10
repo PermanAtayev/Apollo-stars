@@ -94,26 +94,29 @@ SET
   password = _password
 WHERE
   id = _id;
+
 -- list all exams
 SELECT
   DISTINCT exam_name
 FROM Student,
-  Takes,
+  Take_Exam,
   Exam
 WHERE
   Student.id = _student_id
-  AND Takes.student_id = Student.id
-  AND Takes.exam_id = Exam.id;
+  AND Take_Exam.student_id = Student.id
+  AND Take_Exam.exam_id = Exam.id;
+
 -- list all assignments
 SELECT
   DISTINCT assignment_name
 FROM Student,
-  Takes,
+  Take_Assignment,
   Assignment
 WHERE
   Student.id = _student_id
-  AND Takes.student_id = Student.id
-  AND Takes.assignment_id = Assignment.id;
+  AND Take_Assignment.student_id = Student.id
+  AND Take_Assignment.assignment_id = Assignment.id;
+
 -- join a research group
   -- if application has been approved
 INSERT INTO Joins_Research
