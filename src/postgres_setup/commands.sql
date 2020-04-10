@@ -192,6 +192,29 @@ WHERE
   Teaches.instructor_id = _instructor_id
   AND Teaches.course_id = _course_id
   AND Task_List.course_id = _course_id;
+  
+  -- list all exams
+SELECT
+  DISTINCT exam_name
+FROM Instructor,
+  Schedules_Exam,
+  Exam
+WHERE
+  Instructor.id = _instructor_id
+  AND Schedules_Exam.instructor_id = Instructor.id
+  AND Schedules_Exam.exam_id = Exam.id;
+
+-- list all assignments
+SELECT
+  DISTINCT assignment_name
+FROM Instructor,
+  Schedules_Assignment,
+  Assignment
+WHERE
+  Instructor.id = _instructor_id
+  AND Schedules_Assignment.instructor_id = Instructor.id
+  AND Schedules_Assignment.assignment_id = Assignment.id;
+
 -- create an exam
 INSERT INTO Exam
 VALUES(_exam_id, _exam_name, _start_time, _end_time);
