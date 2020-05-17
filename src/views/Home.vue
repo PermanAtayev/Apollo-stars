@@ -1,5 +1,5 @@
 <template>
-  <v-app class="green ">
+  <v-app class="primary">
     <v-content>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">

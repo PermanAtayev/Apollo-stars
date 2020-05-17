@@ -42,6 +42,11 @@
                             <Popup />
                         </div>
                     </v-flex>
+                    <v-flex xs6 sm3 md2>
+                        <div>
+                            <v-btn small rounded outlined class="my-3" color="primary">Assess Instructor</v-btn>
+                        </div>
+                    </v-flex>
                 </v-layout>
             </v-card>
         </v-container>

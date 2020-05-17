@@ -53,7 +53,7 @@
                     {code: "MATH 103", task: "Grade Midterm", deadline: '1/5/2020' },
 
                 ],
-                details: {name: "Balaj Saleem", id: 21701041, gpa: 3.2, email:"balaj.saleem@ug.bilkent.edu.tr", password: "12345678", year: "Third Year", dorm: "77"},
+                details: {name: "Balaj Saleem", id: 21701041, gpa: 3.2, email:"balaj.saleem@ug.bilkent.edu.tr", password: "12345678", year: "Third Year", dorm: "77", phone: "+90 553 169 5037"},
 
             };
         },
