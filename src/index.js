@@ -13,8 +13,7 @@ const LocalStrategy = require('passport-local').Strategy;
 // create express app
 const app = express();
 
-// connect to local port (app needs to be transitioned from local to heroku)
-const port = 3000;
+var port = process.env.PORT || 8080;
 app.listen(port, () => console.log('listening on port ' + port));
 
 // home router
