@@ -1,13 +1,10 @@
 // Imports
 const express = require('express');
 const fs = require('fs');
-var passport = require('passport');
-var request = require('request');
-const {Client} = require('pg')
-// store passwords in hash
-const bcrypt = require('bcrypt')
-// generate unique universal ids
-const uuidv4 = require('uuid/v4');
+const passport = require('passport');
+const request = require('request');
+const {Client} = require('pg');
+const bcrypt = require('bcryptjs');
 const LocalStrategy = require('passport-local').Strategy;
 
 // create express app
@@ -22,7 +19,7 @@ app.get('/', function(req, res){
 });
 
 // connect to heroku database
-const connectionString = fs.readFileSync('postgres_setup/credentials.txt').toString();
+const connectionString = fs.readFileSync('src/postgres_setup/credentials.txt').toString();
 const client = new Client({
   connectionString: connectionString,
   ssl: true,
@@ -40,7 +37,7 @@ app.get('/signup', function(req,res){
  */
 app.post('/signup', function(req, res){ 
   try{
-    var password = await bcrypt.hash(req.body.password, 5);
+    var password = bcrypt.hashSync(req.body.password, 5);
 
     // generate random id
     var rand = uuidv4();
@@ -48,7 +45,7 @@ app.post('/signup', function(req, res){
     if (req.body.student == true){
       var id = '1' + rand;
       q = "INSERT INTO Person VALUES($1, $2, $3, $4, $5); INSERT INTO Phone VALUES($1, $6); INSERT INTO Student VALUES($1, Null, Null, CURRENT_TIMESTAMP);";
-      await JSON.stringify(client.query("Select id From Person Where email = $1",[req.body.email], (err, result)=>{
+      JSON.stringify(client.query("Select id From Person Where email = $1",[req.body.email], (err, result)=>{
         if (result.rows[0]){
           res.redirect('/signup');
         }
@@ -67,7 +64,7 @@ app.post('/signup', function(req, res){
     else if (req.body.instructor == true){
       var id = '2' + rand;
       q = "INSERT INTO Person VALUES($1, $2, $3, $4, $5); INSERT INTO Phone VALUES($1, $6); INSERT INTO Instructor VALUES($1, $7, CURRENT_TIMESTAMP);";
-      await JSON.stringify(client.query("Select id From Person Where email = $1",[req.body.email], (err, result)=>{
+      JSON.stringify(client.query("Select id From Person Where email = $1",[req.body.email], (err, result)=>{
         if (result.rows[0]){
           res.redirect('/signup');
         }
@@ -86,7 +83,7 @@ app.post('/signup', function(req, res){
     else if (req.body.ta == true){
       var id = '3' + rand;
       q = "INSERT INTO Person VALUES($1, $2, $3, $4, $5); INSERT INTO Phone VALUES($1, $6); INSERT INTO Student VALUES($1, Null, Null, CURRENT_TIMESTAMP);";
-      await JSON.stringify(client.query("Select id From Person Where email = $1",[req.body.email], (err, result)=>{
+      JSON.stringify(client.query("Select id From Person Where email = $1",[req.body.email], (err, result)=>{
         if (result.rows[0]){
           res.redirect('/signup');
         }
@@ -149,8 +146,8 @@ passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, id, p
 	loginAttempt();
 	async function loginAttempt() {		
 		try{
-			await client.query('BEGIN')
-			var currentAccountsData = await JSON.stringify(client.query('SELECT firstName, email, password FROM Person WHERE "id"=$1', [id], function(err, result) {
+			client.query('BEGIN')
+			var currentAccountsData = JSON.stringify(client.query('SELECT firstName, email, password FROM Person WHERE "id"=$1', [id], function(err, result) {
 				
 				if(err) {
 					return done(err)
@@ -315,7 +312,7 @@ app.get('/student/:id/details/display', (req,res)=>{
 
 app.post('/student/:id/details/update', (req,res)=>{
   q = `UPDATE Person SET email = $1, password = $2 WHERE id = $3;`;
-  var password = await bcrypt.hash(req.body.password, 5);
+  var password = bcrypt.hashSync(req.body.password, 5);
   client.query(q, [req.body.email, password, req.params.id], (err,result)=>{
     if (err){
       console.log(err);
