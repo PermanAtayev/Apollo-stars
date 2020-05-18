@@ -800,3 +800,16 @@ WHERE
      }
    });
  });
+
+
+ // Delete the contents of a specific table
+ app.post('/delete/:table_name', (req,res)=>{
+  client.query("DELETE FROM $1;", [req.params.table_name], (err, result)=>{
+    if (err){
+      console.log(err);
+    }
+    else{
+      console.log("Specified table removed.");
+    }
+  });
+ })
