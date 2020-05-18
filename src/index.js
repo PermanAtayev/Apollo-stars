@@ -6,12 +6,12 @@ const request = require('request');
 const {Client} = require('pg');
 const bcrypt = require('bcryptjs');
 const LocalStrategy = require('passport-local').Strategy;
-
 // create express app
 const app = express();
+let server = require('http').Server(app);
 
-var port = process.env.PORT || 8080;
-app.listen(port, () => console.log('listening on port ' + port));
+var port = (process.env.PORT || 8080);
+server.listen(port, () => console.log('listening on port ' + port));
 
 // home router
 app.get('/', function(req, res){
