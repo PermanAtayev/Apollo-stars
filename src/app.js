@@ -576,10 +576,231 @@ app.post('/instructor/:id/authorize/TA', (req,res)=>{
 
 // AHD Starts Here --------------------------------------------------------------------------- // 
 
+//list all assignments
+app.get('/instructor/:id/assignments', (req,res)=>{
+  q = `SELECT
+  DISTINCT assignment_name
+FROM Instructor,
+  Schedules_Assignment,
+  Assignment
+WHERE
+  Instructor.id = _instructor_id
+  AND Schedules_Assignment.instructor_id = Instructor.id
+  AND Schedules_Assignment.assignment_id = Assignment.id;`
+  client.query(q, (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.send(result);
+     }
+   });
+ });
+
+// create an exam
+ app.post('/instructor/:id/create/exam', (req,res)=>{
+  q = `INSERT INTO Exam
+  VALUES($1, $2, $3, $4);`
+  client.query(q,[req.body.exam_id, req.body.exam_name, req.body.start_time, req.body.end_time], (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.log("Success");
+     }
+   });
+ });
+
+// create research assignment
+ app.post('/instructor/:id/create/assignment', (req,res)=>{
+  q = `INSERT INTO Assignment
+  VALUES($1, $2, $3);`
+  client.query(q,[req.body.assignment_id, req.body.assignment_name, req.body.assignment_due_date], (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.log("Success");
+     }
+   });
+ });
+
+
+ // create a research group
+ app.post('/instructor/:id/create/group', (req,res)=>{
+  q = `INSERT INTO Research_Group
+  VALUES($1, $2, $3);`
+  client.query(q,[req.body.group_id, req.body.research_topic, 1000 + Math.random()*4000], (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.log("Success");
+     }
+   });
+ });
+
+ //select a course and submit exam grade for each student registered in the course
+ //sequentially call multiple APIs
+ //select a course
+ app.get('/instructor/:id/select/exam', (req,res)=>{
+  q = `SELECT
+  exam_id
+  FROM Course_Exam
+  WHERE
+  course_id = ?;`
+  client.query(q, req.body.course_id, (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.send(result);
+     }
+   });
+ });
+
+ //select an student
+ app.get('/instructor/:id/select/student', (req,res)=>{
+  q = `SELECT
+  student_id
+FROM Take_Exam
+WHERE
+  exam_id = ?;`
+  client.query(q, req.body.exam_id, (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.send(result);
+     }
+   });
+ });
+
+ //update grade
+ app.post('/instructor/:id/student/:id/exam/:id/change_grade', (req,res)=>{
+  q = `UPDATE Take_Exam
+  SET
+    grade = $1
+  WHERE
+    exam_id = $2
+    AND student_id = $3;`
+  client.query(q, [req.body.grade, req.body.exam_id, req.body.student_id], (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.log("Success");
+     }
+   });
+ });
+
+  //select a course and submit assignment grade for each student registered in the course
+ //sequentially call multiple APIs
+ //select a course
+ app.get('/instructor/:id/select/assignment', (req,res)=>{
+  q = `SELECT
+  assignment_id
+FROM Course_Assignment
+WHERE
+  course_id = ?;`
+  client.query(q, req.body.course_id, (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.send(result);
+     }
+   });
+ });
+
+ //select an student
+ app.get('/instructor/:id/select/student', (req,res)=>{
+  q = `SELECT
+  student_id
+FROM Take_Assignment
+WHERE
+  assignment_id = ?;`
+  client.query(q, req.body.assignment_id, (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.send(result);
+     }
+   });
+ });
+
+ //update grade
+ app.post('/instructor/:iid/student/:sid/assignment/:aid/change_grade', (req,res)=>{
+  q = `UPDATE Take_Assignment
+  SET
+    grade = $1
+  WHERE
+    assignment_id = $2
+    AND student_id = $3;`
+  client.query(q, [req.body.grade, req.body.assignment_id, req.body.student_id], (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.log("Success");
+     }
+   });
+ });
 // ---------------------------------- TA Routes ---------------------------------------------- //
 
-// Database Sample Query
-// client.query("QUERY GOES HERE!", (err, res) => {
-//   if (err) throw err;
-//   client.end();
-// });
+//list all courses that a TA is responsible for
+app.get('/ta/:id/courses', (req,res)=>{
+  q = `SELECT
+  DISTINCT course_name
+FROM Course,
+  TA,
+  Assists
+WHERE
+  Assists.ta_id = $1
+  AND Assists.course_id = Course.course_id;`
+  client.query(q, [req.params.id], (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.send(result);
+     }
+   });
+ });
+
+ //select course and list all authorized tasks for this course
+ app.get('/ta/:id/course/:cid/tasks', (req,res)=>{
+  q = `SELECT
+  DISTINCT task_desc
+FROM Auth_TA
+WHERE
+  course_id = $1
+  and ta_id = $2;`
+  client.query(q, [req.params.cid, req.params.id], (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.send(result);
+     }
+   });
+ });
+
+ //complete the selected task such as submitting hw grades/attendance for each student registered to the course
+ app.post('/ta/:id/course/:cid/task/:tid/complete', (req,res)=>{
+  q = `UPDATE Auth_TA
+  SET
+    is_done = TRUE
+  WHERE
+    task_desc = $1
+    AND course_id = $2;`
+  client.query(q, [req.body.task_desc, req.params.cid], (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.log("Success");
+     }
+   });
+ });
