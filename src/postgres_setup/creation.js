@@ -3,7 +3,7 @@ const { Client } = require('pg');
 const fs = require('fs');
 
 // read in sql setup queries
-const sql = fs.readFileSync('relations.sql').toString();
+const sql = fs.readFileSync('creations.sql').toString();
 
 // read in connection string
 const connectionString = fs.readFileSync('credentials.txt').toString();

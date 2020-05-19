@@ -38,7 +38,6 @@ app.get('/signup', function(req,res){
 app.post('/signup', function(req, res){ 
   try{
     var password = bcrypt.hashSync(req.body.password, 5);
-
     // generate random id
     var rand = uuidv4();
     var q;
@@ -885,4 +884,3 @@ GROUP BY exam_name;`;
 });
 
 // trigger
-app.post()
