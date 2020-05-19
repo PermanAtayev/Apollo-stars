@@ -6,6 +6,8 @@ const request = require('request');
 const {Client} = require('pg');
 const bcrypt = require('bcryptjs');
 const LocalStrategy = require('passport-local').Strategy;
+const uuidv4 = require('uuidv4');
+var bodyParser = require('body-parser');
 // create express app
 const app = express();
 let server = require('http').Server(app);
@@ -29,18 +31,16 @@ client.connect();
 // ---------------------------------- Authentication Routes ---------------------------------- //
 // Sign-Up
 app.get('/signup', function(req,res){
-  res.render('signup', {title: "Signup", userData: req.user, messages: {danger: req.flash('danger'), warning: req.flash('warning'), success: req.flash('success')}});
 });
 
 /**
  * Update front end to take in phone number
  */
-app.post('/signup', function(req, res){ 
+app.post('/signup', async function(req, res){ 
   try{
-    var password = bcrypt.hashSync(req.body.password, 5);
+    var password = await bcrypt.hashSync(req.body.password, 5);
     // generate random id
-    var rand = uuidv4();
-    var q;
+    var rand = uuidv4.uuid();
     if (req.body.student == true){
       var id = '1' + rand;
       q = "INSERT INTO Person VALUES($1, $2, $3, $4, $5); INSERT INTO Phone VALUES($1, $6); INSERT INTO Student VALUES($1, Null, Null, CURRENT_TIMESTAMP);";
