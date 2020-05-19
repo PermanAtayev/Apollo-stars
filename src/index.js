@@ -10,6 +10,9 @@ const uuidv4 = require('uuidv4');
 var bodyParser = require('body-parser');
 // create express app
 const app = express();
+
+app.use(express.json())
+
 let server = require('http').Server(app);
 
 var port = (process.env.PORT || 8080);
@@ -36,7 +39,8 @@ app.get('/signup', function(req,res){
 /**
  * Update front end to take in phone number
  */
-app.post('/signup', async function(req, res){ 
+app.post('/signup', async function(req, res){
+  console.log(req.body)
   try{
     var password = await bcrypt.hashSync(req.body.password, 5);
     // generate random id
