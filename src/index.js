@@ -40,10 +40,9 @@ app.get('/signup', function(req,res){
  * Update front end to take in phone number
  */
 app.post('/signup', async function(req, res){
-  console.log(req.body)
   try{
-    var password = await bcrypt.hashSync(req.body.password, 5);
-    // generate random id
+    let password = await bcrypt.hash(req.body.password, 5);
+
     var rand = uuidv4.uuid();
     if (req.body.student == true){
       var id = '1' + rand;
