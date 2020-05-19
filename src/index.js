@@ -41,19 +41,18 @@ app.get('/signup', function(req,res){
  */
 app.post('/signup', async function(req, res){
   try{
-    let password = req.body.password
-        // await bcrypt.hash(req.body.password, 5);
+    // let password = await bcrypt.hash(req.body.password, 5);
 
     var rand = uuidv4.uuid();
     if (req.body.student === true){
       var id = '1' + rand;
-      q = "INSERT INTO Person VALUES($1, $2, $3, $4, $5);";
+      q = "INSERT INTO Person VALUES($1, $2, $3, $4, $5, $6);";
       JSON.stringify(client.query("Select id From Person Where email = $1",[req.body.email], (err, result)=>{
         if (result.rows[0]){
           res.redirect('/signup');
         }
         else{
-          client.query(q,[id, req.body.email, password, req.body.fname, req.body.surname], (err, result)=>{
+          client.query(q,[id, req.body.password, req.body.fname, req.body.surname, req.body.email, req.body.department_name], (err, result)=>{
             if (err){
               console.log(err);
             }
