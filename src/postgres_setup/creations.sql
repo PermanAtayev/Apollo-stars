@@ -4,6 +4,7 @@ CREATE TABLE Person (
   name VARCHAR (20),
   surname VARCHAR (20),
   email VARCHAR (20)
+  department_name VARCHAR (10) REFERENCES Department(department_name) ON DELETE CASCADE
 );
 
 CREATE TABLE Phone (
@@ -12,16 +13,18 @@ CREATE TABLE Phone (
   PRIMARY KEY(id, phone_number)
 );
 
-CREATE TABLE Student (gpa INT, tuition_fee INT, date_enrolled DATE, PRIMARY KEY(id)) INHERITS (Person);
+CREATE TABLE Student (gpa FLOAT, tuition_fee INT, date_enrolled DATE, PRIMARY KEY(id)) INHERITS (Person);
 
 CREATE TABLE TA (ta_since date, PRIMARY KEY(id)) INHERITS (Student);
 
 CREATE TABLE Instructor (salary INT, date_joined DATE, PRIMARY KEY(id)) INHERITS (Person);
 
+CREATE UNIQUE INDEX instructor_salary ON Instructor(Salary);
+
 CREATE TABLE Course (
   course_id INT PRIMARY KEY,
   name VARCHAR(100),
-  credits INT
+  credits INT CHECK (credits >= 0 AND credits <= 4)
 );
 
 CREATE TABLE Task_List (
@@ -78,8 +81,8 @@ CREATE TABLE Course_Assignment (
 CREATE TABLE Section (
   section_id VARCHAR (6),
   course_id INT REFERENCES Course(course_id) ON DELETE CASCADE,
-  building_no INT,
-  room_no INT,
+  building_no INT REFERENCES Classroom(building_no) ON DELETE CASCADE,
+  room_no INT REFERENCES Classroom(room_no) ON DELETE CASCADE,
   PRIMARY KEY (section_id, course_id)
 );
 
@@ -102,7 +105,7 @@ CREATE TABLE Student_Sec (
   student_id INT REFERENCES Student(id) ON DELETE CASCADE,
   section_id VARCHAR (6),
   course_id INT,
-  grade INT,
+  grade VARCHAR(1),
   PRIMARY KEY (section_id, student_id),
   FOREIGN KEY (section_id, course_id) REFERENCES Section(section_id, course_id) ON DELETE CASCADE
 );
@@ -156,6 +159,7 @@ CREATE TABLE Assignment (
 
 CREATE TABLE Exam (
   exam_id INT PRIMARY KEY,
+  exam_name VARCHAR (10),
   start_time TIMESTAMP,
   end_time TIMESTAMP
 );
@@ -175,8 +179,7 @@ CREATE TABLE Participates (
 CREATE TABLE Auth_TA (
   instructor_id INT REFERENCES Instructor(id) ON DELETE CASCADE,
   ta_id INT REFERENCES TA(id) ON DELETE CASCADE,
-  task VARCHAR(100),
-  course_id INT REFERENCES Course(course_id) ON DELETE CASCADE,
+  task_desc VARCHAR(100),
   is_done BOOLEAN,
   PRIMARY KEY (instructor_id, ta_id)
 );

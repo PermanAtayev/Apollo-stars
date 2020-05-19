@@ -22,8 +22,8 @@ WHERE
 SELECT
   DISTINCT course_name
 FROM Course,
-  Prereq
-WHERE
+  Prereq, Courses_Taken
+WHERE Courses_Taken.student_id = _student_id AND
   (
     Course.id = Prereq.course_id
     AND Prereq.prereq_id IN (
@@ -63,24 +63,26 @@ Select
   grade
 From Take_Exam,
   Course_Exam
-WHERE
+WHERE Take_Exam.student_id = _student_id AND
   Take_Exam.exam_id IN (
     SELECT
       exam_id
     FROM Course_Exam
   )
   AND Course_Exam.course_id = _course_id;
+
 Select
   grade
 From Take_Assignment,
   Course_Assignment
-WHERE
+WHERE Take_Assignment.student_id = _student_id AND
   Take_Assignment.assignment_id IN (
     SELECT
       assignment_id
     FROM Course_Assignment
   )
   AND Course_Assignment.course_id = _course_id;
+
 -- display and update student details such as email and password
 SELECT
   *
@@ -280,14 +282,65 @@ WHERE
 -- select a course and list all authorized tasks for this course
 SELECT
   DISTINCT task_desc
-FROM Auth_TA
+FROM Auth_TA, Assists
 WHERE
-  course_id = _course_id
-  and ta_id = _ta_id;
+  Assists.ta_id = _ta_id AND
+  Assists.course_id = _course_id
+  and Assists.ta_id = _ta_id;
+
 -- complete the selected task such as submitting hw grades/attendance for each student registered to the course
 UPDATE Auth_TA
 SET
   is_done = TRUE
-WHERE
-  task_desc = _task_desc
-  AND course_id = _course_id;
+WHERE ta_id = _ta_id AND
+  task_desc = _task_desc;
+
+---------------------------------------------- Advanced Features --------------------------------------------------
+--  find instructors that have a salary within a certain range
+Select first_name, surname
+FROM Instructor as i
+Where i.salary bet ween _range1 and _range2;
+
+-- allow students to view courses with a certain keyword
+Select course_name
+From Course
+Where course_name Like 'a%';
+
+-- view
+CREATE VIEW view_ranking AS
+SELECT first_name, surname, gpa
+FROM Student
+WHERE department_name = _department_name
+ORDER BY gpa DESC LIMIT 5;
+
+-- The first report shows the maximum research grant for all instructors.
+Select first_name, surname, email, date_joined, sum(research_grant)
+FROM Instructor JOIN Research_Group ON Instructor.id = Research_Group.instructor_id
+GROUP BY  first_name, surname, email, date_joined; 
+
+-- The second report shows the average grade for all exams
+SELECT exam_name, avg(grade)
+FROM course_exam
+JOIN take_exam ON course_exam.exam_id = take_exam.exam_id
+JOIN exam ON exam.exam_id = take_exam.exam_id
+GROUP BY exam_name;
+
+-- trigger
+CREATE FUNCTION log_gpa_update()
+  RETURNS trigger AS
+$$
+BEGIN
+	IF NEW.grade == '' THEN
+		 BEGIN ATOMIC
+     SET NEW.grade = NULL;
+     END; 
+	END IF;
+	RETURN NEW;
+END;
+$$
+
+CREATE TRIGGER gpa_update
+  BEFORE UPDATE
+  ON Student_Sec
+  FOR EACH ROW
+  EXECUTE PROCEDURE log_gpa_update();

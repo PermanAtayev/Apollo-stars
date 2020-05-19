@@ -185,15 +185,14 @@ passport.deserializeUser(function(user, done) {
 	done(null, user);
 });		
   
-// ---------------------------------- User Routes -------------------------------------------- //
+// ---------------------------------- Student Routes -------------------------------------------- //
 // list all courses that a student can register for
 app.get('/student/:id/regCourseApply', (req,res)=>{
-  student_id = req.params.id;
   q = `SELECT
   DISTINCT course_name
   FROM Course,
-    Prereq
-  WHERE
+    Prereq, Courses_Taken
+  WHERE Courses_Taken.student_id = $1 AND
     (
     Course.id = Prereq.course_id
     AND Prereq.prereq_id IN (
@@ -218,7 +217,7 @@ app.get('/student/:id/regCourseApply', (req,res)=>{
     FROM Courses_Taken
   );`;
 
-  client.query(q, (err, result)=>{
+  client.query(q, [req.params.id], (err, result)=>{
     if (err){
       console.log(err);
     }
@@ -231,8 +230,7 @@ app.get('/student/:id/regCourseApply', (req,res)=>{
 // select and register a course for a student
 // the student picks an available section from a course they can take.
 app.post('/student/:id/register', (req,res)=>{
- q = `INSERT INTO Courses_Registered
- VALUES($1, $2, $3);`;
+ q = `INSERT INTO Courses_Registered VALUES($1, $2, $3);`;
  client.query(q,[req.params.id, req.body.course_id, req.body.section_id], (err, result)=>{
     if (err){
       console.log(err);
@@ -262,31 +260,10 @@ app.get('/student/:id/regCourseView', (req,res)=>{
 });
 
 // select a course and display grades for that course
-app.get('/student/:id/regCourseView', (req,res)=>{
-  q = `Select
-  grade
-  From Take_Exam,
-  Course_Exam
-  WHERE
-  Take_Exam.exam_id IN (
-    SELECT
-      exam_id
-    FROM Course_Exam
-  )
-  AND Course_Exam.course_id = $1;
-  Select
-  grade
-  From Take_Assignment,
-  Course_Assignment
-  WHERE
-  Take_Assignment.assignment_id IN (
-    SELECT
-      assignment_id
-    FROM Course_Assignment
-  )
-  AND Course_Assignment.course_id = $1;`;
-
-  client.query(q,[req.body.course_id], (err,result)=>{
+app.get('/student/:id/exams/grades/display', (req,res)=>{
+  q = `Select grade From Take_Exam, Course_Exam WHERE Take_Exam.student_id = $1 AND
+  Take_Exam.exam_id IN ( SELECT exam_id FROM Course_Exam) AND Course_Exam.course_id = $2;`;
+  client.query(q,[req.params.id, req.body.course_id], (err,result)=>{
     if (err){
       console.log(err);
     }
@@ -294,8 +271,22 @@ app.get('/student/:id/regCourseView', (req,res)=>{
       res.send(result);
     }
   });
-
 });
+
+app.get('/student/:id/assignments/grades/display', (req,res)=>{
+  q = `Select grade From Take_Assignment, Course_Assignment WHERE Take_Assignment.student_id = $1 AND
+  Take_Assignment.assignment_id IN (SELECT assignment_id FROM Course_Assignment) AND Course_Assignment.course_id = $2;`;
+  client.query(q,[req.params.id, req.body.course_id], (err,result)=>{
+    if (err){
+      console.log(err);
+    }
+    else{
+      res.send(result);
+    }
+  });
+});
+
+
 
 // display and update student details such as email and password
 app.get('/student/:id/details/display', (req,res)=>{
@@ -344,17 +335,29 @@ WHERE
   });
 });
 
+// create list assignment stored procedure
+app.post('/student/:id/assignments/display/create',(req,res)=>{
+  proc = `Drop Procedure If Exists listAssignments; Create Procedure listAssignments(INT)
+      Language plpgsql
+      AS $$ BEGIN
+      SELECT DISTINCT assignment_name FROM Student, Take_Assignment, Assignment
+      WHERE Student.id = $1 AND Take_Assignment.student_id = Student.id 
+      AND Take_Assignment.assignment_id = Assignment.id;
+      COMMIT;
+      END; $$;`;
+  client.query(proc, (err,result)=>{
+    if (err){
+      console.log(err);
+    }
+    else{
+      console.log('stored procedure created');
+    }
+  });
+});
+
 // list all assignments
 app.get('/student/:id/assignments/display', (req,res)=>{
-  q = `SELECT
-  DISTINCT assignment_name
-FROM Student,
-  Take_Assignment,
-  Assignment
-WHERE
-  Student.id = $1
-  AND Take_Assignment.student_id = Student.id
-  AND Take_Assignment.assignment_id = Assignment.id;`;
+  q = `Call listAssignments($1);`;
   client.query(q, [req.params.id], (err,result)=>{
     if (err){
       console.log(err);
@@ -767,13 +770,9 @@ WHERE
 
  //select course and list all authorized tasks for this course
  app.get('/ta/:id/course/:cid/tasks', (req,res)=>{
-  q = `SELECT
-  DISTINCT task_desc
-FROM Auth_TA
-WHERE
-  course_id = $1
-  and ta_id = $2;`
-  client.query(q, [req.params.cid, req.params.id], (err, result)=>{
+  q = `SELECT DISTINCT task_desc FROM Auth_TA, Assists WHERE
+  Assists.ta_id = $1 AND Assists.course_id = $2 AND Assists.ta_id = $1;`
+  client.query(q, [req.params.id, req.body.course_id], (err, result)=>{
      if (err){
        console.log(err);
      }
@@ -784,14 +783,10 @@ WHERE
  });
 
  //complete the selected task such as submitting hw grades/attendance for each student registered to the course
+ // task_desc uniquely identifies a course assignment such as OS-HW-01 or Algs-HW-01
  app.post('/ta/:id/course/:cid/task/:tid/complete', (req,res)=>{
-  q = `UPDATE Auth_TA
-  SET
-    is_done = TRUE
-  WHERE
-    task_desc = $1
-    AND course_id = $2;`
-  client.query(q, [req.body.task_desc, req.params.cid], (err, result)=>{
+  q = `UPDATE Auth_TA SET is_done = TRUE WHERE ta_id = $1 AND task_desc = $2;`
+  client.query(q, [req.params.id, req.body.task_desc], (err, result)=>{
      if (err){
        console.log(err);
      }
@@ -813,3 +808,81 @@ WHERE
     }
   });
  })
+
+////////////////////////////////////////////////// Advanced Features //////////////////////////////////////////
+// find instructors that have a salary within a certain range
+app.get('/general/instrructor/salaries', (req, res)=>{
+q = `Select first_name, surname FROM Instructor as i Where i.salary between $1 and $2;`;
+  client.query(q, [req.body.minSal, req.body.maxSal], (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.send(result);
+     }
+   });
+});
+
+
+// allow students to view courses with a certain keyword
+app.get('/student/:id/search/course', (req, res)=>{
+q = ` Select course_name From Course Where course_name Like '$1%';`;
+  client.query(q, [req.body.keyword], (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.send(result);
+     }
+   });
+});
+
+// Create View
+app.get('/rankings/view', (req, res)=>{
+q = ` CREATE VIEW view_ranking AS SELECT first_name, surname, gpa FROM Student
+  WHERE department_name = _department_name ORDER BY gpa DESC LIMIT 5;
+  Select * FROM view_ranking;`;
+  client.query(q, [req.body.instructor_id], (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.send(result);
+     }
+   });
+});
+
+// First Report
+app.get('/report/one', (req, res)=>{
+q = `Select first_name, surname, email, date_joined, sum(research_grant)
+FROM Instructor JOIN Research_Group ON Instructor.id = Research_Group.instructor_id
+GROUP BY  first_name, surname, email, date_joined;`;
+  client.query(q, (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.send(result);
+     }
+   });
+});
+
+// Second Report
+app.get('/report/second', (req, res)=>{
+q = `SELECT exam_name, avg(grade)
+FROM course_exam
+JOIN take_exam ON course_exam.exam_id = take_exam.exam_id
+JOIN exam ON exam.exam_id = take_exam.exam_id
+GROUP BY exam_name;`;
+  client.query(q, (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.send(result);
+     }
+   });
+});
+
+// trigger
+app.post()
