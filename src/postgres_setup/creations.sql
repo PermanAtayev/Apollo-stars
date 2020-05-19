@@ -1,6 +1,6 @@
 CREATE TABLE Person (
   id INT PRIMARY KEY,
-  password INT,
+  password INT, --change to varchar
   name VARCHAR (20),
   surname VARCHAR (20),
   email VARCHAR (20)

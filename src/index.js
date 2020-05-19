@@ -41,18 +41,18 @@ app.get('/signup', function(req,res){
  */
 app.post('/signup', async function(req, res){
   try{
-    let password = await bcrypt.hash(req.body.password, 5);
+    // let password = await bcrypt.hash(req.body.password, 5);
 
     var rand = uuidv4.uuid();
-    if (req.body.student == true){
+    if (req.body.student === true){
       var id = '1' + rand;
-      q = "INSERT INTO Person VALUES($1, $2, $3, $4, $5); INSERT INTO Phone VALUES($1, $6); INSERT INTO Student VALUES($1, Null, Null, CURRENT_TIMESTAMP);";
+      q = "INSERT INTO Person VALUES($1, $2, $3, $4, $5, $6);";
       JSON.stringify(client.query("Select id From Person Where email = $1",[req.body.email], (err, result)=>{
         if (result.rows[0]){
           res.redirect('/signup');
         }
         else{
-          client.query(q,[id, req.body.email, password, req.body.fname, req.body.surname, req.body.phone_no], (err, result)=>{
+          client.query(q,[id, req.body.password, req.body.fname, req.body.surname, req.body.email, req.body.department_name], (err, result)=>{
             if (err){
               console.log(err);
             }
@@ -63,7 +63,7 @@ app.post('/signup', async function(req, res){
         }
       }));
     }
-    else if (req.body.instructor == true){
+    else if (req.body.instructor === true){
       var id = '2' + rand;
       q = "INSERT INTO Person VALUES($1, $2, $3, $4, $5); INSERT INTO Phone VALUES($1, $6); INSERT INTO Instructor VALUES($1, $7, CURRENT_TIMESTAMP);";
       JSON.stringify(client.query("Select id From Person Where email = $1",[req.body.email], (err, result)=>{
@@ -82,7 +82,7 @@ app.post('/signup', async function(req, res){
         }
       }));
     }
-    else if (req.body.ta == true){
+    else if (req.body.ta === true){
       var id = '3' + rand;
       q = "INSERT INTO Person VALUES($1, $2, $3, $4, $5); INSERT INTO Phone VALUES($1, $6); INSERT INTO Student VALUES($1, Null, Null, CURRENT_TIMESTAMP);";
       JSON.stringify(client.query("Select id From Person Where email = $1",[req.body.email], (err, result)=>{
