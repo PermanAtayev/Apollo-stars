@@ -94,4 +94,3 @@
 -- INSERT INTO Section VALUES('CN-01',13,8,32);
 -- INSERT INTO Section VALUES('CO-01',14,7,452);
 -- INSERT INTO Section VALUES('CP-01',15,8,552);
--- Assists
