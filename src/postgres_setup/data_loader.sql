@@ -53,6 +53,17 @@
  INSERT INTO TA VALUES(1217032, 'password1', 'Aron', 'Einstenium', 'Einstenium@harvard.edu',93029321, 'ME', 0, 10000, '2020-01-20');
  INSERT INTO TA VALUES(1217033, 'password1', 'Clara', 'Greenwood', 'Greenwood@harvard.edu',93029321, 'CS', 0, 10000, '2020-01-20');
 
+ INSERT INTO ASSISTS VALUES(1, 1217024);
+ INSERT INTO ASSISTS VALUES(2, 1217025);
+ INSERT INTO ASSISTS VALUES(3, 1217025);
+ INSERT INTO ASSISTS VALUES(4, 1217025);
+ INSERT INTO ASSISTS VALUES(5, 1217025);
+ INSERT INTO ASSISTS VALUES(6, 1217026);
+ INSERT INTO ASSISTS VALUES(7, 1217026);
+ INSERT INTO ASSISTS VALUES(8, 1217026);
+ INSERT INTO ASSISTS VALUES(9, 1217027);
+ INSERT INTO ASSISTS VALUES(10, 1217028);
+
 --INSERT INTO Career VALUES(75514212, 'Facebook is privacy concerned company', 'anyone who wants to work', 1000)
 --INSERT INTO Career VALUES(75514213, 'Microsoft is privacy concerned company', 'anyone who wants to work as a web developer', 1000)
 --INSERT INTO Career VALUES(75514214, 'Asus is privacy concerned company', 'anyone who wants to work as a mobile developer', 1000)
