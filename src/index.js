@@ -916,6 +916,37 @@ GROUP BY exam_name;`;
    });
 });
 
+// Trigger
+// TESTED
+app.post('/trigger/create/function', (req,res)=>{
+  q = `CREATE FUNCTION log_gpa_update() RETURNS trigger AS 
+      $$ BEGIN IF New.grade == '' THEN SET New.grade = 'NULL'; END IF; END; $$ Language plpgsql;`
+  client.query(q, (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.send("Success");
+       return;
+     }
+   });
+ });
+ 
+// TESTED
+ app.post('/trigger/create/trig', (req,res)=>{
+  q = `CREATE TRIGGER gpa_update BEFORE UPDATE ON Student_Sec FOR EACH ROW
+      EXECUTE PROCEDURE log_gpa_update();`
+  client.query(q, (err, result)=>{
+     if (err){
+       console.log(err);
+     }
+     else{
+       res.send("Success");
+       return;
+     }
+   });
+ });
+
  // Delete the contents of a specific table
  // For personal use -- DO NOT USE IN ACTUAL APP ANYWHERE
  app.post('/delete/:table_name', (req,res)=>{
