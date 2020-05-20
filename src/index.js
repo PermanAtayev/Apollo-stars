@@ -217,15 +217,8 @@ app.post('/student/:id/details/update', (req,res)=>{
 
 // list all exams
 app.get('/student/:id/exams/display', (req,res)=>{
-  q = `SELECT
-  DISTINCT exam_name
-FROM Student,
-  Take_Exam,
-  Exam
-WHERE
-  Student.id = $1
-  AND Take_Exam.student_id = Student.id
-  AND Take_Exam.exam_id = Exam.id;`;
+  q = `SELECT DISTINCT exam_name FROM Student, Take_Exam, Exam
+      WHERE Student.id = $1 AND Take_Exam.student_id = Student.id AND Take_Exam.exam_id = Exam.id;`;
   client.query(q, [req.params.id], (err,result)=>{
     if (err){
       console.log(err);
