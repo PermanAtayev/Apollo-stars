@@ -19,5 +19,3 @@ client.connect();
 client.query(sql, (err, res) => {
     if (err) throw err;
 });
-
-return 0;

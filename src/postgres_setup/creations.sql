@@ -10,13 +10,8 @@ CREATE TABLE Person (
   name VARCHAR (20),
   surname VARCHAR (20),
   email VARCHAR (20),
+  phone_no INT,
   department_name VARCHAR (10) REFERENCES Department(department_name) ON DELETE CASCADE
-);
-
-CREATE TABLE Phone (
-  id INT REFERENCES Person(id) ON DELETE CASCADE,
-  phone_number INT,
-  PRIMARY KEY(id, phone_number)
 );
 
 CREATE TABLE Student (gpa FLOAT, tuition_fee INT, date_enrolled DATE, PRIMARY KEY(id)) INHERITS (Person);

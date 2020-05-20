@@ -6,7 +6,6 @@ const request = require('request');
 const {Client} = require('pg');
 const bcrypt = require('bcryptjs');
 const LocalStrategy = require('passport-local').Strategy;
-const uuidv4 = require('uuidv4');
 var bodyParser = require('body-parser');
 // create express app
 const app = express();
@@ -36,6 +35,17 @@ client.connect();
 // Login
 app.get('/login', (req,res,next)=>{
   res.send("At login");
+});
+
+app.post('/all', (req, res)=>{
+  client.query("INSERT INTO Phone VALUES(1, 090078601);", (err, result)=>{
+    if (err){
+      console.log(err);
+    }
+    else{
+      res.send(result);
+    }
+  });
 });
 
 
