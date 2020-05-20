@@ -460,7 +460,7 @@ app.get('/instructor/:id/select/course/section', (req,res)=>{
   });
 });
 
-app.post('/instructor/:id/authorize/TA', (req,res)=>{
+app.post('/instructor/:id/setGrade', (req,res)=>{
   q = `UPDATE Student_Sec SET grade = $1 WHERE section_id = $2 AND student_id = $3;`;
   client.query(q, [req.body.grade, req.body.section_id, req.body.student_id], (err,result)=>{
     if (err){
@@ -578,7 +578,7 @@ WHERE
  });
 
  //update grade
- app.post('/instructor/:id/student/:id/exam/:id/change_grade', (req,res)=>{
+ app.post('/instructor/:id/exam/change_grade', (req,res)=>{
   q = `UPDATE Take_Exam
   SET
     grade = $1
@@ -590,7 +590,7 @@ WHERE
        console.log(err);
      }
      else{
-       res.log("Success");
+       res.send("Success");
      }
    });
  });
@@ -632,7 +632,7 @@ WHERE
  });
 
  //update grade
- app.post('/instructor/:iid/student/:sid/assignment/:aid/change_grade', (req,res)=>{
+ app.post('/instructor/:iid/assignment/change_grade', (req,res)=>{
   q = `UPDATE Take_Assignment
   SET
     grade = $1
@@ -644,7 +644,7 @@ WHERE
        console.log(err);
      }
      else{
-       res.log("Success");
+       res.send("Success");
      }
    });
  });
