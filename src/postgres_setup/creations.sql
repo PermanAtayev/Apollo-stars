@@ -1,6 +1,6 @@
 CREATE TABLE Department (
   department_name VARCHAR (10) PRIMARY KEY,
-  building_no INT,
+  building_no INT UNIQUE,
   budget INT
 );
 
@@ -79,19 +79,12 @@ CREATE TABLE Course_Assignment (
   PRIMARY KEY (course_id, assignment_id)
 );
 
-CREATE TABLE Classroom (
-  building_no INT,
-  room_no INT,
-  capacity INT,
-  PRIMARY KEY (building_no, room_no)
-);
-
 
 CREATE TABLE Section (
   section_id VARCHAR (6),
   course_id INT REFERENCES Course(course_id) ON DELETE CASCADE,
-  building_no INT REFERENCES Classroom(building_no) ON DELETE CASCADE,
-  room_no INT REFERENCES Classroom(room_no) ON DELETE CASCADE,
+  building_no INT REFERENCES Department(building_no) ON DELETE CASCADE,
+  room_no INT,
   PRIMARY KEY (section_id, course_id)
 );
 
