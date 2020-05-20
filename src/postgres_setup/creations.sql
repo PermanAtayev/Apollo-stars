@@ -28,11 +28,6 @@ CREATE TABLE Course (
   credits INT CHECK (credits >= 0 AND credits <= 4)
 );
 
-CREATE TABLE Task_List (
-  course_id INT REFERENCES Course(course_id) ON DELETE CASCADE,
-  task_desc VARCHAR (100),
-  PRIMARY KEY (course_id, task_desc)
-);
 
 CREATE TABLE Prereq (
   course_id INT REFERENCES Course(course_id) ON DELETE CASCADE,
@@ -109,13 +104,6 @@ CREATE TABLE Teaches (
   FOREIGN KEY (section_id, course_id) REFERENCES Section(section_id, course_id) ON DELETE CASCADE
 );
 
-CREATE TABLE Sec_Course (
-  section_id VARCHAR(6),
-  course_id INT,
-  PRIMARY KEY (section_id, course_id),
-  FOREIGN KEY (section_id, course_id) REFERENCES Section(section_id, course_id) ON DELETE CASCADE
-);
-
 CREATE TABLE Student_Sec (
   student_id INT REFERENCES Student(id) ON DELETE CASCADE,
   section_id VARCHAR (6),
@@ -141,6 +129,7 @@ CREATE TABLE Research_Group (
 
 CREATE TABLE Study_Group (
   group_id INT PRIMARY KEY,
+  id INT REFERENCES Student(id) ON DELETE CASCADE,
   group_name VARCHAR (100),
   purpose VARCHAR (100)
 );

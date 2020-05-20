@@ -34,6 +34,7 @@ client.connect();
 
 // ---------------------------------- Authentication Routes ---------------------------------- //
 // Login
+//TESTED
 app.get('/login', (req,res,next)=>{
   // res.send("At login");
     q = `SELECT password FROM Person WHERE id=$1`
@@ -54,13 +55,14 @@ app.get('/login', (req,res,next)=>{
     });
 });
 
-// not tested
+// TESTED
 app.get('/logout', (req, res)=>{
   res.redirect('/');
 });
   
 // ---------------------------------- Student Routes -------------------------------------------- //
 // list all courses that a student can register for
+// TESTED
 app.get('/student/:id/regCourseApply', (req,res)=>{
   q = `SELECT
   DISTINCT c.name FROM Course as c, Prereq, Courses_Taken
@@ -82,6 +84,7 @@ app.get('/student/:id/regCourseApply', (req,res)=>{
 
 // select and register a course for a student
 // the student picks an available section from a course they can take.
+// TESTED
 app.post('/student/:id/register', (req,res)=>{
  q = `INSERT INTO Courses_Registered VALUES($1, $2, $3);`;
  client.query(q,[req.params.id, req.body.course_id, req.body.section_id], (err, result)=>{
@@ -104,6 +107,7 @@ app.post('/student/:id/register', (req,res)=>{
 });
 
 // list all registered courses of a student
+// TESTED
 app.get('/student/:id/regCourseView', (req,res)=>{
   q = `SELECT
     course.name
@@ -125,6 +129,7 @@ app.get('/student/:id/regCourseView', (req,res)=>{
 
 
 // select a course and display grades for that course
+//TESTED
 app.get('/student/:id/exams/grades/display', (req,res)=>{
   q = `Select grade From Take_Exam, Course_Exam WHERE Take_Exam.student_id = $1 AND
   Take_Exam.exam_id IN ( SELECT exam_id FROM Course_Exam) AND Course_Exam.course_id = $2;`;
@@ -139,6 +144,7 @@ app.get('/student/:id/exams/grades/display', (req,res)=>{
   });
 });
 
+// TESTED
 app.get('/student/:id/assignments/grades/display', (req,res)=>{
   q = `Select grade From Take_Assignment, Course_Assignment WHERE Take_Assignment.student_id = $1 AND
   Take_Assignment.assignment_id IN (SELECT assignment_id FROM Course_Assignment) AND Course_Assignment.course_id = $2;`;
@@ -154,8 +160,8 @@ app.get('/student/:id/assignments/grades/display', (req,res)=>{
 });
 
 
-
 // display and update student details such as email and password
+// TESTED
 app.get('/student/:id/details/display', (req,res)=>{
   q = `SELECT * FROM Student WHERE Student.id = $1;`;
   client.query(q, [req.params.id], (err,result)=>{
@@ -169,6 +175,7 @@ app.get('/student/:id/details/display', (req,res)=>{
   });
 });
 
+// TESTED
 app.post('/student/:id/details/update', (req,res)=>{
   q = `UPDATE Person SET email = $1, password = $2 WHERE id = $3;`;
   client.query(q, [req.body.email, req.body.password, req.params.id], (err,result)=>{
@@ -184,9 +191,10 @@ app.post('/student/:id/details/update', (req,res)=>{
 });
 
 // list all exams
+// TESTED
 app.get('/student/:id/exams/display', (req,res)=>{
   q = `SELECT DISTINCT exam_name FROM Student, Take_Exam, Exam
-      WHERE Student.id = $1 AND Take_Exam.student_id = Student.id AND Take_Exam.exam_id = Exam.id;`;
+      WHERE Student.id = $1 AND Take_Exam.student_id = Student.id AND Take_Exam.exam_id = Exam.exam_id;`;
   client.query(q, [req.params.id], (err,result)=>{
     if (err){
       console.log(err);
@@ -199,6 +207,7 @@ app.get('/student/:id/exams/display', (req,res)=>{
 });
 
 // create list assignment stored procedure
+// TESTED
 app.post('/student/:id/assignments/display/create',(req,res)=>{
   proc = `Drop Procedure If Exists listAssignments; Create FUNCTION  listAssignments(INT) RETURNS SETOF varchar(20) 
       AS $BODY$ BEGIN
@@ -220,6 +229,7 @@ app.post('/student/:id/assignments/display/create',(req,res)=>{
 });
 
 // list all assignments
+// TESTED
 app.get('/student/:id/assignments/display', (req,res)=>{
   q = `SELECT * FROM listAssignments($1);`;
   client.query(q, [req.params.id], (err,result)=>{
@@ -235,6 +245,7 @@ app.get('/student/:id/assignments/display', (req,res)=>{
 
 // join a research group
 // if application has been approved
+// TESTED
 app.post('/student/:id/research/apply', (req, res)=>{
   q = `INSERT INTO Joins_Research Values($1, $2);`;
   var accept = Math.random();
@@ -256,13 +267,23 @@ app.post('/student/:id/research/apply', (req, res)=>{
 });
 
 // create study group
+// TESTED
 app.post('/student/:id/study/create', (req, res)=>{
-  q = `INSERT INTO Study_Group Values($1, $2, $3, $4);`;
+  q = `INSERT INTO Study_Group Values($1, $2, $3);`;
   client.query(q, [req.body.group_id, req.params.id, req.body.group_name, req.body.purpose], (err,result)=>{
     if (err){
       console.log(err);
     }
     else{
+      q = `INSERT INTO Participates Values($1, $2);`;
+      client.query(q, [req.body.group_id, req.params.id], (err,result)=>{
+        if (err){
+          console.log(err);
+        }
+        else{
+          return;
+        }
+      });
       res.send('Study group created!')
       return;
     }
@@ -272,6 +293,7 @@ app.post('/student/:id/study/create', (req, res)=>{
 
 // join study group
 // if application has been approved
+// TESTED
 app.post('/student/:id/study/apply', (req, res)=>{
   q = `INSERT INTO Participates Values($1, $2);`;
   var accept = Math.random();
@@ -293,6 +315,7 @@ app.post('/student/:id/study/apply', (req, res)=>{
 });
 
 // list study groups
+// TESTED
 app.get('/student/:id/study_group/', (req,res)=>{
   q = `SELECT DISTINCT group_name FROM Student, Participates, Study_Group
   WHERE Student.id = $1 AND Participates.student_id = Student.id AND Participates.group_id = Study_Group.group_id;`;
@@ -308,6 +331,7 @@ app.get('/student/:id/study_group/', (req,res)=>{
 });
 
 //view available career posts
+// TESTED
 app.get('/student/:id/careers/display', (req,res)=>{
   q = `Select * From Career`;
   client.query(q, (err,result)=>{
@@ -322,6 +346,7 @@ app.get('/student/:id/careers/display', (req,res)=>{
 });
 
 // assess an instructor
+// TESTED
 app.post('/student/:id/assess/instructor', (req,res)=>{
   q = `INSERT INTO Reviews VALUES($1, $2, $3, $4);`;
   client.query(q, [req.body.instructor_id, req.params.id, req.body.points, req.body.comments], (err,result)=>{
@@ -336,6 +361,7 @@ app.post('/student/:id/assess/instructor', (req,res)=>{
 });
 // ---------------------------------- Instructor Routes -------------------------------------- //
 // list all the courses of the instructor
+// TESTED
 app.get('/instructor/:id/courses/display', (req,res)=>{
   q = `SELECT DISTINCT name FROM Course, Section, Teaches
   WHERE Teaches.instructor_id = $1 AND Teaches.section_id = Section.section_id AND Course.course_id = Section.course_id;`;
@@ -351,8 +377,9 @@ app.get('/instructor/:id/courses/display', (req,res)=>{
 });
 
 // list TA's of a course
+// TESTED
 app.get('/instructor/:id/course/TA/display', (req,res)=>{
-  q = `SELECT DISTINCT c.name FROM Course as c, TA, Assists WHERE Assists.course_id = $1 AND Assists.ta_id = TA.id;`;
+  q = `SELECT DISTINCT t.name, t.surname FROM Course as c, TA as t, Assists WHERE Assists.course_id = $1 AND c.course_id = $1 AND Assists.ta_id = t.id;`;
   client.query(q, [req.body.course_id], (err,result)=>{
     if (err){
       console.log(err);
@@ -365,9 +392,10 @@ app.get('/instructor/:id/course/TA/display', (req,res)=>{
 });
 
 // list possible tasks for a TA for a specific course
-app.get('/instructor/:id/course/TA/tasks/display', (req,res)=>{
-  q = `SELECT task_desc FROM Task_List, Teaches WHERE 
-  Teaches.instructor_id = $1 AND Teaches.course_id = $2 AND Task_List.course_id = $2;`;
+// TESTED
+app.get('/instructor/:id/TA/tasks/display', (req,res)=>{
+  q = `SELECT task_desc FROM Auth_TA, Teaches WHERE 
+  Teaches.instructor_id = $1 AND Teaches.course_id = $2 AND Auth_TA.instructor_id = $1;`;
   client.query(q, [req.params.id, req.body.course_id], (err,result)=>{
     if (err){
       console.log(err);
@@ -380,9 +408,10 @@ app.get('/instructor/:id/course/TA/tasks/display', (req,res)=>{
 });
 
 // list all exams
+// TESTED
 app.get('/instructor/:id/exams/display', (req,res)=>{
-  q = `SELECT DISTINCT exam_name FROM Instructor, Schedules_Exam, Exam WHERE
-  Instructor.id = $1 AND Schedules_Exam.instructor_id = Instructor.id AND Schedules_Exam.exam_id = Exam.id;`;
+  q = `SELECT DISTINCT exam_name FROM Teaches, Course_Exam, Exam WHERE
+  Teaches.instructor_id = $1 AND Course_Exam.course_id = Teaches.course_id AND Course_Exam.exam_id = Exam.exam_id;`;
   client.query(q, [req.params.id], (err,result)=>{
     if (err){
       console.log(err);
@@ -394,9 +423,10 @@ app.get('/instructor/:id/exams/display', (req,res)=>{
 });
 
 // authorize TA's for doing specific tasks such as submitting hw grades, attendance etc.
+// TESTED - Return does return for me
 app.post('/instructor/:id/authorize/TA', (req,res)=>{
-  q = `INSERT INTO Auth_TA VALUES($1, $2, $3, $4, FALSE);`;
-  client.query(q, [req.params.id, req.body.ta_id, req.body.task_desc, req.body.course_id], (err,result)=>{
+  q = `INSERT INTO Auth_TA VALUES($1, $2, $3, $4);`;
+  client.query(q, [req.params.id, req.body.ta_id, req.body.task_desc, "FALSE"], (err,result)=>{
     if (err){
       console.log(err);
     }
@@ -411,8 +441,9 @@ app.post('/instructor/:id/authorize/TA', (req,res)=>{
 // select a course and submit course grade for each student registered in the course
 // the section_id is made up of the coursename and an in -- eg OOP-01
 // select a course then select a section then select a student
+//TESTED
 app.get('/instructor/:id/select/course', (req,res)=>{
-  q = `SELECT section_id FROM Sec_Course WHERE course_id = $1;`;
+  q = `SELECT section_id FROM Section WHERE course_id = $1;`;
   client.query(q, [req.body.course_id], (err,result)=>{
     if (err){
       console.log(err);
@@ -424,9 +455,10 @@ app.get('/instructor/:id/select/course', (req,res)=>{
   });
 });
 
+//TESTED
 app.get('/instructor/:id/select/course/section', (req,res)=>{
-  q = `SELECT student_id FROM Student_Sec WHERE section_id = $1;`;
-  client.query(q, [req.body.section_id], (err,result)=>{
+  q = `SELECT student_id FROM Courses_Taken, Section WHERE Courses_Taken.course_id = $1 AND Section.course_id = $1 AND section_id = $2;`;
+  client.query(q, [req.body.course_id,req.body.section_id], (err,result)=>{
     if (err){
       console.log(err);
     }
@@ -437,34 +469,74 @@ app.get('/instructor/:id/select/course/section', (req,res)=>{
   });
 });
 
+//TESTED
 app.post('/instructor/:id/setGrade', (req,res)=>{
-  q = `UPDATE Student_Sec SET grade = $1 WHERE section_id = $2 AND student_id = $3;`;
-  client.query(q, [req.body.grade, req.body.section_id, req.body.student_id], (err,result)=>{
+  q = `INSERT INTO Student_Sec VALUES($1,$2,$3,$4);`;
+  client.query(q, [req.body.student_id,req.body.section_id,req.body.course_id, req.body.grade], (err,result)=>{
     if (err){
       console.log(err);
     }
     else{
-      console.log("Grade Submitted.");
+      res.send("Grade Submitted.");
+      return;
+    }
+  });
+});
+
+// Calculate GPA
+//TESTED
+app.get('/instructor/:id/gpa/display', (req,res)=>{
+  q = `SELECT gpa FROM Student Where Student.id = $1;`;
+  client.query(q, [req.body.student_id], (err,result)=>{
+    if (err){
+      console.log(err);
+    }
+    else{
+      res.send(result);
+      return;
+    }
+  });
+});
+
+//TESTED
+app.post('/instructor/:id/setgpa', (req,res)=>{
+  let gpa;
+  if (req.body.grade === 'A'){
+    gpa = Math.round((req.body.gpa + 4) / 2);
+  }
+  else if (req.body.grade === 'B'){
+    gpa = Math.round((req.body.gpa + 3) / 2);
+  }
+  else if (req.body.grade === 'F'){
+    gpa = req.body.gpa;
+  }
+  q = `UPDATE Student Set gpa = $2  WHERE Student.id = $1`;
+  client.query(q, [req.body.student_id, gpa], (err,result)=>{
+    if (err){
+      console.log(err);
+    }
+    else{
+      res.send("GPA Updated.");
       return;
     }
   });
 });
 
 
-// AHD Starts Here --------------------------------------------------------------------------- // 
-
 //list all assignments
+// TESTED
 app.get('/instructor/:id/assignments', (req,res)=>{
   q = `SELECT
-  DISTINCT assignment_name
+  DISTINCT a.assignment_name
 FROM Instructor,
-  Schedules_Assignment,
-  Assignment
+  Teaches,
+  Course_Assignment,
+  Assignment as a
 WHERE
-  Instructor.id = _instructor_id
-  AND Schedules_Assignment.instructor_id = Instructor.id
-  AND Schedules_Assignment.assignment_id = Assignment.id;`
-  client.query(q, (err, result)=>{
+  Instructor.id = $1
+  AND Teaches.instructor_id = Instructor.id
+  AND Teaches.course_id = Course_Assignment.course_id`
+  client.query(q,[req.params.id], (err, result)=>{
      if (err){
        console.log(err);
      }
@@ -476,6 +548,7 @@ WHERE
  });
 
 // create an exam
+// TESTED
 app.post('/instructor/:id/create/exam', (req,res)=>{
   q = `INSERT INTO Exam
   VALUES($1, $2, $3, $4);`
@@ -513,6 +586,7 @@ app.post('/instructor/:id/create/exam', (req,res)=>{
  
 
 // create an assignment
+// TESTED
 app.post('/instructor/:id/create/assignment', (req,res)=>{
   q = `INSERT INTO Assignment
   VALUES($1, $2, $3);`
@@ -548,6 +622,7 @@ app.post('/instructor/:id/create/assignment', (req,res)=>{
 
 
  // create a research group
+ // TESTED
  app.post('/instructor/:id/research/create', (req,res)=>{
   q = `INSERT INTO Research_Group
   VALUES($1, $2, $3, $4);`
@@ -566,13 +641,14 @@ app.post('/instructor/:id/create/assignment', (req,res)=>{
  //select a course and submit exam grade for each student registered in the course
  //sequentially call multiple APIs
  //select a course
+ //TESTED
  app.get('/instructor/:id/select/exam', (req,res)=>{
   q = `SELECT
   exam_id
   FROM Course_Exam
   WHERE
-  course_id = ?;`
-  client.query(q, req.body.course_id, (err, result)=>{
+  course_id = $1;`
+  client.query(q, [req.body.course_id], (err, result)=>{
      if (err){
        console.log(err);
      }
@@ -583,14 +659,15 @@ app.post('/instructor/:id/create/assignment', (req,res)=>{
    });
  });
 
- //select an student
+ //select a student
+ //TESTED
  app.get('/instructor/:id/select/student', (req,res)=>{
   q = `SELECT
   student_id
 FROM Take_Exam
 WHERE
-  exam_id = ?;`
-  client.query(q, req.body.exam_id, (err, result)=>{
+  exam_id = $1;`
+  client.query(q, [req.body.exam_id], (err, result)=>{
      if (err){
        console.log(err);
      }
@@ -602,6 +679,7 @@ WHERE
  });
 
  //update grade
+ //TESTED
  app.post('/instructor/:id/exam/change_grade', (req,res)=>{
   q = `UPDATE Take_Exam
   SET
@@ -623,13 +701,14 @@ WHERE
   //select a course and submit assignment grade for each student registered in the course
  //sequentially call multiple APIs
  //select a course
+ // TESTED
  app.get('/instructor/:id/select/assignment', (req,res)=>{
   q = `SELECT
   assignment_id
 FROM Course_Assignment
 WHERE
-  course_id = ?;`
-  client.query(q, req.body.course_id, (err, result)=>{
+  course_id = $1;`
+  client.query(q, [req.body.course_id], (err, result)=>{
      if (err){
        console.log(err);
      }
@@ -641,13 +720,14 @@ WHERE
  });
 
  //select an student
- app.get('/instructor/:id/select/student', (req,res)=>{
+ // TESTED
+ app.get('/instructor/:id/select/student/assignment', (req,res)=>{
   q = `SELECT
   student_id
-FROM Take_Assignment
-WHERE
-  assignment_id = ?;`
-  client.query(q, req.body.assignment_id, (err, result)=>{
+  FROM Take_Assignment
+  WHERE
+    assignment_id = $1;`
+  client.query(q, [req.body.assignment_id], (err, result)=>{
      if (err){
        console.log(err);
      }
@@ -659,7 +739,8 @@ WHERE
  });
 
  //update grade
- app.post('/instructor/:iid/assignment/change_grade', (req,res)=>{
+ //TESTED
+ app.post('/instructor/:id/assignment/change_grade', (req,res)=>{
   q = `UPDATE Take_Assignment
   SET
     grade = $1
@@ -679,9 +760,10 @@ WHERE
 // ---------------------------------- TA Routes ---------------------------------------------- //
 
 //list all courses that a TA is responsible for
+// TESTED
 app.get('/ta/:id/courses', (req,res)=>{
-  q = `SELECT DISTINCT name FROM Course, TA, Assists
-      WHERE Assists.ta_id = $1 AND Assists.course_id = Course.course_id;`
+  q = `SELECT DISTINCT c.name FROM Course as c, Assists
+      WHERE Assists.ta_id = $1 AND Assists.course_id = c.course_id;`
   client.query(q, [req.params.id], (err, result)=>{
      if (err){
        console.log(err);
@@ -693,11 +775,12 @@ app.get('/ta/:id/courses', (req,res)=>{
    });
  });
 
- //select course and list all authorized tasks for this course
- app.get('/ta/:id/course/:cid/tasks', (req,res)=>{
-  q = `SELECT DISTINCT task_desc FROM Auth_TA, Assists WHERE
-  Assists.ta_id = $1 AND Assists.course_id = $2 AND Assists.ta_id = $1;`
-  client.query(q, [req.params.id, req.body.course_id], (err, result)=>{
+ //select course and list all authorized tasks (not just for a course)
+ // TESTED
+ app.get('/ta/:id/course/tasks', (req,res)=>{
+  q = `SELECT DISTINCT task_desc FROM Auth_TA WHERE
+  AUTH_TA.ta_id = $1`
+  client.query(q, [req.params.id], (err, result)=>{
      if (err){
        console.log(err);
      }
@@ -710,9 +793,11 @@ app.get('/ta/:id/courses', (req,res)=>{
 
  //complete the selected task such as submitting hw grades/attendance for each student registered to the course
  // task_desc uniquely identifies a course assignment such as OS-HW-01 or Algs-HW-01
- app.post('/ta/:id/course/:cid/task/:tid/complete', (req,res)=>{
-  q = `UPDATE Auth_TA SET is_done = TRUE WHERE ta_id = $1 AND task_desc = $2;`
-  client.query(q, [req.params.id, req.body.task_desc], (err, result)=>{
+ // since (instructor_id, ta_id) is unique for auth_ta
+ // TESTED
+ app.post('/ta/:id/course/task/complete', (req,res)=>{
+  q = `UPDATE Auth_TA SET is_done = TRUE WHERE ta_id = $1 AND instructor_id = $2;`
+  client.query(q, [req.params.id, req.body.instructor_id], (err, result)=>{
      if (err){
        console.log(err);
      }
@@ -723,22 +808,9 @@ app.get('/ta/:id/courses', (req,res)=>{
    });
  });
 
-
- // Delete the contents of a specific table
- app.post('/delete/:table_name', (req,res)=>{
-  client.query("DELETE FROM $1;", [req.params.table_name], (err, result)=>{
-    if (err){
-      console.log(err);
-    }
-    else{
-      res.send("Specified table removed.");
-      return;
-    }
-  });
- })
-
 ////////////////////////////////////////////////// Advanced Features //////////////////////////////////////////
 // find instructors that have a salary within a certain range
+// TESTED
 app.get('/general/instructor/salaries', (req, res)=>{
 q = `Select name, surname FROM Instructor as i Where i.salary between $1 and $2;`;
   client.query(q, [req.body.minSal, req.body.maxSal], (err, result)=>{
@@ -754,6 +826,7 @@ q = `Select name, surname FROM Instructor as i Where i.salary between $1 and $2;
 
 
 // allow students to view courses with a certain keyword
+// TESTED
 app.get('/student/:id/search/course', (req, res)=>{
 q = ` Select name From Course Where name Like $1;`;
   client.query(q, [`%${req.body.keyword}%`], (err, result)=>{
@@ -768,11 +841,24 @@ q = ` Select name From Course Where name Like $1;`;
 });
 
 // Create View
-app.get('/rankings/view', (req, res)=>{
-q = ` CREATE VIEW view_ranking AS SELECT first_name, surname, gpa FROM Student
-  WHERE department_name = _department_name ORDER BY gpa DESC LIMIT 5;
-  Select * FROM view_ranking;`;
-  client.query(q, [req.body.instructor_id], (err, result)=>{
+// TESTED
+app.get('/rankings/view/drop', (req, res)=>{
+  q = `DROP VIEW view_salary;`;
+    client.query(q, (err, result)=>{
+       if (err){
+         console.log(err);
+       }
+       else{
+         res.send(result);
+         return;
+       }
+     });
+  });
+
+app.get('/rankings/view/create', (req, res)=>{
+q = `CREATE VIEW view_salary AS (SELECT name, surname FROM Instructor
+  ORDER BY Salary DESC LIMIT 5);`;
+  client.query(q, (err, result)=>{
      if (err){
        console.log(err);
      }
@@ -783,11 +869,24 @@ q = ` CREATE VIEW view_ranking AS SELECT first_name, surname, gpa FROM Student
    });
 });
 
+app.get('/rankings/view/',(req,res)=>{
+  q = `Select * FROM view_salary;`;
+  client.query(q, (err, result)=>{
+   if (err){
+     console.log(err);
+   }
+   else{
+     res.send(result);
+     return;
+   }
+ });
+})
 // First Report
+// TESTED
 app.get('/report/one', (req, res)=>{
-q = `Select first_name, surname, email, date_joined, sum(research_grant)
+q = `Select name, surname, email, date_joined, sum(research_grant)
 FROM Instructor JOIN Research_Group ON Instructor.id = Research_Group.instructor_id
-GROUP BY  first_name, surname, email, date_joined;`;
+GROUP BY  name, surname, email, date_joined;`;
   client.query(q, (err, result)=>{
      if (err){
        console.log(err);
@@ -800,6 +899,7 @@ GROUP BY  first_name, surname, email, date_joined;`;
 });
 
 // Second Report
+// TESTED
 app.get('/report/second', (req, res)=>{
 q = `SELECT exam_name, avg(grade)
 FROM course_exam
@@ -812,7 +912,20 @@ GROUP BY exam_name;`;
      }
      else{
        res.send(result);
-       return;
      }
    });
 });
+
+ // Delete the contents of a specific table
+ // For personal use -- DO NOT USE IN ACTUAL APP ANYWHERE
+ app.post('/delete/:table_name', (req,res)=>{
+  client.query("DELETE FROM $1;", [req.params.table_name], (err, result)=>{
+    if (err){
+      console.log(err);
+    }
+    else{
+      res.send("Specified table removed.");
+      return;
+    }
+  });
+ })
