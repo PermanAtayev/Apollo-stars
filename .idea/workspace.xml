@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d56a08ef-b48f-44a5-955e-95e7e46f8697" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/postgres_setup/data_loader.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/postgres_setup/data_loader.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,7 +51,7 @@
       <updated>1589912573138</updated>
       <workItem from="1589912574415" duration="10032000" />
       <workItem from="1589923448293" duration="1087000" />
-      <workItem from="1589971315496" duration="2451000" />
+      <workItem from="1589971315496" duration="3312000" />
     </task>
     <task id="LOCAL-00001" summary="tas dummy data">
       <created>1589973009370</created>
@@ -73,11 +74,28 @@
       <option name="project" value="LOCAL" />
       <updated>1589973403906</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="dummy careers">
+      <created>1589973815875</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1589973815875</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="tas dummy data" />
@@ -89,10 +107,10 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="174" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1299.741@67.27.1299.741" timestamp="1589973600052" />
-    <state x="255" y="27" width="912" height="739" key="CommitChangelistDialog2" timestamp="1589973403848">
+    <state x="264" y="29" width="912" height="739" key="CommitChangelistDialog2" timestamp="1589973815821">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="255" y="27" width="912" height="739" key="CommitChangelistDialog2/67.27.1299.741@67.27.1299.741" timestamp="1589973403848" />
+    <state x="264" y="29" width="912" height="739" key="CommitChangelistDialog2/67.27.1299.741@67.27.1299.741" timestamp="1589973815821" />
     <state x="94" y="158" width="1099" height="541" key="DiffContextDialog" timestamp="1589918628983">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
@@ -125,10 +143,10 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="598" y="264" key="MultipleFileMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589922670747" />
-    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2" timestamp="1589973406221">
+    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2" timestamp="1589973818205">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2/67.27.1299.741@67.27.1299.741" timestamp="1589973406221" />
+    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2/67.27.1299.741@67.27.1299.741" timestamp="1589973818205" />
     <state x="487" y="312" width="449" height="168" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589973765918">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
