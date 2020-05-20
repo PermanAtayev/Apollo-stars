@@ -4,10 +4,11 @@
       <template v-slot:activator="{ on }">
         <v-btn small text color="success" v-on="on">
           <v-icon left small>event</v-icon>
-          <span class="caption text">Upcomming Exams</span>
+          <span class="caption text">Exams</span>
         </v-btn>
       </template>
     <v-card color="grey lighten-3">
+      <p class="headline text--secondary pa-5">{{ label  }}</p>
     <v-col v-for="item in items" :key="item.name" cols="12">
       <v-card >
         <div class="d-flex flex-no-wrap justify-space-between">
@@ -30,21 +31,21 @@
 <script>
 export default {
   props: {
-    scores: Object
+    items: Object,
+    label: String, 
   },
   data() {
     return {
       dialog: false,
       //right now dummy exams are used
       //NOTE: Recycle the assignments popup with different props, since these are the same code
-      items: [
-        { name: "Midterm I", dueDate: "20/5/2020" , course: "CS 101" },
-        { name: "Final", dueDate: "25/5/2020" , course: "MATH 102" },
-        { name: "Midterm II", dueDate: "30/5/2020" , course: "CS 342" },
-        { name: "Midterm II", dueDate: "5/6/2020" , course: "CS 224" },
-        { name: "Final", dueDate: "8/6/2020" , course: "CS 201" },
-
-      ]
+      // items: [
+      //   { name: "Midterm I", dueDate: "20/5/2020" , course: "CS 101" },
+      //   { name: "Final", dueDate: "25/5/2020" , course: "MATH 102" },
+      //   { name: "Midterm II", dueDate: "30/5/2020" , course: "CS 342" },
+      //   { name: "Midterm II", dueDate: "5/6/2020" , course: "CS 224" },
+      //   { name: "Final", dueDate: "20/6/2020" , course: "CS 201" },
+      // ],
     };
   }
 };

@@ -29,6 +29,11 @@ Vue.use(VueRouter);
     path: '/ta',
     name: 'TA',
     component: () => import('../views/TA'),
+  },
+  {
+    path: '/reports',
+    name: 'Reports',
+    component: () => import('../views/Reports'),
   }
 ];
 

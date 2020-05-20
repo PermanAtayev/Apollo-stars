@@ -1,13 +1,13 @@
 <template>
   <nav>
     <v-toolbar flat color="primary" app>
-      <v-app-bar-nav-icon dark @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon dark @click="drawer = !drawer" ></v-app-bar-nav-icon>
       <v-toolbar-title class="text uppercase white--text">
         <span class="font-weight-light">Apollo</span>
         <span>Stars</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn  flat color="white">
+      <v-btn router to="/" flat color="white">
         <span>Log out</span>
         <v-icon right>exit_to_app</v-icon>
       </v-btn>
@@ -20,7 +20,7 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
-      <v-list-item>
+      <v-list-item v-if="hasGroups">
           <GroupPopup v-if="isStudent" />
           <RGroupPopup v-else />
       </v-list-item>
@@ -47,7 +47,8 @@ export default {
   name: "Navbar",
   props: {
     drawerItems: Object,
-    isStudent: { default: false, type: Boolean}
+    isStudent: { default: false, type: Boolean},
+    hasGroups: { default: true, type: Boolean}
   },
 
   data() {

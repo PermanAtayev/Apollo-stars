@@ -8,6 +8,7 @@
         </v-btn>
       </template>
       <v-card color="grey lighten-3">
+        <p class="headline text--secondary pa-5">{{ label  }}</p>
         <v-col v-for="item in items" :key="item.name" cols="12">
           <v-card>
             <div class="d-flex flex-no-wrap justify-space-between">
@@ -30,19 +31,20 @@
 <script>
 export default {
   props: {
-    scores: Object
+    items: Object,
+    label: String,
   },
   data() {
     return {
       dialog: false,
       //right now dummy exams are used
-      items: [
-        { name: "Lab 1", dueDate: "20/5/2020", course: "CS 101" },
-        { name: "Quiz 1", dueDate: "25/5/2020", course: "MATH 102" },
-        { name: "Homework 3", dueDate: "30/5/2020", course: "CS 342" },
-        { name: "Project 2", dueDate: "5/6/2020", course: "CS 224" },
-        { name: "Demo", dueDate: "8/6/2020", course: "CS 201" }
-      ]
+      // items: [
+      //   { name: "Lab 1", dueDate: "20/5/2020", course: "CS 101" },
+      //   { name: "Quiz 1", dueDate: "25/5/2020", course: "MATH 102" },
+      //   { name: "Homework 3", dueDate: "30/5/2020", course: "CS 342" },
+      //   { name: "Project 2", dueDate: "5/6/2020", course: "CS 224" },
+      //   { name: "Demo", dueDate: "8/6/2020", course: "CS 201" }
+      // ],
     };
   }
 };

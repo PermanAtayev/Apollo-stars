@@ -2,7 +2,7 @@
   <div class="text-center">
     <v-dialog v-model="dialog" max-width="600px" >
       <template v-slot:activator="{ on }">
-        <v-btn small rounded outlined dark class="my-3" color="teal" v-on="on">Complete Task</v-btn>
+        <v-btn small rounded outlined dark class="my-3" color="teal" v-on="on"> {{label}} </v-btn>
       </template>
       <v-card color="grey lighten-3">
       <v-col v-for="item in students" :key="item.id" cols="12">
@@ -12,8 +12,8 @@
               <v-card-title class="headline" v-text="item.name"></v-card-title>
               <v-card-subtitle class="subheading" v-text="item.id"></v-card-subtitle>
             </div>
-            <v-checkbox v-if="isAttendence" :label="`Present`"></v-checkbox>
-            <v-text-field v-else label="Marks Obtained" suffix=" / 100" rounded mt-3></v-text-field>
+            <v-checkbox v-if="isAttendance" :label="`Present`"></v-checkbox>
+            <v-text-field v-else solo rounded append-icon="create" label="Marks Obtained" suffix=" / 100" class="px-3 mt-3"></v-text-field>
           </div>
         </v-card>
       </v-col>
@@ -30,13 +30,17 @@
 <script>
 export default {
   props: {
+    label: String,
+    isAttendance: {default: true, type: Boolean} //there may be different entry types not just marks or attendence, provided by the parent
     //to be provided, by parent
   },
   data() {
     return {
       dialog: false,
-      isAttendence: false, //there may be different entry types not just marks or attendence, provided by the parent
+      //isAttendance: false, //there may be different entry types not just marks or attendence, provided by the parent
       //right now dummy students are used, in reality these would be passed from parent component
+
+      //GET STUDENTS FOR THAT COURSE USING AN API CALL
       students: [
         { name: "Balaj Saleem", id: 21701041 },
         { name: "Perman Atayev", id: 21701111 },

@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       dialog: false,
-      //right now dummy scores are used
+      //right now dummy scores are used later on we can fetch this from the API
       groups: [
 
         { name: "CS 101 Midterm Preperation", purpose: "Just to prepare for the midterms" , id:1011},

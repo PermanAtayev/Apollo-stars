@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Navbar :drawerItems="actions" v-on:navBarSelection="onNavBarSelect" />
-    <h3 class="subheading grey--text ma-5">{{ currentPage }}</h3>
+    <h3 class="headline Primary ma-5 font-italic font-weight-light">{{ currentPage }}</h3>
     <keep-alive>
       <component :is="currentPage" v-bind="currentProperties"></component>
     </keep-alive>
@@ -14,6 +14,7 @@
     import Navbar from '@/components/Navbar' 
     import Foot from "@/components/Foot";
     import CourseTable from "@/components/CourseTable";
+    import RegisterTable from "@/components/RegisterTable";
     import TaCourseTable from "@/components/TaCourseTable";
     import PersonDetails from "@/components/PersonDetails";
 
@@ -38,6 +39,30 @@
                     {name: "Computer Organization", code: "CS 224", instructor: "Albert Einstein", section: "10", credits: "6"},
                     {name: "Operating Systems", code: "CS 342", instructor: "Selim Aksoy", section: "1", credits: "1"},
                 ],
+
+                registerableCourses: [
+                    {name: "Algorithms and Programming II", code: "CS 102", instructor: "David Mavenhoarde", section: "5", credits: "3"},
+                    {name: "Linear Math", code: "MATH 225", instructor: "Bilgen Milgen", section: "1", credits: "2"},
+                    {name: "Data Science", code: "CS 555", instructor: "Alan Turing", section: "3", credits: "6"},
+                    {name: "Creative Writing", code: "CS 224", instructor: "J. K. Rowling", section: "1", credits: "2"},
+                ],
+
+                exams: [
+                    { name: "Midterm I", dueDate: "20/5/2020" , course: "CS 101" },
+                    { name: "Final", dueDate: "25/5/2020" , course: "MATH 102" },
+                    { name: "Midterm II", dueDate: "30/5/2020" , course: "CS 342" },
+                    { name: "Midterm II", dueDate: "5/6/2020" , course: "CS 224" },
+                    { name: "Final", dueDate: "20/6/2020" , course: "CS 201" },
+
+                ],
+
+                assignments: [
+                    { name: "Lab 1", dueDate: "20/5/2020", course: "CS 101" },
+                    { name: "Quiz 1", dueDate: "25/5/2020", course: "MATH 102" },
+                    { name: "Homework 3", dueDate: "30/5/2020", course: "CS 342" },
+                    { name: "Project 2", dueDate: "5/6/2020", course: "CS 224" },
+                    { name: "Demo", dueDate: "8/6/2020", course: "CS 201" }
+                ],
                 
                 taCourses: [
                     {name: "Algorithms and Programming I", code: "CS 101", instructor: "David Davenport"},
@@ -53,14 +78,14 @@
                     {code: "MATH 103", task: "Grade Midterm", deadline: '1/5/2020' },
 
                 ],
-                details: {name: "Balaj Saleem", id: 21701041, gpa: 3.2, email:"balaj.saleem@ug.bilkent.edu.tr", password: "12345678", year: "Third Year", dorm: "77", phone: "+90 553 169 5037"},
+                details: {name: "Balaj Saleem", id: 21701041, gpa: 3.2, email:"balaj.saleem@ug.bilkent.edu.tr", password: "12345678", year: "Third Year", dorm: "77", phone: ["+90 553 169 5037", "+90 500 100 5000"]},
 
             };
         },
         computed: {
             currentProperties: function() {
                 if (this.currentPage === 'Courses') {
-                    return {courses: this.courses}
+                     return {courses: this.courses, exams: this.exams, assignments: this.assignments}
                 }
                 else if(this.currentPage === 'TA Courses'){
                     return {courses: this.taCourses, tasks: this.taTasks}
@@ -68,13 +93,17 @@
                 else if(this.currentPage === 'Information'){
                     return {details: this.details}
                 }
+                else if(this.currentPage === 'Register'){
+                    return {courses: this.courses, regCourses: this.registerableCourses}
+                }
+                //No career option since TA is already an EMPLOYEE!
                 else 
                     return {}
             }
         },
 
         components: { Navbar, Foot, "Courses": CourseTable, 
-        "TA Courses": TaCourseTable, "Information": PersonDetails,
+        "TA Courses": TaCourseTable, "Information": PersonDetails, "Register": RegisterTable,
         },
 
         methods: {

@@ -36,7 +36,7 @@
             <div class="heading black--text">Email</div>
           </v-flex>
           <v-flex md4>
-            <v-text-field :value="details.email" label="Solo" solo readonly rounded append-icon="create"></v-text-field>
+            <v-text-field :value="details.email" solo rounded append-icon="create"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row wrap align-center justify-space-around px-2>
@@ -44,7 +44,7 @@
             <div class="heading black--text">Passowrd</div>
           </v-flex>
           <v-flex md4>
-            <v-text-field :value="details.password" label="Solo" type="password" solo readonly rounded append-icon="create"></v-text-field>
+            <v-text-field v-on:input="updateDetails()" :value="details.password" type="password" solo rounded append-icon="create"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row wrap align-center justify-space-around px-2>
@@ -52,7 +52,7 @@
             <div class="heading black--text">Phone Number(s)</div>
           </v-flex>
           <v-flex md4>
-            <v-text-field :value="details.phone" label="Solo" solo readonly rounded append-icon="create"></v-text-field>
+            <v-text-field v-for="phone in details.phone" :key="phone" :value="phone" solo rounded append-icon="create"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row wrap align-center justify-space-around pa-3>
@@ -86,8 +86,19 @@ export default {
       return this.details.name
         .split(" ")
         .map(n => n[0])
-        .join(" "); //I dont know how this works too lol
+        .join(" "); //Just shows the initials of a Name
+    },
+    totalPhoneNumbers: function(){
+      return this.details.phone.length;
+    },
+  },
+
+  methods: {
+    updateDetails: function(){
+      console.log("Number updated: ");
+
     }
+    
   }
 };
 </script>

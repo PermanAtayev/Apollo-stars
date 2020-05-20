@@ -20,20 +20,18 @@
               </v-layout>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              <v-layout row wrap  v-for="task in tasks" :key="task.code + task.task">
-                  <!-- Do not use these V-ifs on deployment, this is a quickfix -->
-                <v-flex xs6 sm3 md4 v-if="task.code == course.code">
+              <v-layout row wrap  v-for="task in tasksForCourse(course.code)" :key="task.code + task.task">
+                <v-flex xs6 sm3 md4>
                   <div class="caption grey--text">Task</div>
                   <div>{{ task.task }}</div>
                 </v-flex>
-                <v-flex xs6 sm3 md2 v-if="task.code == course.code">
+                <v-flex xs6 sm3 md2 >
                   <div class="caption grey--text">Deadline</div>
                   <div>{{ task.deadline }}</div>
                 </v-flex>
-                <v-flex xs6 sm3 md2 v-if="task.code == course.code">
+                <v-flex xs6 sm3 md2 >
                     <div>
-                        <!-- <v-btn small rounded outlined dark class="my-3" color="teal">Complete Now</v-btn> -->
-                        <TaskPopup />
+                      <TaskPopup label="Complete Task" :isAttendance = checkTaskType(task.task) />
                     </div>
                 </v-flex>
               </v-layout>
@@ -51,23 +49,36 @@ export default {
     courses: Object,
     tasks: Object
   },
-      components: { TaskPopup,
-    }
   
-//   computed: {
-//       tasksForCourses: function(){
-//           courseTasks = {}
-//           for(course in courses){
-//               courseTasks.
-//               for(task in tasks){
-//                   if(task.code == course.code){
+  components: { TaskPopup,
+  
+  },
 
-//                   }
-//               }
+  methods: {
+    //only of all tasks return the tasks for this course
+    tasksForCourse: function (courseCode){
+      var tasks = [];
+      for(var task in this.tasks){
+        if(this.tasks[task].code == courseCode  ){
+          tasks.push(this.tasks[task]);
+        }
+      }
+      return tasks;
+    },
+    
+    checkTaskType: function(task){
 
-//           }
-//       }
-//   }
+      if(task.toUpperCase().includes("ATTEND")){
+        return true;
+      }
+      else{
+        return false;
+      }
+
+    } 
+
+
+  }
 
 };
 </script>

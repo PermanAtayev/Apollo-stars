@@ -52,9 +52,7 @@ export default {
     return {
       dialog: false,
       //right now dummy groups are used
-      //NOTE: You should recycle the GroupPopup, with different props, do not use a new component
       groups: [
-
         { topic: "Genetic Research on GATAKA", id:1011},
         { topic: "Corona is bad, how will we fix it" , id: 2241},
         { topic: "Making masks affordable",  id:3421},

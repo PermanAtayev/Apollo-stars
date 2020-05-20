@@ -11,7 +11,7 @@
                     <v-col cols="12" md="8">
                       <v-card-text class="mt12">
                         <h2 class="text-center display-1 teal--text text--accent-3">
-                         Welcome back to Apollo Stars!</h2>
+                         Welcome back to ApolloStars!</h2>
                         <h4 class="text-center mlt-4">Please Sign In with your credentials</h4>
                         <v-form>
                           <v-text-field
@@ -47,10 +47,12 @@
                     <v-col cols="12" md="4" class="teal accent-3">
                       <v-card-text class="white--text mt-12">
                           <h1 class="text-center display-1">Not registered?</h1>
-                          <h5 class="text-center mt-6">Provide your details, and sign up!</h5>
+                          <h5 class="text-center mt-4">Provide your details, and sign up!</h5>
                       </v-card-text>
                       <div class="text-center">
                         <v-btn rounded outlined="" dark @click="step++">Sign Up</v-btn>
+                        <h5 class="white--text text-center pa-4">View ApolloStars Reports!</h5>
+                        <v-btn rounded outlined="" dark router to="/reports" >Reports</v-btn>
                       </div>
                     </v-col>
                   </v-row>
