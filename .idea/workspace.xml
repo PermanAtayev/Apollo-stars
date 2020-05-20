@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d56a08ef-b48f-44a5-955e-95e7e46f8697" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="d56a08ef-b48f-44a5-955e-95e7e46f8697" name="Default Changelist" comment="Merge branch 'backend' of github.com:PermanAtayev/stars-2.0 into backend&#10;&#10;# Please enter a commit message to explain why this merge is necessary,&#10;# especially if it merges an updated upstream into a topic branch.&#10;#&#10;# Lines starting with '#' will be ignored, and an empty message aborts&#10;# the commit.">
+      <change afterPath="$PROJECT_DIR$/src/postgres_setup/del.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -55,6 +55,7 @@
       <workItem from="1589976756172" duration="141000" />
       <workItem from="1589977182091" duration="12008000" />
       <workItem from="1589998455083" duration="5012000" />
+      <workItem from="1590003540251" duration="295000" />
     </task>
     <task id="LOCAL-00001" summary="tas dummy data">
       <created>1589973009370</created>
@@ -126,7 +127,8 @@
     <MESSAGE value="dummy careers" />
     <MESSAGE value="dummy assists" />
     <MESSAGE value="some updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="some updates" />
+    <MESSAGE value="Merge branch 'backend' of github.com:PermanAtayev/stars-2.0 into backend&#10;&#10;# Please enter a commit message to explain why this merge is necessary,&#10;# especially if it merges an updated upstream into a topic branch.&#10;#&#10;# Lines starting with '#' will be ignored, and an empty message aborts&#10;# the commit." />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'backend' of github.com:PermanAtayev/stars-2.0 into backend&#10;&#10;# Please enter a commit message to explain why this merge is necessary,&#10;# especially if it merges an updated upstream into a topic branch.&#10;#&#10;# Lines starting with '#' will be ignored, and an empty message aborts&#10;# the commit." />
   </component>
   <component name="WindowStateProjectService">
     <state x="174" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589973600052">

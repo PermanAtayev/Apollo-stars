@@ -107,6 +107,7 @@ app.get('/student/:id/regCourseApply', (req,res)=>{
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
@@ -368,7 +369,7 @@ app.post('/student/:id/assess/instructor', (req,res)=>{
 // ---------------------------------- Instructor Routes -------------------------------------- //
 // list all the courses of the instructor
 app.get('/instructor/:id/courses/display', (req,res)=>{
-  q = `SELECT DISTINCT course_name FROM Course, Section, Teaches
+  q = `SELECT DISTINCT name FROM Course, Section, Teaches
   WHERE Teaches.instructor_id = $1 AND Teaches.section_id = Section.section_id AND Course.course_id = Section.course_id;`;
   client.query(q, [req.params.id], (err,result)=>{
     if (err){
@@ -382,7 +383,7 @@ app.get('/instructor/:id/courses/display', (req,res)=>{
 
 // list TA's of a course
 app.get('/instructor/:id/course/TA/display', (req,res)=>{
-  q = `SELECT DISTINCT name FROM Course, TA, Assists WHERE Assists.course_id = $1 AND Assists.ta_id = TA.ta_id;`;
+  q = `SELECT DISTINCT c.name FROM Course as c, TA, Assists WHERE Assists.course_id = $1 AND Assists.ta_id = TA.ta_id;`;
   client.query(q, [req.body.course_id], (err,result)=>{
     if (err){
       console.log(err);
