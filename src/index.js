@@ -274,7 +274,8 @@ app.post('/student/:id/research/apply', (req, res)=>{
         console.log(err);
       }
       else{
-        console.log("Reasearch application approved!");
+        res.send("Reasearch application approved!");
+        return;
       }
     });
   }
@@ -527,13 +528,15 @@ WHERE
  // create a research group
  app.post('/instructor/:id/research/create', (req,res)=>{
   q = `INSERT INTO Research_Group
-  VALUES($1, $2, $3);`
-  client.query(q,[req.body.group_id, req.body.research_topic, 1000 + Math.random()*4000], (err, result)=>{
+  VALUES($1, $2, $3, $4);`
+  grant = Math.round(1000 + Math.random()*4000);
+  client.query(q,[req.body.group_id, req.params.id, grant, req.body.research_topic], (err, result)=>{
      if (err){
        console.log(err);
      }
      else{
-       res.log("Success");
+       res.send("Success");
+       return;
      }
    });
  });
@@ -649,14 +652,8 @@ WHERE
 
 //list all courses that a TA is responsible for
 app.get('/ta/:id/courses', (req,res)=>{
-  q = `SELECT
-  DISTINCT course_name
-FROM Course,
-  TA,
-  Assists
-WHERE
-  Assists.ta_id = $1
-  AND Assists.course_id = Course.course_id;`
+  q = `SELECT DISTINCT name FROM Course, TA, Assists
+      WHERE Assists.ta_id = $1 AND Assists.course_id = Course.course_id;`
   client.query(q, [req.params.id], (err, result)=>{
      if (err){
        console.log(err);
