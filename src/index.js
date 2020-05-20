@@ -37,18 +37,6 @@ app.get('/login', (req,res,next)=>{
   res.send("At login");
 });
 
-app.post('/all', (req, res)=>{
-  client.query("INSERT INTO Phone VALUES(1, 090078601);", (err, result)=>{
-    if (err){
-      console.log(err);
-    }
-    else{
-      res.send(result);
-    }
-  });
-});
-
-
 app.get('/logout', (req, res)=>{
   req.logout();
   res.redirect('/');
