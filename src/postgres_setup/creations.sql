@@ -69,13 +69,13 @@ CREATE TABLE Take_Assignment (
 
 CREATE TABLE Course_Exam (
   course_id INT REFERENCES Course(course_id) ON DELETE CASCADE,
-  exam_id INT,
+  exam_id INT REFERENCES Exam(exam_id) ON DELETE CASCADE,
   PRIMARY KEY (course_id, exam_id)
 );
 
 CREATE TABLE Course_Assignment (
   course_id INT REFERENCES Course(course_id) ON DELETE CASCADE,
-  assignment_id INT,
+  assignment_id INT REFERENCES Assignment(assignment_id) ON DELETE CASCADE,
   PRIMARY KEY (course_id, assignment_id)
 );
 
