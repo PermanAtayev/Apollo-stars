@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d56a08ef-b48f-44a5-955e-95e7e46f8697" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/postgres_setup/data_loader.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/postgres_setup/data_loader.sql" afterDir="false" />
+    <list default="true" id="d56a08ef-b48f-44a5-955e-95e7e46f8697" name="Default Changelist" comment="Merge branch 'backend' of github.com:PermanAtayev/stars-2.0 into backend&#10;&#10;# Please enter a commit message to explain why this merge is necessary,&#10;# especially if it merges an updated upstream into a topic branch.&#10;#&#10;# Lines starting with '#' will be ignored, and an empty message aborts&#10;# the commit.">
+      <change afterPath="$PROJECT_DIR$/src/postgres_setup/del.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +51,11 @@
       <updated>1589912573138</updated>
       <workItem from="1589912574415" duration="10032000" />
       <workItem from="1589923448293" duration="1087000" />
-      <workItem from="1589971315496" duration="3698000" />
+      <workItem from="1589971315496" duration="5420000" />
+      <workItem from="1589976756172" duration="141000" />
+      <workItem from="1589977182091" duration="12008000" />
+      <workItem from="1589998455083" duration="5012000" />
+      <workItem from="1590003540251" duration="295000" />
     </task>
     <task id="LOCAL-00001" summary="tas dummy data">
       <created>1589973009370</created>
@@ -87,7 +92,21 @@
       <option name="project" value="LOCAL" />
       <updated>1589974647718</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="dummy assists">
+      <created>1589975026341</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1589975026341</updated>
+    </task>
+    <task id="LOCAL-00007" summary="some updates">
+      <created>1590001830222</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1590001830222</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,17 +125,20 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="tas dummy data" />
     <MESSAGE value="dummy careers" />
-    <option name="LAST_COMMIT_MESSAGE" value="dummy careers" />
+    <MESSAGE value="dummy assists" />
+    <MESSAGE value="some updates" />
+    <MESSAGE value="Merge branch 'backend' of github.com:PermanAtayev/stars-2.0 into backend&#10;&#10;# Please enter a commit message to explain why this merge is necessary,&#10;# especially if it merges an updated upstream into a topic branch.&#10;#&#10;# Lines starting with '#' will be ignored, and an empty message aborts&#10;# the commit." />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'backend' of github.com:PermanAtayev/stars-2.0 into backend&#10;&#10;# Please enter a commit message to explain why this merge is necessary,&#10;# especially if it merges an updated upstream into a topic branch.&#10;#&#10;# Lines starting with '#' will be ignored, and an empty message aborts&#10;# the commit." />
   </component>
   <component name="WindowStateProjectService">
     <state x="174" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589973600052">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="174" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1299.741@67.27.1299.741" timestamp="1589973600052" />
-    <state x="264" y="29" width="912" height="739" key="CommitChangelistDialog2" timestamp="1589974647651">
+    <state x="264" y="29" width="912" height="739" key="CommitChangelistDialog2" timestamp="1590003864449">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="264" y="29" width="912" height="739" key="CommitChangelistDialog2/67.27.1299.741@67.27.1299.741" timestamp="1589974647651" />
+    <state x="264" y="29" width="912" height="739" key="CommitChangelistDialog2/67.27.1299.741@67.27.1299.741" timestamp="1590003864449" />
     <state x="94" y="158" width="1099" height="541" key="DiffContextDialog" timestamp="1589918628983">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
@@ -145,22 +167,26 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state width="1276" height="330" key="GridCell.Tab.0.right/67.27.1299.741@67.27.1299.741" timestamp="1589922923345" />
-    <state x="598" y="264" key="MultipleFileMergeDialog" timestamp="1589922670747">
+    <state x="192" y="86" width="1039" height="620" key="MergeDialog" timestamp="1589975296145">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="598" y="264" key="MultipleFileMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589922670747" />
-    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2" timestamp="1589974649890">
+    <state x="192" y="86" width="1039" height="620" key="MergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589975296145" />
+    <state x="598" y="264" width="476" height="266" key="MultipleFileMergeDialog" timestamp="1590001842187">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2/67.27.1299.741@67.27.1299.741" timestamp="1589974649890" />
-    <state x="487" y="312" width="449" height="168" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589973765918">
+    <state x="598" y="264" width="476" height="266" key="MultipleFileMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1590001842187" />
+    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2" timestamp="1590001832905">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="487" y="312" width="449" height="168" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1299.741@67.27.1299.741" timestamp="1589973765918" />
-    <state x="434" y="178" width="564" height="437" key="git4idea.merge.GitMergeDialog" timestamp="1589973563912">
+    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2/67.27.1299.741@67.27.1299.741" timestamp="1590001832905" />
+    <state x="487" y="312" width="449" height="168" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1590003871888">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="434" y="178" width="564" height="437" key="git4idea.merge.GitMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589973563912" />
+    <state x="487" y="312" width="449" height="168" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1299.741@67.27.1299.741" timestamp="1590003871888" />
+    <state x="434" y="178" width="564" height="437" key="git4idea.merge.GitMergeDialog" timestamp="1590003610399">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="434" y="178" width="564" height="437" key="git4idea.merge.GitMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1590003610399" />
     <state x="446" y="294" width="530" height="205" key="git4idea.ui.GitStashDialog" timestamp="1589918728538">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
