@@ -93,33 +93,11 @@ passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, id, p
 // list all courses that a student can register for
 app.get('/student/:id/regCourseApply', (req,res)=>{
   q = `SELECT
-  DISTINCT course_name
-  FROM Course,
-    Prereq, Courses_Taken
-  WHERE Courses_Taken.student_id = $1 AND
-    (
-    Course.id = Prereq.course_id
-    AND Prereq.prereq_id IN (
-      SELECT
-        course_id
-      FROM Courses_Taken
-    )
-    AND Course.id NOT IN (
-      SELECT
-        course_id
-      FROM Courses_Taken
-    )
-  )
-  OR Course.id NOT IN (
-    SELECT
-      course_id
-    FROM Prereq
-  )
-  AND Course.id NOT IN (
-    SELECT
-      course_id
-    FROM Courses_Taken
-  );`;
+  DISTINCT c.name FROM Course as c, Prereq, Courses_Taken
+  WHERE (Courses_Taken.student_id = $1 AND (c.course_id = Prereq.course_id
+    AND Prereq.prereq_id IN (SELECT course_id FROM Courses_Taken)
+    AND c.course_id NOT IN (SELECT course_id FROM Courses_Taken)
+  )) OR c.course_id NOT IN (SELECT course_id FROM Prereq) AND c.course_id NOT IN (SELECT course_id FROM Courses_Taken);`;
 
   client.query(q, [req.params.id], (err, result)=>{
     if (err){
@@ -140,7 +118,16 @@ app.post('/student/:id/register', (req,res)=>{
       console.log(err);
     }
     else{
-      res.redirect('/student/:id');
+      q = `INSERT INTO Courses_Taken VALUES($1, $2);`;
+      client.query(q,[req.params.id, req.body.course_id], (err, result)=>{
+        if (err){
+          console.log(err);
+        }
+        else{
+          res.send("success");
+          return;
+        }
+      });
     }
   });
 });
@@ -148,12 +135,12 @@ app.post('/student/:id/register', (req,res)=>{
 // list all registered courses of a student
 app.get('/student/:id/regCourseView', (req,res)=>{
   q = `SELECT
-    course_name
-  FROM Course,
+    course.name
+  FROM Course as course,
     Courses_Registered
-  WHERE
-    Course.id = Courses_Registered.course_id;`;
-  client.query(q, (err,result)=>{
+  WHERE Courses_Registered.student_id = $1 AND
+    Course.course_id = Courses_Registered.course_id;`;
+  client.query(q,[req.params.id], (err,result)=>{
     if (err){
       console.log(err);
     }
@@ -196,7 +183,7 @@ app.get('/student/:id/assignments/grades/display', (req,res)=>{
 
 // display and update student details such as email and password
 app.get('/student/:id/details/display', (req,res)=>{
-  q = `SELECT * FROM Person,Student WHERE Person.id = $1;`;
+  q = `SELECT * FROM Student WHERE Student.id = $1;`;
   client.query(q, [req.params.id], (err,result)=>{
     if (err){
       console.log(err);
@@ -209,13 +196,14 @@ app.get('/student/:id/details/display', (req,res)=>{
 
 app.post('/student/:id/details/update', (req,res)=>{
   q = `UPDATE Person SET email = $1, password = $2 WHERE id = $3;`;
-  var password = bcrypt.hashSync(req.body.password, 5);
-  client.query(q, [req.body.email, password, req.params.id], (err,result)=>{
+  client.query(q, [req.body.email, req.body.password, req.params.id], (err,result)=>{
     if (err){
       console.log(err);
     }
     else{
       console.log('Details Updated');
+      res.send("success");
+      return;
     }
   });
 });
@@ -243,27 +231,28 @@ WHERE
 
 // create list assignment stored procedure
 app.post('/student/:id/assignments/display/create',(req,res)=>{
-  proc = `Drop Procedure If Exists listAssignments; Create Procedure listAssignments(INT)
-      Language plpgsql
-      AS $$ BEGIN
-      SELECT DISTINCT assignment_name FROM Student, Take_Assignment, Assignment
+  proc = `Drop Procedure If Exists listAssignments; Create FUNCTION  listAssignments(INT) RETURNS SETOF varchar(20) 
+      AS $BODY$ BEGIN
+      RETURN QUERY SELECT DISTINCT assignment_name FROM Student, Take_Assignment, Assignment
       WHERE Student.id = $1 AND Take_Assignment.student_id = Student.id 
-      AND Take_Assignment.assignment_id = Assignment.id;
-      COMMIT;
-      END; $$;`;
+      AND Take_Assignment.assignment_id = Assignment.assignment_id;
+      RETURN;
+      END $BODY$ Language plpgsql;`;
   client.query(proc, (err,result)=>{
     if (err){
       console.log(err);
     }
     else{
       console.log('stored procedure created');
+      res.send("success");
+      return;
     }
   });
 });
 
 // list all assignments
 app.get('/student/:id/assignments/display', (req,res)=>{
-  q = `Call listAssignments($1);`;
+  q = `SELECT * FROM listAssignments($1);`;
   client.query(q, [req.params.id], (err,result)=>{
     if (err){
       console.log(err);
@@ -296,14 +285,15 @@ app.post('/student/:id/research/apply', (req, res)=>{
 });
 
 // create study group
-app.post('/student/:id/research/apply', (req, res)=>{
+app.post('/student/:id/study/create', (req, res)=>{
   q = `INSERT INTO Study_Group Values($1, $2, $3, $4);`;
   client.query(q, [req.body.group_id, req.params.id, req.body.group_name, req.body.purpose], (err,result)=>{
     if (err){
       console.log(err);
     }
     else{
-      console.log('Study group created!');
+      res.send('Study group created!')
+      return;
     }
   });
 });
@@ -320,20 +310,21 @@ app.post('/student/:id/study/apply', (req, res)=>{
         console.log(err);
       }
       else{
-        console.log("Reasearch application approved!");
+        res.send("Study application approved!");
+        return;
       }
     });
   }
   else{
-    console.log("Application to join the group has been rejected!");
+    res.send("Application to join the group has been rejected!");
   }
   
 });
 
 // list study groups
 app.get('/student/:id/study_group/', (req,res)=>{
-  q = `SELECT DISTINCT group_nam FROM Student, Participates, Study_Group
-  WHERE Student.id = $1 AND Participates.student_id = Student.id AND Participates.group_id = Study_Group.id;`;
+  q = `SELECT DISTINCT group_name FROM Student, Participates, Study_Group
+  WHERE Student.id = $1 AND Participates.student_id = Student.id AND Participates.group_id = Study_Group.group_id;`;
   client.query(q, [req.params.id], (err,result)=>{
     if (err){
       console.log(err);
@@ -346,13 +337,14 @@ app.get('/student/:id/study_group/', (req,res)=>{
 
 //view available career posts
 app.get('/student/:id/careers/display', (req,res)=>{
-  q = `Select * From Careers `;
+  q = `Select * From Career`;
   client.query(q, (err,result)=>{
     if (err){
       console.log(err);
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
@@ -365,7 +357,8 @@ app.post('/student/:id/assess/instructor', (req,res)=>{
       console.log(err);
     }
     else{
-      console.log("Instructor Assessment Submitted.");
+      res.send("Instructor Assessment Submitted.");
+      return;
     }
   });
 });
@@ -532,7 +525,7 @@ WHERE
 
 
  // create a research group
- app.post('/instructor/:id/create/group', (req,res)=>{
+ app.post('/instructor/:id/research/create', (req,res)=>{
   q = `INSERT INTO Research_Group
   VALUES($1, $2, $3);`
   client.query(q,[req.body.group_id, req.body.research_topic, 1000 + Math.random()*4000], (err, result)=>{
@@ -717,8 +710,8 @@ WHERE
 
 ////////////////////////////////////////////////// Advanced Features //////////////////////////////////////////
 // find instructors that have a salary within a certain range
-app.get('/general/instrructor/salaries', (req, res)=>{
-q = `Select first_name, surname FROM Instructor as i Where i.salary between $1 and $2;`;
+app.get('/general/instructor/salaries', (req, res)=>{
+q = `Select name, surname FROM Instructor as i Where i.salary between $1 and $2;`;
   client.query(q, [req.body.minSal, req.body.maxSal], (err, result)=>{
      if (err){
        console.log(err);
@@ -732,13 +725,14 @@ q = `Select first_name, surname FROM Instructor as i Where i.salary between $1 a
 
 // allow students to view courses with a certain keyword
 app.get('/student/:id/search/course', (req, res)=>{
-q = ` Select course_name From Course Where course_name Like '$1%';`;
-  client.query(q, [req.body.keyword], (err, result)=>{
+q = ` Select name From Course Where name Like $1;`;
+  client.query(q, [`%${req.body.keyword}%`], (err, result)=>{
      if (err){
        console.log(err);
      }
      else{
        res.send(result);
+       return;
      }
    });
 });
