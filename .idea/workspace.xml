@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d56a08ef-b48f-44a5-955e-95e7e46f8697" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/postgres_setup/data_loader.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/postgres_setup/data_loader.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +24,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="8.10.0" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documents/postgre-node" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -43,7 +44,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1589912573138</updated>
-      <workItem from="1589912574415" duration="9401000" />
+      <workItem from="1589912574415" duration="10032000" />
+      <workItem from="1589923448293" duration="1087000" />
+      <workItem from="1589971315496" duration="317000" />
     </task>
     <servers />
   </component>
@@ -55,30 +58,34 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="94" y="158" width="1099" height="541" key="DiffContextDialog/67.27.1299.741@67.27.1299.741" timestamp="1589918628983" />
-    <state width="1276" height="330" key="GridCell.Tab.0.bottom" timestamp="1589919707589">
+    <state x="499" y="155" width="424" height="482" key="FileChooserDialogImpl" timestamp="1589924781008">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state width="1276" height="330" key="GridCell.Tab.0.bottom/67.27.1299.741@67.27.1299.741" timestamp="1589919707589" />
-    <state width="1276" height="330" key="GridCell.Tab.0.center" timestamp="1589919707587">
+    <state x="499" y="155" width="424" height="482" key="FileChooserDialogImpl/67.27.1299.741@67.27.1299.741" timestamp="1589924781008" />
+    <state width="1276" height="330" key="GridCell.Tab.0.bottom" timestamp="1589922923345">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state width="1276" height="330" key="GridCell.Tab.0.center/67.27.1299.741@67.27.1299.741" timestamp="1589919707587" />
-    <state width="1276" height="330" key="GridCell.Tab.0.left" timestamp="1589919707587">
+    <state width="1276" height="330" key="GridCell.Tab.0.bottom/67.27.1299.741@67.27.1299.741" timestamp="1589922923345" />
+    <state width="1276" height="330" key="GridCell.Tab.0.center" timestamp="1589922923344">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state width="1276" height="330" key="GridCell.Tab.0.left/67.27.1299.741@67.27.1299.741" timestamp="1589919707587" />
-    <state width="1276" height="330" key="GridCell.Tab.0.right" timestamp="1589919707588">
+    <state width="1276" height="330" key="GridCell.Tab.0.center/67.27.1299.741@67.27.1299.741" timestamp="1589922923344" />
+    <state width="1276" height="330" key="GridCell.Tab.0.left" timestamp="1589922923344">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state width="1276" height="330" key="GridCell.Tab.0.right/67.27.1299.741@67.27.1299.741" timestamp="1589919707588" />
-    <state x="598" y="264" key="MultipleFileMergeDialog" timestamp="1589919080661">
+    <state width="1276" height="330" key="GridCell.Tab.0.left/67.27.1299.741@67.27.1299.741" timestamp="1589922923344" />
+    <state width="1276" height="330" key="GridCell.Tab.0.right" timestamp="1589922923345">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="598" y="264" key="MultipleFileMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589919080661" />
-    <state x="434" y="178" width="564" height="437" key="git4idea.merge.GitMergeDialog" timestamp="1589919196390">
+    <state width="1276" height="330" key="GridCell.Tab.0.right/67.27.1299.741@67.27.1299.741" timestamp="1589922923345" />
+    <state x="598" y="264" key="MultipleFileMergeDialog" timestamp="1589922670747">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="434" y="178" width="564" height="437" key="git4idea.merge.GitMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589919196390" />
+    <state x="598" y="264" key="MultipleFileMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589922670747" />
+    <state x="434" y="178" width="564" height="437" key="git4idea.merge.GitMergeDialog" timestamp="1589922668351">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="434" y="178" width="564" height="437" key="git4idea.merge.GitMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589922668351" />
     <state x="446" y="294" width="530" height="205" key="git4idea.ui.GitStashDialog" timestamp="1589918728538">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
