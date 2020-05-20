@@ -32,99 +32,12 @@ const client = new Client({
 client.connect();
 
 // ---------------------------------- Authentication Routes ---------------------------------- //
-// Sign-Up
-app.get('/signup', function(req,res){
-});
-
-/**
- * Update front end to take in phone number
- */
-app.post('/signup', async function(req, res){
-  try{
-    // let password = await bcrypt.hash(req.body.password, 5);
-
-    var rand = uuidv4.uuid();
-    if (req.body.student === true){
-      var id = '1' + rand;
-      q = "INSERT INTO Person VALUES($1, $2, $3, $4, $5, $6);";
-      JSON.stringify(client.query("Select id From Person Where email = $1",[req.body.email], (err, result)=>{
-        if (result.rows[0]){
-          res.redirect('/signup');
-        }
-        else{
-          client.query(q,[id, req.body.password, req.body.fname, req.body.surname, req.body.email, req.body.department_name], (err, result)=>{
-            if (err){
-              console.log(err);
-            }
-            else{
-              res.redirect('/login');
-            }
-          });
-        }
-      }));
-    }
-    else if (req.body.instructor === true){
-      var id = '2' + rand;
-      q = "INSERT INTO Person VALUES($1, $2, $3, $4, $5); INSERT INTO Phone VALUES($1, $6); INSERT INTO Instructor VALUES($1, $7, CURRENT_TIMESTAMP);";
-      JSON.stringify(client.query("Select id From Person Where email = $1",[req.body.email], (err, result)=>{
-        if (result.rows[0]){
-          res.redirect('/signup');
-        }
-        else{
-          client.query(q,[id, req.body.email, password, req.body.fname, req.body.surname, req.body.phone_no, 1000 + Math.random() * 9000], (err, result)=>{
-            if (err){
-              console.log(err);
-            }
-            else{
-              res.redirect('/login');
-            }
-          });
-        }
-      }));
-    }
-    else if (req.body.ta === true){
-      var id = '3' + rand;
-      q = "INSERT INTO Person VALUES($1, $2, $3, $4, $5); INSERT INTO Phone VALUES($1, $6); INSERT INTO Student VALUES($1, Null, Null, CURRENT_TIMESTAMP);";
-      JSON.stringify(client.query("Select id From Person Where email = $1",[req.body.email], (err, result)=>{
-        if (result.rows[0]){
-          res.redirect('/signup');
-        }
-        else{
-          client.query(q,[id, req.body.email, password, req.body.fname, req.body.surname, req.body.phone_no], (err, result)=>{
-            if (err){
-              console.log(err);
-            }
-            else{
-              res.redirect('/login');
-            }
-          });
-        }
-      }));
-    }
-  }
-  catch(e){
-    throw(e);
-  }
-});
 
 // Login
 app.get('/login', (req,res,next)=>{
-  if (res.isAuthenticated()){
-    res.redirect('/account');
-  }
-  else{
-    res.render('login', {title: "Log in", userData: req.user, messages: {danger: req.flash('danger'), warning: req.flash('warning'), success: req.flash('success')}});  }
+  res.send("At login");
 });
 
-app.post
-
-app.get('/account', (req,res,next)=>{
-  if (res.isAuthenticated()){
-    res.render('account', {title: "Account", userData: req.user, messages: {danger: req.flash('danger'), warning: req.flash('warning'), success: req.flash('success')}});  }
-  else{
-    res.redirect('/login');
-  }
-});
 
 app.get('/logout', (req, res)=>{
   req.logout();
@@ -155,7 +68,6 @@ passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, id, p
 					return done(err)
 				}	
 				if(result.rows[0] == null){
-					req.flash('danger', "Oops. Incorrect login details.");
 					return done(null, false);
 				}
 				else{
@@ -168,7 +80,6 @@ passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, id, p
 							return done(null, [{email: result.rows[0].email, firstName: result.rows[0].firstName}]);
 						}
 						else{
-							req.flash('danger', "Oops. Incorrect login details.");
 							return done(null, false);
 						}
 					});
@@ -179,13 +90,6 @@ passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, id, p
   };
 }));
 
-passport.serializeUser(function(user, done) {
-	done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-	done(null, user);
-});		
   
 // ---------------------------------- Student Routes -------------------------------------------- //
 // list all courses that a student can register for
@@ -260,6 +164,8 @@ app.get('/student/:id/regCourseView', (req,res)=>{
     }
   });
 });
+
+
 
 // select a course and display grades for that course
 app.get('/student/:id/exams/grades/display', (req,res)=>{

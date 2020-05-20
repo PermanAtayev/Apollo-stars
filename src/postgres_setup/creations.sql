@@ -1,14 +1,20 @@
+CREATE TABLE Department (
+  department_name VARCHAR (10) PRIMARY KEY,
+  building_no INT,
+  budget INT
+);
+
 CREATE TABLE Person (
   id INT PRIMARY KEY,
-  password INT, --change to varchar
+  password VARCHAR(60),
   name VARCHAR (20),
   surname VARCHAR (20),
-  email VARCHAR (20)
+  email VARCHAR (20),
   department_name VARCHAR (10) REFERENCES Department(department_name) ON DELETE CASCADE
 );
 
 CREATE TABLE Phone (
-  id INT REFERENCES Person (id) ON DELETE CASCADE,
+  id INT REFERENCES Person(id) ON DELETE CASCADE,
   phone_number INT,
   PRIMARY KEY(id, phone_number)
 );
@@ -78,6 +84,14 @@ CREATE TABLE Course_Assignment (
   PRIMARY KEY (course_id, assignment_id)
 );
 
+CREATE TABLE Classroom (
+  building_no INT UNIQUE ,
+  room_no INT UNIQUE,
+  capacity INT,
+  PRIMARY KEY (building_no, room_no)
+);
+
+
 CREATE TABLE Section (
   section_id VARCHAR (6),
   course_id INT REFERENCES Course(course_id) ON DELETE CASCADE,
@@ -138,18 +152,6 @@ CREATE TABLE Career (
   salary INT
 );
 
-CREATE TABLE Classroom (
-  building_no INT,
-  room_no INT,
-  capacity INT,
-  PRIMARY KEY (building_no, room_no)
-);
-
-CREATE TABLE Department (
-  department_name VARCHAR (10) PRIMARY KEY,
-  building_no INT,
-  budget INT
-);
 
 CREATE TABLE Assignment (
   assignment_id INT PRIMARY KEY,
