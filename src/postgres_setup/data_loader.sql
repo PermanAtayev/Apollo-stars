@@ -53,6 +53,18 @@
  INSERT INTO TA VALUES(1217032, 'password1', 'Aron', 'Einstenium', 'Einstenium@harvard.edu',93029321, 'ME', '2020-01-20');
  INSERT INTO TA VALUES(1217033, 'password1', 'Clara', 'Greenwood', 'Greenwood@harvard.edu',93029321, 'CS', '2020-01-20');
 
+INSERT INTO Career VALUES(75514212, 'Facebook is privacy concerned company', 'anyone who wants to work', 1000)
+INSERT INTO Career VALUES(75514213, 'Microsoft is privacy concerned company', 'anyone who wants to work as a web developer', 1000)
+INSERT INTO Career VALUES(75514214, 'Asus is privacy concerned company', 'anyone who wants to work as a mobile developer', 1000)
+INSERT INTO Career VALUES(75514215, 'Dell is privacy concerned company', 'anyone who wants to work', 1000)
+INSERT INTO Career VALUES(75514216, 'Fofo is privacy concerned company', 'anyone who wants to work', 1000)
+INSERT INTO Career VALUES(75514217, 'Hamidius is privacy concerned company', 'anyone who wants to work', 1000)
+INSERT INTO Career VALUES(75514218, 'Balajius is privacy concerned company', 'anyone who wants to work', 1000)
+INSERT INTO Career VALUES(75514219, 'Permanius is privacy concerned company', 'anyone who wants to work', 1000)
+INSERT INTO Career VALUES(75514220, 'Hanzallius is privacy concerned company', 'anyone who wants to work', 1000)
+INSERT INTO Career VALUES(75514221, 'Whatius is privacy concerned company', 'anyone who wants to work', 1000)
+
+
 -- Courses
 -- Sections
 -- Prereq

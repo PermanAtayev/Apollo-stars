@@ -10,6 +10,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="PermanAtayev &lt;perman.atayev17@gmail.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1c8aFsqWHbnfv7UwlO5cwlX4lbb" />
@@ -45,14 +50,30 @@
       <updated>1589912573138</updated>
       <workItem from="1589912574415" duration="10032000" />
       <workItem from="1589923448293" duration="1087000" />
-      <workItem from="1589971315496" duration="1453000" />
+      <workItem from="1589971315496" duration="1766000" />
     </task>
+    <task id="LOCAL-00001" summary="tas dummy data">
+      <created>1589973009370</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1589973009370</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="tas dummy data" />
+    <option name="LAST_COMMIT_MESSAGE" value="tas dummy data" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="255" y="27" width="912" height="739" key="CommitChangelistDialog2" timestamp="1589973009245">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="255" y="27" width="912" height="739" key="CommitChangelistDialog2/67.27.1299.741@67.27.1299.741" timestamp="1589973009245" />
     <state x="94" y="158" width="1099" height="541" key="DiffContextDialog" timestamp="1589918628983">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
@@ -81,6 +102,10 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="598" y="264" key="MultipleFileMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589922670747" />
+    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2" timestamp="1589973011471">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2/67.27.1299.741@67.27.1299.741" timestamp="1589973011471" />
     <state x="434" y="178" width="564" height="437" key="git4idea.merge.GitMergeDialog" timestamp="1589972453526">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
