@@ -80,8 +80,8 @@ CREATE TABLE Course_Assignment (
 );
 
 CREATE TABLE Classroom (
-  building_no INT UNIQUE ,
-  room_no INT UNIQUE,
+  building_no INT,
+  room_no INT,
   capacity INT,
   PRIMARY KEY (building_no, room_no)
 );
