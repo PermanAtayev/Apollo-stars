@@ -41,16 +41,16 @@
 -- INSERT INTO Instructor VALUES(2217042, 'password1', 'Walter', 'Melon', 'Melon@harvard.edu', 123, 'CS', 900, '2020-01-20');
 -- INSERT INTO Instructor VALUES(2217043, 'password1', 'Nick', 'Bocker', 'Bocker@harvard.edu', 123, 'CS', 10000, '2020-01-20');
 
---INSERT INTO Career VALUES(75514212, 'Facebook is privacy concerned company', 'anyone who wants to work', 1000)
---INSERT INTO Career VALUES(75514213, 'Microsoft is privacy concerned company', 'anyone who wants to work as a web developer', 1000)
---INSERT INTO Career VALUES(75514214, 'Asus is privacy concerned company', 'anyone who wants to work as a mobile developer', 1000)
---INSERT INTO Career VALUES(75514215, 'Dell is privacy concerned company', 'anyone who wants to work', 1000)
---INSERT INTO Career VALUES(75514216, 'Fofo is privacy concerned company', 'anyone who wants to work', 1000)
---INSERT INTO Career VALUES(75514217, 'Hamidius is privacy concerned company', 'anyone who wants to work', 1000)
---INSERT INTO Career VALUES(75514218, 'Balajius is privacy concerned company', 'anyone who wants to work', 1000)
---INSERT INTO Career VALUES(75514219, 'Permanius is privacy concerned company', 'anyone who wants to work', 1000)
---INSERT INTO Career VALUES(75514220, 'Hanzallius is privacy concerned company', 'anyone who wants to work', 1000)
---INSERT INTO Career VALUES(75514221, 'Whatius is privacy concerned company', 'anyone who wants to work', 1000)
+-- INSERT INTO Career VALUES(75514212, 'Facebook is privacy concerned company', 'anyone who wants to work', 1000);
+-- INSERT INTO Career VALUES(75514213, 'Microsoft is privacy concerned company', 'anyone who wants to work as a web developer', 1000);
+-- INSERT INTO Career VALUES(75514214, 'Asus is privacy concerned company', 'anyone who wants to work as a mobile developer', 1000);
+-- INSERT INTO Career VALUES(75514215, 'Dell is privacy concerned company', 'anyone who wants to work', 1000);
+-- INSERT INTO Career VALUES(75514216, 'Fofo is privacy concerned company', 'anyone who wants to work', 1000);
+-- INSERT INTO Career VALUES(75514217, 'Hamidius is privacy concerned company', 'anyone who wants to work', 1000);
+-- INSERT INTO Career VALUES(75514218, 'Balajius is privacy concerned company', 'anyone who wants to work', 1000);
+-- INSERT INTO Career VALUES(75514219, 'Permanius is privacy concerned company', 'anyone who wants to work', 1000);
+-- INSERT INTO Career VALUES(75514220, 'Hanzallius is privacy concerned company', 'anyone who wants to work', 1000);
+-- INSERT INTO Career VALUES(75514221, 'Whatius is privacy concerned company', 'anyone who wants to work', 1000);
 
 -- INSERT INTO Course VALUES(1, 'Course_A', 1);
 -- INSERT INTO Course VALUES(2, 'Course_B', 2);
@@ -75,6 +75,26 @@
 -- INSERT INTO Prereq VALUES(8, 2);
 -- INSERT INTO Prereq VALUES(15, 9);
 
+-- INSERT INTO Section VALUES('CA-01',1,1,101);
+-- INSERT INTO Section VALUES('CA-02',1,2,102);
+-- INSERT INTO Section VALUES('CB-01',2,3,103);
+-- INSERT INTO Section VALUES('CC-01',3,4,104);
+-- INSERT INTO Section VALUES('CD-01',4,5,105);
+-- INSERT INTO Section VALUES('CE-01',5,6,106);
+-- INSERT INTO Section VALUES('CE-02',5,7,107);
+-- INSERT INTO Section VALUES('CF-01',6,4,108);
+-- INSERT INTO Section VALUES('CG-01',7,2,109);
+-- INSERT INTO Section VALUES('CH-01',8,1,110);
+-- INSERT INTO Section VALUES('CI-01',9,4,111);
+-- INSERT INTO Section VALUES('CJ-01',10,5,12);
+-- INSERT INTO Section VALUES('CK-01',11,3,2);
+-- INSERT INTO Section VALUES('CJ-02',10,3,22);
+-- INSERT INTO Section VALUES('CK-02',11,6,232);
+-- INSERT INTO Section VALUES('CM-01',12,9,322);
+-- INSERT INTO Section VALUES('CN-01',13,8,32);
+-- INSERT INTO Section VALUES('CO-01',14,7,452);
+-- INSERT INTO Section VALUES('CP-01',15,8,552);
+
  INSERT INTO TA VALUES(1217024, 'password1', 'Steve', 'Gunn', 'Gunn@harvard.edu',93029321, 'SOC', 0, 10000, '2020-01-20');
  INSERT INTO TA VALUES(1217025, 'password1', 'Stephen', 'Forester', 'Forester@harvard.edu',93029321, 'ARCH', 0, 10000, '2020-01-20');
  INSERT INTO TA VALUES(1217026, 'password1', 'Peter', 'Parker', 'Parker@harvard.edu',93029321, 'ME', 0, 10000, '2020-01-20');
@@ -96,7 +116,3 @@
  INSERT INTO ASSISTS VALUES(8, 1217026);
  INSERT INTO ASSISTS VALUES(9, 1217027);
  INSERT INTO ASSISTS VALUES(10, 1217028);
--- Sections
--- Prereq
--- Assists
--- Career
