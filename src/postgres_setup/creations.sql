@@ -8,8 +8,8 @@ CREATE TABLE Person (
   id INT PRIMARY KEY,
   password VARCHAR(60),
   name VARCHAR (20),
-  surname VARCHAR (20),
-  email VARCHAR (20),
+  surname VARCHAR (60),
+  email VARCHAR (60),
   phone_no INT,
   department_name VARCHAR (10) REFERENCES Department(department_name) ON DELETE CASCADE
 );
