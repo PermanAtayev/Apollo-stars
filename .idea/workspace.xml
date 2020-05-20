@@ -4,8 +4,6 @@
     <list default="true" id="d56a08ef-b48f-44a5-955e-95e7e46f8697" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/postgres_setup/creations.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/postgres_setup/creations.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/postgres_setup/data_loader.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/postgres_setup/data_loader.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +54,7 @@
       <workItem from="1589971315496" duration="5420000" />
       <workItem from="1589976756172" duration="141000" />
       <workItem from="1589977182091" duration="12008000" />
-      <workItem from="1589998455083" duration="3352000" />
+      <workItem from="1589998455083" duration="5012000" />
     </task>
     <task id="LOCAL-00001" summary="tas dummy data">
       <created>1589973009370</created>
@@ -100,7 +98,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589975026341</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="some updates">
+      <created>1590001830222</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1590001830222</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,17 +125,18 @@
     <MESSAGE value="tas dummy data" />
     <MESSAGE value="dummy careers" />
     <MESSAGE value="dummy assists" />
-    <option name="LAST_COMMIT_MESSAGE" value="dummy assists" />
+    <MESSAGE value="some updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="some updates" />
   </component>
   <component name="WindowStateProjectService">
     <state x="174" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589973600052">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="174" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1299.741@67.27.1299.741" timestamp="1589973600052" />
-    <state x="264" y="29" width="912" height="739" key="CommitChangelistDialog2" timestamp="1589975026278">
+    <state x="264" y="29" width="912" height="739" key="CommitChangelistDialog2" timestamp="1590001830098">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="264" y="29" width="912" height="739" key="CommitChangelistDialog2/67.27.1299.741@67.27.1299.741" timestamp="1589975026278" />
+    <state x="264" y="29" width="912" height="739" key="CommitChangelistDialog2/67.27.1299.741@67.27.1299.741" timestamp="1590001830098" />
     <state x="94" y="158" width="1099" height="541" key="DiffContextDialog" timestamp="1589918628983">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
@@ -163,14 +169,14 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="192" y="86" width="1039" height="620" key="MergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589975296145" />
-    <state x="598" y="264" key="MultipleFileMergeDialog" timestamp="1589975297800">
+    <state x="598" y="264" width="476" height="266" key="MultipleFileMergeDialog" timestamp="1590001842187">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="598" y="264" key="MultipleFileMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589975297800" />
-    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2" timestamp="1589975027840">
+    <state x="598" y="264" width="476" height="266" key="MultipleFileMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1590001842187" />
+    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2" timestamp="1590001832905">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2/67.27.1299.741@67.27.1299.741" timestamp="1589975027840" />
+    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2/67.27.1299.741@67.27.1299.741" timestamp="1590001832905" />
     <state x="487" y="312" width="449" height="168" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589980522407">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
