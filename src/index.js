@@ -33,63 +33,31 @@ const client = new Client({
 client.connect();
 
 // ---------------------------------- Authentication Routes ---------------------------------- //
-
 // Login
 app.get('/login', (req,res,next)=>{
-  res.send("At login");
+  // res.send("At login");
+    q = `SELECT password FROM Person WHERE id=$1`
+
+    client.query(q, [req.body.id], (err, result)=>{
+        if (err){
+            return res.send(error);
+        }
+        else{
+            // res.send(result);
+            if(result.rows[0].password === req.body.password){
+                return res.status(200).send('Logged in')
+            }
+            else{
+                return res.status(404).send('Not found')
+            }
+        }
+    });
 });
 
+// not tested
 app.get('/logout', (req, res)=>{
-  req.logout();
   res.redirect('/');
 });
-
-app.post('/login',	passport.authenticate('local', {
-  successRedirect: '/account',
-  failureRedirect: '/login',
-  failureFlash: true
-  }), function(req, res) {
-  if (req.body.remember) {
-    req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // Cookie expires after 30 days
-    } else {
-    req.session.cookie.expires = false; // Cookie expires at end of session
-  }
-  res.redirect('/');
-});
-
-passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, id, password, done) => {
-	loginAttempt();
-	async function loginAttempt() {		
-		try{
-			client.query('BEGIN')
-			var currentAccountsData = JSON.stringify(client.query('SELECT firstName, email, password FROM Person WHERE "id"=$1', [id], function(err, result) {
-				
-				if(err) {
-					return done(err)
-				}	
-				if(result.rows[0] == null){
-					return done(null, false);
-				}
-				else{
-					bcrypt.compare(password, result.rows[0].password, function(err, check) {
-						if (err){
-							console.log('Error while checking password');
-							return done();
-						}
-						else if (check){
-							return done(null, [{email: result.rows[0].email, firstName: result.rows[0].firstName}]);
-						}
-						else{
-							return done(null, false);
-						}
-					});
-				}
-			}))
-		}
-		catch(e){throw (e);}
-  };
-}));
-
   
 // ---------------------------------- Student Routes -------------------------------------------- //
 // list all courses that a student can register for
@@ -508,7 +476,7 @@ WHERE
  });
 
 // create an exam
- app.post('/instructor/:id/create/exam', (req,res)=>{
+app.post('/instructor/:id/create/exam', (req,res)=>{
   q = `INSERT INTO Exam
   VALUES($1, $2, $3, $4);`
   client.query(q,[req.body.exam_id, req.body.exam_name, req.body.start_time, req.body.end_time], (err, result)=>{
@@ -516,14 +484,36 @@ WHERE
        console.log(err);
      }
      else{
-       res.send("Success");
-       return;
-     }
+         q2 = `INSERT INTO Course_Exam values($1, $2);`
+
+         client.query(q2,[req.body.course_id, req.body.exam_id], (err, result)=> {
+             if (err){
+                 console.log(err);
+             }
+             else {
+                 q3 = `INSERT INTO Take_Exam (student_id, exam_id)
+                    SELECT Courses_Taken.student_id, Exam.exam_id
+                    FROM Courses_Taken, Exam
+                    WHERE Courses_Taken.course_id = $2
+                    AND Exam.exam_id = $1`
+                 client.query(q3, [req.body.exam_id, req.body.course_id], (err, result) => {
+                     if (err){
+                         console.log(err);
+                     }
+                     else {
+                         return res.send("Exam Created").status(201);
+                     }
+                 })
+             }
+         })
+    }
+
    });
  });
+ 
 
-// create research assignment
- app.post('/instructor/:id/create/assignment', (req,res)=>{
+// create an assignment
+app.post('/instructor/:id/create/assignment', (req,res)=>{
   q = `INSERT INTO Assignment
   VALUES($1, $2, $3);`
   client.query(q,[req.body.assignment_id, req.body.assignment_name, req.body.assignment_due_date], (err, result)=>{
@@ -531,8 +521,27 @@ WHERE
        console.log(err);
      }
      else{
-       res.send("Success");
-       return;
+         q2 = `INSERT INTO Course_Assignment values($1, $2);`
+         client.query(q2,[req.body.course_id, req.body.assignment_id], (err, result)=> {
+             if (err){
+                 console.log(err);
+             }
+             else {
+                 q3 = `INSERT INTO Take_Assignment (student_id, assignment_id)
+                    SELECT Courses_Taken.student_id, Assignment.assignment_id
+                    FROM Courses_Taken, Assignment 
+                    WHERE Courses_Taken.course_id = $2
+                    AND Assignment.Assignment_id = $1`
+                 client.query(q3, [req.body.assignment_id, req.body.course_id], (err, result) => {
+                     if (err){
+                         console.log(err);
+                     }
+                     else {
+                         return res.send("Assignment Created").status(201);
+                     }
+                 })
+             }
+         })
      }
    });
  });
