@@ -53,6 +53,19 @@ CREATE TABLE Courses_Registered (
   PRIMARY KEY (course_id, student_id, sec_id)
 );
 
+CREATE TABLE Exam (
+  exam_id INT PRIMARY KEY,
+  exam_name VARCHAR (10),
+  start_time TIMESTAMP,
+  end_time TIMESTAMP
+);
+
+CREATE TABLE Assignment (
+  assignment_id INT PRIMARY KEY,
+  assignment_name VARCHAR(10),
+  due_date DATE
+);
+
 CREATE TABLE Take_Exam (
   student_id INT REFERENCES Student(id) ON DELETE CASCADE,
   exam_id INT,
@@ -140,18 +153,9 @@ CREATE TABLE Career (
 );
 
 
-CREATE TABLE Assignment (
-  assignment_id INT PRIMARY KEY,
-  assignment_name VARCHAR(10),
-  due_date DATE
-);
 
-CREATE TABLE Exam (
-  exam_id INT PRIMARY KEY,
-  exam_name VARCHAR (10),
-  start_time TIMESTAMP,
-  end_time TIMESTAMP
-);
+
+
 
 CREATE TABLE Joins_Research (
   group_id INT REFERENCES research_group (group_id),
