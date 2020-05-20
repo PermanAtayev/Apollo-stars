@@ -147,6 +147,7 @@ app.get('/student/:id/regCourseView', (req,res)=>{
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
@@ -163,6 +164,7 @@ app.get('/student/:id/exams/grades/display', (req,res)=>{
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
@@ -176,6 +178,7 @@ app.get('/student/:id/assignments/grades/display', (req,res)=>{
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
@@ -191,6 +194,7 @@ app.get('/student/:id/details/display', (req,res)=>{
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
@@ -226,6 +230,7 @@ WHERE
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
@@ -260,6 +265,7 @@ app.get('/student/:id/assignments/display', (req,res)=>{
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
@@ -333,6 +339,7 @@ app.get('/student/:id/study_group/', (req,res)=>{
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
@@ -375,19 +382,21 @@ app.get('/instructor/:id/courses/display', (req,res)=>{
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
 
 // list TA's of a course
 app.get('/instructor/:id/course/TA/display', (req,res)=>{
-  q = `SELECT DISTINCT c.name FROM Course as c, TA, Assists WHERE Assists.course_id = $1 AND Assists.ta_id = TA.ta_id;`;
+  q = `SELECT DISTINCT c.name FROM Course as c, TA, Assists WHERE Assists.course_id = $1 AND Assists.ta_id = TA.id;`;
   client.query(q, [req.body.course_id], (err,result)=>{
     if (err){
       console.log(err);
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
@@ -402,6 +411,7 @@ app.get('/instructor/:id/course/TA/tasks/display', (req,res)=>{
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
@@ -429,6 +439,7 @@ app.post('/instructor/:id/authorize/TA', (req,res)=>{
     }
     else{
       console.log("TA Authorized.");
+      return;
     }
   });
 });
@@ -445,6 +456,7 @@ app.get('/instructor/:id/select/course', (req,res)=>{
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
@@ -457,6 +469,7 @@ app.get('/instructor/:id/select/course/section', (req,res)=>{
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
@@ -469,6 +482,7 @@ app.post('/instructor/:id/setGrade', (req,res)=>{
     }
     else{
       console.log("Grade Submitted.");
+      return;
     }
   });
 });
@@ -493,6 +507,7 @@ WHERE
      }
      else{
        res.send(result);
+       return;
      }
    });
  });
@@ -506,7 +521,8 @@ WHERE
        console.log(err);
      }
      else{
-       res.log("Success");
+       res.send("Success");
+       return;
      }
    });
  });
@@ -520,7 +536,8 @@ WHERE
        console.log(err);
      }
      else{
-       res.log("Success");
+       res.send("Success");
+       return;
      }
    });
  });
@@ -557,6 +574,7 @@ WHERE
      }
      else{
        res.send(result);
+       return;
      }
    });
  });
@@ -574,6 +592,7 @@ WHERE
      }
      else{
        res.send(result);
+       return;
      }
    });
  });
@@ -592,6 +611,7 @@ WHERE
      }
      else{
        res.send("Success");
+       return;
      }
    });
  });
@@ -611,6 +631,7 @@ WHERE
      }
      else{
        res.send(result);
+       return;
      }
    });
  });
@@ -628,6 +649,7 @@ WHERE
      }
      else{
        res.send(result);
+       return;
      }
    });
  });
@@ -646,6 +668,7 @@ WHERE
      }
      else{
        res.send("Success");
+       return;
      }
    });
  });
@@ -661,6 +684,7 @@ app.get('/ta/:id/courses', (req,res)=>{
      }
      else{
        res.send(result);
+       return;
      }
    });
  });
@@ -675,6 +699,7 @@ app.get('/ta/:id/courses', (req,res)=>{
      }
      else{
        res.send(result);
+       return;
      }
    });
  });
@@ -688,7 +713,8 @@ app.get('/ta/:id/courses', (req,res)=>{
        console.log(err);
      }
      else{
-       res.log("Success");
+       res.send("Success");
+       return;
      }
    });
  });
@@ -701,7 +727,8 @@ app.get('/ta/:id/courses', (req,res)=>{
       console.log(err);
     }
     else{
-      console.log("Specified table removed.");
+      res.send("Specified table removed.");
+      return;
     }
   });
  })
@@ -716,6 +743,7 @@ q = `Select name, surname FROM Instructor as i Where i.salary between $1 and $2;
      }
      else{
        res.send(result);
+       return;
      }
    });
 });
@@ -746,6 +774,7 @@ q = ` CREATE VIEW view_ranking AS SELECT first_name, surname, gpa FROM Student
      }
      else{
        res.send(result);
+       return;
      }
    });
 });
@@ -761,6 +790,7 @@ GROUP BY  first_name, surname, email, date_joined;`;
      }
      else{
        res.send(result);
+       return;
      }
    });
 });
@@ -778,8 +808,7 @@ GROUP BY exam_name;`;
      }
      else{
        res.send(result);
+       return;
      }
    });
 });
-
-// trigger
