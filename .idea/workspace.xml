@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d56a08ef-b48f-44a5-955e-95e7e46f8697" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/postgres_setup/data_loader.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/postgres_setup/data_loader.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,7 +45,7 @@
       <updated>1589912573138</updated>
       <workItem from="1589912574415" duration="10032000" />
       <workItem from="1589923448293" duration="1087000" />
-      <workItem from="1589971315496" duration="317000" />
+      <workItem from="1589971315496" duration="1453000" />
     </task>
     <servers />
   </component>
@@ -82,13 +81,17 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="598" y="264" key="MultipleFileMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589922670747" />
-    <state x="434" y="178" width="564" height="437" key="git4idea.merge.GitMergeDialog" timestamp="1589922668351">
+    <state x="434" y="178" width="564" height="437" key="git4idea.merge.GitMergeDialog" timestamp="1589972453526">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="434" y="178" width="564" height="437" key="git4idea.merge.GitMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589922668351" />
+    <state x="434" y="178" width="564" height="437" key="git4idea.merge.GitMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589972453526" />
     <state x="446" y="294" width="530" height="205" key="git4idea.ui.GitStashDialog" timestamp="1589918728538">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="446" y="294" width="530" height="205" key="git4idea.ui.GitStashDialog/67.27.1299.741@67.27.1299.741" timestamp="1589918728538" />
+    <state x="379" y="89" key="search.everywhere.popup" timestamp="1589972521849">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="379" y="89" key="search.everywhere.popup/67.27.1299.741@67.27.1299.741" timestamp="1589972521849" />
   </component>
 </project>
