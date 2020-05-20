@@ -49,7 +49,7 @@ CREATE TABLE Courses_Taken (
 CREATE TABLE Courses_Registered (
   student_id INT REFERENCES Student(id) ON DELETE CASCADE,
   course_id INT REFERENCES Course(course_id) ON DELETE CASCADE,
-  sec_id INT,
+  sec_id VARCHAR(20),
   PRIMARY KEY (course_id, student_id, sec_id)
 );
 
@@ -128,7 +128,6 @@ CREATE TABLE Research_Group (
 
 CREATE TABLE Study_Group (
   group_id INT PRIMARY KEY,
-  mod_id INT REFERENCES Student(id) ON DELETE CASCADE,
   group_name VARCHAR (100),
   purpose VARCHAR (100)
 );
@@ -172,4 +171,11 @@ CREATE TABLE Auth_TA (
   task_desc VARCHAR(100),
   is_done BOOLEAN,
   PRIMARY KEY (instructor_id, ta_id)
+);
+
+CREATE TABLE Reviews(
+  instructor_id INT REFERENCES Instructor(id) ON DELETE CASCADE,
+  student_id INT REFERENCES Student(id) ON DELETE CASCADE,
+  points INT CHECK(points >=0 AND points <= 5),
+  comments VARCHAR(100)
 );

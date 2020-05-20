@@ -14,12 +14,12 @@ app.use(express.json())
 
 let server = require('http').Server(app);
 
-let port = (process.env.PORT || 8079);
+var port = (process.env.PORT || 8080);
 server.listen(port, () => console.log('listening on port ' + port));
 
 // home router
 app.get('/', function(req, res){
-    return res.send("Apollo Stars");
+    res.send("Apollo Stars");
 });
 
 // connect to heroku database
@@ -34,116 +34,77 @@ client.connect();
 
 // Login
 app.get('/login', (req,res,next)=>{
-  // res.send("At login");
-    q = `SELECT password FROM Person WHERE id=$1`
-
-    client.query(q, [req.body.id], (err, result)=>{
-        if (err){
-            return res.send(error);
-        }
-        else{
-            // res.send(result);
-            if(result.rows[0].password === req.body.password){
-                return res.status(200).send('Logged in')
-            }
-            else{
-                return res.status(404).send('Not found')
-            }
-        }
-    });
+  res.send("At login");
 });
 
-// not tested
 app.get('/logout', (req, res)=>{
   req.logout();
   res.redirect('/');
 });
 
-// app.post('/login',	passport.authenticate('local', {
-//   successRedirect: '/account',
-//   failureRedirect: '/login',
-//   failureFlash: true
-//   }), function(req, res) {
-//   if (req.body.remember) {
-//     req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // Cookie expires after 30 days
-//     } else {
-//     req.session.cookie.expires = false; // Cookie expires at end of session
-//   }
-//   res.redirect('/');
-// });
+app.post('/login',	passport.authenticate('local', {
+  successRedirect: '/account',
+  failureRedirect: '/login',
+  failureFlash: true
+  }), function(req, res) {
+  if (req.body.remember) {
+    req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // Cookie expires after 30 days
+    } else {
+    req.session.cookie.expires = false; // Cookie expires at end of session
+  }
+  res.redirect('/');
+});
 
-// passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, id, password, done) => {
-// 	loginAttempt();
-// 	async function loginAttempt() {
-// 		try{
-// 			client.query('BEGIN')
-// 			var currentAccountsData = JSON.stringify(client.query('SELECT firstName, email, password FROM Person WHERE "id"=$1', [id], function(err, result) {
-//
-// 				if(err) {
-// 					return done(err)
-// 				}
-// 				if(result.rows[0] == null){
-// 					return done(null, false);
-// 				}
-// 				else{
-// 					bcrypt.compare(password, result.rows[0].password, function(err, check) {
-// 						if (err){
-// 							console.log('Error while checking password');
-// 							return done();
-// 						}
-// 						else if (check){
-// 							return done(null, [{email: result.rows[0].email, firstName: result.rows[0].firstName}]);
-// 						}
-// 						else{
-// 							return done(null, false);
-// 						}
-// 					});
-// 				}
-// 			}))
-// 		}
-// 		catch(e){throw (e);}
-//   };
-// }));
+passport.use('local', new  LocalStrategy({passReqToCallback : true}, (req, id, password, done) => {
+	loginAttempt();
+	async function loginAttempt() {		
+		try{
+			client.query('BEGIN')
+			var currentAccountsData = JSON.stringify(client.query('SELECT firstName, email, password FROM Person WHERE "id"=$1', [id], function(err, result) {
+				
+				if(err) {
+					return done(err)
+				}	
+				if(result.rows[0] == null){
+					return done(null, false);
+				}
+				else{
+					bcrypt.compare(password, result.rows[0].password, function(err, check) {
+						if (err){
+							console.log('Error while checking password');
+							return done();
+						}
+						else if (check){
+							return done(null, [{email: result.rows[0].email, firstName: result.rows[0].firstName}]);
+						}
+						else{
+							return done(null, false);
+						}
+					});
+				}
+			}))
+		}
+		catch(e){throw (e);}
+  };
+}));
 
   
 // ---------------------------------- Student Routes -------------------------------------------- //
 // list all courses that a student can register for
 app.get('/student/:id/regCourseApply', (req,res)=>{
   q = `SELECT
-  DISTINCT course_name
-  FROM Course,
-    Prereq, Courses_Taken
-  WHERE Courses_Taken.student_id = $1 AND
-    (
-    Course.id = Prereq.course_id
-    AND Prereq.prereq_id IN (
-      SELECT
-        course_id
-      FROM Courses_Taken
-    )
-    AND Course.id NOT IN (
-      SELECT
-        course_id
-      FROM Courses_Taken
-    )
-  )
-  OR Course.id NOT IN (
-    SELECT
-      course_id
-    FROM Prereq
-  )
-  AND Course.id NOT IN (
-    SELECT
-      course_id
-    FROM Courses_Taken
-  );`;
+  DISTINCT c.name FROM Course as c, Prereq, Courses_Taken
+  WHERE (Courses_Taken.student_id = $1 AND (c.course_id = Prereq.course_id
+    AND Prereq.prereq_id IN (SELECT course_id FROM Courses_Taken)
+    AND c.course_id NOT IN (SELECT course_id FROM Courses_Taken)
+  )) OR c.course_id NOT IN (SELECT course_id FROM Prereq) AND c.course_id NOT IN (SELECT course_id FROM Courses_Taken);`;
 
   client.query(q, [req.params.id], (err, result)=>{
     if (err){
-      return console.log(err);
+      console.log(err);
     }
     else{
-      return res.send(result);
+      res.send(result);
     }
   });
 });
@@ -157,7 +118,16 @@ app.post('/student/:id/register', (req,res)=>{
       console.log(err);
     }
     else{
-      res.redirect('/student/:id');
+      q = `INSERT INTO Courses_Taken VALUES($1, $2);`;
+      client.query(q,[req.params.id, req.body.course_id], (err, result)=>{
+        if (err){
+          console.log(err);
+        }
+        else{
+          res.send("success");
+          return;
+        }
+      });
     }
   });
 });
@@ -165,13 +135,12 @@ app.post('/student/:id/register', (req,res)=>{
 // list all registered courses of a student
 app.get('/student/:id/regCourseView', (req,res)=>{
   q = `SELECT
-    course_name
-  FROM Course,
+    course.name
+  FROM Course as course,
     Courses_Registered
-  WHERE
-    Course.id = Courses_Registered.course_id;`;
-
-  client.query(q, (err,result)=>{
+  WHERE Courses_Registered.student_id = $1 AND
+    Course.course_id = Courses_Registered.course_id;`;
+  client.query(q,[req.params.id], (err,result)=>{
     if (err){
       console.log(err);
     }
@@ -182,12 +151,11 @@ app.get('/student/:id/regCourseView', (req,res)=>{
 });
 
 
-//HERE I AM
+
 // select a course and display grades for that course
 app.get('/student/:id/exams/grades/display', (req,res)=>{
   q = `Select grade From Take_Exam, Course_Exam WHERE Take_Exam.student_id = $1 AND
   Take_Exam.exam_id IN ( SELECT exam_id FROM Course_Exam) AND Course_Exam.course_id = $2;`;
-
   client.query(q,[req.params.id, req.body.course_id], (err,result)=>{
     if (err){
       console.log(err);
@@ -215,7 +183,7 @@ app.get('/student/:id/assignments/grades/display', (req,res)=>{
 
 // display and update student details such as email and password
 app.get('/student/:id/details/display', (req,res)=>{
-  q = `SELECT * FROM Person,Student WHERE Person.id = $1;`;
+  q = `SELECT * FROM Student WHERE Student.id = $1;`;
   client.query(q, [req.params.id], (err,result)=>{
     if (err){
       console.log(err);
@@ -228,13 +196,14 @@ app.get('/student/:id/details/display', (req,res)=>{
 
 app.post('/student/:id/details/update', (req,res)=>{
   q = `UPDATE Person SET email = $1, password = $2 WHERE id = $3;`;
-  var password = bcrypt.hashSync(req.body.password, 5);
-  client.query(q, [req.body.email, password, req.params.id], (err,result)=>{
+  client.query(q, [req.body.email, req.body.password, req.params.id], (err,result)=>{
     if (err){
       console.log(err);
     }
     else{
       console.log('Details Updated');
+      res.send("success");
+      return;
     }
   });
 });
@@ -250,40 +219,40 @@ WHERE
   Student.id = $1
   AND Take_Exam.student_id = Student.id
   AND Take_Exam.exam_id = Exam.id;`;
-
   client.query(q, [req.params.id], (err,result)=>{
     if (err){
       console.log(err);
     }
     else{
-      return res.send(result);
+      res.send(result);
     }
   });
 });
 
 // create list assignment stored procedure
 app.post('/student/:id/assignments/display/create',(req,res)=>{
-  proc = `Drop Procedure If Exists listAssignments; Create Procedure listAssignments(INT)
-      Language plpgsql
-      AS $$ BEGIN
-      SELECT DISTINCT assignment_name FROM Student, Take_Assignment, Assignment
+  proc = `Drop Procedure If Exists listAssignments; Create FUNCTION  listAssignments(INT) RETURNS SETOF varchar(20) 
+      AS $BODY$ BEGIN
+      RETURN QUERY SELECT DISTINCT assignment_name FROM Student, Take_Assignment, Assignment
       WHERE Student.id = $1 AND Take_Assignment.student_id = Student.id 
-      AND Take_Assignment.assignment_id = Assignment.id;
-      COMMIT;
-      END; $$;`;
+      AND Take_Assignment.assignment_id = Assignment.assignment_id;
+      RETURN;
+      END $BODY$ Language plpgsql;`;
   client.query(proc, (err,result)=>{
     if (err){
       console.log(err);
     }
     else{
       console.log('stored procedure created');
+      res.send("success");
+      return;
     }
   });
 });
 
 // list all assignments
 app.get('/student/:id/assignments/display', (req,res)=>{
-  q = `Call listAssignments($1);`;
+  q = `SELECT * FROM listAssignments($1);`;
   client.query(q, [req.params.id], (err,result)=>{
     if (err){
       console.log(err);
@@ -305,7 +274,8 @@ app.post('/student/:id/research/apply', (req, res)=>{
         console.log(err);
       }
       else{
-        console.log("Reasearch application approved!");
+        res.send("Reasearch application approved!");
+        return;
       }
     });
   }
@@ -316,14 +286,15 @@ app.post('/student/:id/research/apply', (req, res)=>{
 });
 
 // create study group
-app.post('/student/:id/research/apply', (req, res)=>{
+app.post('/student/:id/study/create', (req, res)=>{
   q = `INSERT INTO Study_Group Values($1, $2, $3, $4);`;
   client.query(q, [req.body.group_id, req.params.id, req.body.group_name, req.body.purpose], (err,result)=>{
     if (err){
       console.log(err);
     }
     else{
-      console.log('Study group created!');
+      res.send('Study group created!')
+      return;
     }
   });
 });
@@ -340,20 +311,21 @@ app.post('/student/:id/study/apply', (req, res)=>{
         console.log(err);
       }
       else{
-        console.log("Reasearch application approved!");
+        res.send("Study application approved!");
+        return;
       }
     });
   }
   else{
-    console.log("Application to join the group has been rejected!");
+    res.send("Application to join the group has been rejected!");
   }
   
 });
 
 // list study groups
 app.get('/student/:id/study_group/', (req,res)=>{
-  q = `SELECT DISTINCT group_nam FROM Student, Participates, Study_Group
-  WHERE Student.id = $1 AND Participates.student_id = Student.id AND Participates.group_id = Study_Group.id;`;
+  q = `SELECT DISTINCT group_name FROM Student, Participates, Study_Group
+  WHERE Student.id = $1 AND Participates.student_id = Student.id AND Participates.group_id = Study_Group.group_id;`;
   client.query(q, [req.params.id], (err,result)=>{
     if (err){
       console.log(err);
@@ -366,13 +338,14 @@ app.get('/student/:id/study_group/', (req,res)=>{
 
 //view available career posts
 app.get('/student/:id/careers/display', (req,res)=>{
-  q = `Select * From Careers `;
+  q = `Select * From Career`;
   client.query(q, (err,result)=>{
     if (err){
       console.log(err);
     }
     else{
       res.send(result);
+      return;
     }
   });
 });
@@ -385,7 +358,8 @@ app.post('/student/:id/assess/instructor', (req,res)=>{
       console.log(err);
     }
     else{
-      console.log("Instructor Assessment Submitted.");
+      res.send("Instructor Assessment Submitted.");
+      return;
     }
   });
 });
@@ -396,10 +370,10 @@ app.get('/instructor/:id/courses/display', (req,res)=>{
   WHERE Teaches.instructor_id = $1 AND Teaches.section_id = Section.section_id AND Course.course_id = Section.course_id;`;
   client.query(q, [req.params.id], (err,result)=>{
     if (err){
-      return console.log(err);
+      console.log(err);
     }
     else{
-      return res.send(result);
+      res.send(result);
     }
   });
 });
@@ -409,7 +383,7 @@ app.get('/instructor/:id/course/TA/display', (req,res)=>{
   q = `SELECT DISTINCT name FROM Course, TA, Assists WHERE Assists.course_id = $1 AND Assists.ta_id = TA.ta_id;`;
   client.query(q, [req.body.course_id], (err,result)=>{
     if (err){
-      return console.log(err);
+      console.log(err);
     }
     else{
       res.send(result);
@@ -486,7 +460,7 @@ app.get('/instructor/:id/select/course/section', (req,res)=>{
   });
 });
 
-app.post('/instructor/:id/authorize/TA', (req,res)=>{
+app.post('/instructor/:id/setGrade', (req,res)=>{
   q = `UPDATE Student_Sec SET grade = $1 WHERE section_id = $2 AND student_id = $3;`;
   client.query(q, [req.body.grade, req.body.section_id, req.body.student_id], (err,result)=>{
     if (err){
@@ -531,30 +505,8 @@ WHERE
        console.log(err);
      }
      else{
-         q2 = `INSERT INTO Course_Exam values($1, $2);`
-
-         client.query(q2,[req.body.course_id, req.body.exam_id], (err, result)=> {
-             if (err){
-                 console.log(err);
-             }
-             else {
-                 q3 = `INSERT INTO Take_Exam (student_id, exam_id)
-                    SELECT Courses_Taken.student_id, Exam.exam_id
-                    FROM Courses_Taken, Exam
-                    WHERE Courses_Taken.course_id = $2
-                    AND Exam.exam_id = $1`
-                 client.query(q3, [req.body.exam_id, req.body.course_id], (err, result) => {
-                     if (err){
-                         console.log(err);
-                     }
-                     else {
-                         return res.send("Exam Created").status(201);
-                     }
-                 })
-             }
-         })
-    }
-
+       res.log("Success");
+     }
    });
  });
 
@@ -567,42 +519,24 @@ WHERE
        console.log(err);
      }
      else{
-         q2 = `INSERT INTO Course_Assignment values($1, $2);`
-         client.query(q2,[req.body.course_id, req.body.assignment_id], (err, result)=> {
-             if (err){
-                 console.log(err);
-             }
-             else {
-                 q3 = `INSERT INTO Take_Assignment (student_id, assignment_id)
-                    SELECT Courses_Taken.student_id, Assignment.assignment_id
-                    FROM Courses_Taken, Assignment 
-                    WHERE Courses_Taken.course_id = $2
-                    AND Assignment.Assignment_id = $1`
-                 client.query(q3, [req.body.assignment_id, req.body.course_id], (err, result) => {
-                     if (err){
-                         console.log(err);
-                     }
-                     else {
-                         return res.send("Assignment Created").status(201);
-                     }
-                 })
-             }
-         })
+       res.log("Success");
      }
    });
  });
 
 
  // create a research group
- app.post('/instructor/:id/create/group', (req,res)=>{
+ app.post('/instructor/:id/research/create', (req,res)=>{
   q = `INSERT INTO Research_Group
-  VALUES($1, $2, $3);`
-  client.query(q,[req.body.group_id, req.body.research_topic, 1000 + Math.random()*4000], (err, result)=>{
+  VALUES($1, $2, $3, $4);`
+  grant = Math.round(1000 + Math.random()*4000);
+  client.query(q,[req.body.group_id, req.params.id, grant, req.body.research_topic], (err, result)=>{
      if (err){
        console.log(err);
      }
      else{
-       res.log("Success");
+       res.send("Success");
+       return;
      }
    });
  });
@@ -626,7 +560,7 @@ WHERE
    });
  });
 
- //select a student
+ //select an student
  app.get('/instructor/:id/select/student', (req,res)=>{
   q = `SELECT
   student_id
@@ -644,7 +578,7 @@ WHERE
  });
 
  //update grade
- app.post('/instructor/:id/change_grade', (req,res)=>{
+ app.post('/instructor/:id/exam/change_grade', (req,res)=>{
   q = `UPDATE Take_Exam
   SET
     grade = $1
@@ -656,16 +590,17 @@ WHERE
        console.log(err);
      }
      else{
-       return res.send("Success");
+       res.send("Success");
      }
    });
  });
 
-  //select a course and submit assignment grade for a student registered in the course
+  //select a course and submit assignment grade for each student registered in the course
  //sequentially call multiple APIs
  //select a course
  app.get('/instructor/:id/select/assignment', (req,res)=>{
-  q = `SELECT assignment_id
+  q = `SELECT
+  assignment_id
 FROM Course_Assignment
 WHERE
   course_id = ?;`
@@ -697,7 +632,7 @@ WHERE
  });
 
  //update grade
- app.post('/instructor/:iid/student/:sid/assignment/:aid/change_grade', (req,res)=>{
+ app.post('/instructor/:iid/assignment/change_grade', (req,res)=>{
   q = `UPDATE Take_Assignment
   SET
     grade = $1
@@ -709,7 +644,7 @@ WHERE
        console.log(err);
      }
      else{
-       res.log("Success");
+       res.send("Success");
      }
    });
  });
@@ -717,14 +652,8 @@ WHERE
 
 //list all courses that a TA is responsible for
 app.get('/ta/:id/courses', (req,res)=>{
-  q = `SELECT
-  DISTINCT course_name
-FROM Course,
-  TA,
-  Assists
-WHERE
-  Assists.ta_id = $1
-  AND Assists.course_id = Course.course_id;`
+  q = `SELECT DISTINCT name FROM Course, TA, Assists
+      WHERE Assists.ta_id = $1 AND Assists.course_id = Course.course_id;`
   client.query(q, [req.params.id], (err, result)=>{
      if (err){
        console.log(err);
@@ -752,13 +681,13 @@ WHERE
  //complete the selected task such as submitting hw grades/attendance for each student registered to the course
  // task_desc uniquely identifies a course assignment such as OS-HW-01 or Algs-HW-01
  app.post('/ta/:id/course/:cid/task/:tid/complete', (req,res)=>{
-  q = `UPDATE Auth_TA SET is_done = true WHERE ta_id = $1 AND task_desc = $2;`
+  q = `UPDATE Auth_TA SET is_done = TRUE WHERE ta_id = $1 AND task_desc = $2;`
   client.query(q, [req.params.id, req.body.task_desc], (err, result)=>{
      if (err){
        console.log(err);
      }
      else{
-       return res.send("Success");
+       res.log("Success");
      }
    });
  });
@@ -778,8 +707,8 @@ WHERE
 
 ////////////////////////////////////////////////// Advanced Features //////////////////////////////////////////
 // find instructors that have a salary within a certain range
-app.get('/general/instrructor/salaries', (req, res)=>{
-q = `Select first_name, surname FROM Instructor as i Where i.salary between $1 and $2;`;
+app.get('/general/instructor/salaries', (req, res)=>{
+q = `Select name, surname FROM Instructor as i Where i.salary between $1 and $2;`;
   client.query(q, [req.body.minSal, req.body.maxSal], (err, result)=>{
      if (err){
        console.log(err);
@@ -793,13 +722,14 @@ q = `Select first_name, surname FROM Instructor as i Where i.salary between $1 a
 
 // allow students to view courses with a certain keyword
 app.get('/student/:id/search/course', (req, res)=>{
-q = ` Select course_name From Course Where course_name Like '$1%';`;
-  client.query(q, [req.body.keyword], (err, result)=>{
+q = ` Select name From Course Where name Like $1;`;
+  client.query(q, [`%${req.body.keyword}%`], (err, result)=>{
      if (err){
        console.log(err);
      }
      else{
        res.send(result);
+       return;
      }
    });
 });
