@@ -19,6 +19,19 @@ INSERT INTO Student VALUES(1217031, 'password1', 'Stephanie', 'Helium', 'atayev@
 INSERT INTO Student VALUES(1217032, 'password1', 'Aron', 'Einstenium', 'atayev@harvard.edu', 'CS', 0, 10000,'2020-01-20');
 INSERT INTO Student VALUES(1217033, 'password1', 'Clara', 'Greenwood', 'atayev@harvard.edu', 'CS', 0, 10000,'2020-01-20');
 
+INSERT INTO Instructor VALUES(1217034, 'password1', 'Mario', 'Greenwood', 'atayev@harvard.edu', 123, 'CS', 100, '2020-01-20');
+INSERT INTO Instructor VALUES(1217035, 'password1', 'Petey', 'Cruiser', 'atayev@harvard.edu', 123, 'CS', 100, '2020-01-20');
+INSERT INTO Instructor VALUES(1217036, 'password1', 'Anna', 'Sthesia', 'atayev@harvard.edu', 123, 'CS', 100, '2020-01-20');
+INSERT INTO Instructor VALUES(1217037, 'password1', 'Paul', 'Molive', 'atayev@harvard.edu', 123, 'CS', 100, '2020-01-20');
+INSERT INTO Instructor VALUES(1217038, 'password1', 'Anna', 'Mull', 'atayev@harvard.edu', 123, 'CS', 100, '2020-01-20');
+INSERT INTO Instructor VALUES(1217039, 'password1', 'Gail', 'Forcewind', 'atayev@harvard.edu', 123, 'CS', 100, '2020-01-20');
+INSERT INTO Instructor VALUES(1217040, 'password1', 'Paige', 'Turner', 'atayev@harvard.edu', 123, 'CS', 100, '2020-01-20');
+INSERT INTO Instructor VALUES(1217041, 'password1', 'Bob', 'Frapples', 'atayev@harvard.edu', 123, 'CS', 100, '2020-01-20');
+INSERT INTO Instructor VALUES(1217042, 'password1', 'Walter', 'Melon', 'atayev@harvard.edu', 123, 'CS', 100, '2020-01-20');
+INSERT INTO Instructor VALUES(1217043, 'password1', 'Nick', 'Bocker', 'atayev@harvard.edu', 123, 'CS', 100, '2020-01-20');
+
+
+
 -- INSERT INTO Instructor VALUES();
 -- INSERT INTO TA VALUES();
 
