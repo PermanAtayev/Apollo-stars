@@ -50,7 +50,7 @@
       <updated>1589912573138</updated>
       <workItem from="1589912574415" duration="10032000" />
       <workItem from="1589923448293" duration="1087000" />
-      <workItem from="1589971315496" duration="1766000" />
+      <workItem from="1589971315496" duration="2077000" />
     </task>
     <task id="LOCAL-00001" summary="tas dummy data">
       <created>1589973009370</created>
@@ -59,7 +59,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589973009370</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="dummy careers">
+      <created>1589973296647</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1589973296647</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -67,13 +74,14 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="tas dummy data" />
-    <option name="LAST_COMMIT_MESSAGE" value="tas dummy data" />
+    <MESSAGE value="dummy careers" />
+    <option name="LAST_COMMIT_MESSAGE" value="dummy careers" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="255" y="27" width="912" height="739" key="CommitChangelistDialog2" timestamp="1589973009245">
+    <state x="255" y="27" width="912" height="739" key="CommitChangelistDialog2" timestamp="1589973296588">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="255" y="27" width="912" height="739" key="CommitChangelistDialog2/67.27.1299.741@67.27.1299.741" timestamp="1589973009245" />
+    <state x="255" y="27" width="912" height="739" key="CommitChangelistDialog2/67.27.1299.741@67.27.1299.741" timestamp="1589973296588" />
     <state x="94" y="158" width="1099" height="541" key="DiffContextDialog" timestamp="1589918628983">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
@@ -82,6 +90,10 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="499" y="155" width="424" height="482" key="FileChooserDialogImpl/67.27.1299.741@67.27.1299.741" timestamp="1589924781008" />
+    <state x="67" y="27" width="1289" height="739" key="FileDocumentManager.FileCacheConflict" timestamp="1589973381309">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="67" y="27" width="1289" height="739" key="FileDocumentManager.FileCacheConflict/67.27.1299.741@67.27.1299.741" timestamp="1589973381309" />
     <state width="1276" height="330" key="GridCell.Tab.0.bottom" timestamp="1589922923345">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
@@ -102,10 +114,10 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="598" y="264" key="MultipleFileMergeDialog/67.27.1299.741@67.27.1299.741" timestamp="1589922670747" />
-    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2" timestamp="1589973011471">
+    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2" timestamp="1589973322454">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2/67.27.1299.741@67.27.1299.741" timestamp="1589973011471" />
+    <state x="311" y="115" width="800" height="563" key="Vcs.Push.Dialog.v2/67.27.1299.741@67.27.1299.741" timestamp="1589973322454" />
     <state x="434" y="178" width="564" height="437" key="git4idea.merge.GitMergeDialog" timestamp="1589972453526">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
