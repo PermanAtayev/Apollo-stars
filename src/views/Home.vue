@@ -141,23 +141,27 @@ export default {
       let data = { id: parseInt(this.id), password: this.password };
 
       const settings = {
-        method: "get",
+        method: "post",
         headers: {
           "content-Type": "application/json"
         },
         body: JSON.stringify(data)
       };
 
-      const res = await fetch("localhost:8079/login", settings)
+      const res = await fetch("http://localhost:8079/login", settings)
         .then(response => response.json())
-        .then(json => {
-          console.log(res);
-          return console.log(json);
+        .then(async function(text){
+          return text;
         })
         .catch(e => {
           return e;
         });
+
+      console.log(res)
+
     }
   }
 };
+
+
 </script>
