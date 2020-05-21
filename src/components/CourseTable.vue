@@ -35,14 +35,14 @@
                     <v-flex xs6 sm3 md2>
                         <div>
                             <!-- <v-btn small rounded outlined class="my-3" color="teal">Grades</v-btn> -->
-                            <GradesPopup :label = course.code />
+                            <GradesPopup :label = course.course_id />
                         </div>
                     </v-flex>
                     <v-flex xs6 sm3 md1>
                         <div>
                             <!-- onClick: Show the assesment popup -->
                             <!-- <v-btn small rounded outlined class="my-3" color="primary">Assess Instructor</v-btn> -->
-                            <AssessPopup :instructorName = course.instructor />
+                            <AssessPopup :instructorName ="course.instructor_name" :instructorSurname="course.instructor_surname"   />
                         </div>
                     </v-flex>
                 </v-layout>

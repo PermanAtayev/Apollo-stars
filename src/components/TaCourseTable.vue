@@ -2,21 +2,21 @@
     <v-container class="my5">
       <v-card flat>
         <v-expansion-panels>
-          <v-expansion-panel focusable v-for="course in courses" :key="course.code">
+          <v-expansion-panel focusable v-for="course in courses" :key="course.name">
             <v-expansion-panel-header>
               <v-layout row wrap>
                 <v-flex xs12 md4>
                   <div class="caption grey--text">Name</div>
                   <div>{{ course.name }}</div>
                 </v-flex>
-                <v-flex xs6 sm3 md2>
+                <!-- <v-flex xs6 sm3 md2>
                   <div class="caption grey--text">Code</div>
                   <div>{{ course.code }}</div>
                 </v-flex>
                 <v-flex xs6 sm3 md4>
                   <div class="caption grey--text">Instructor</div>
                   <div>{{ course.instructor }}</div>
-                </v-flex>
+                </v-flex> -->
               </v-layout>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
@@ -46,8 +46,8 @@
 import TaskPopup from "@/components/TaskPopup"
 export default {
   props: {
-    courses: Object,
-    tasks: Object
+    courses: Array,
+    tasks: Array
   },
   
   components: { TaskPopup,

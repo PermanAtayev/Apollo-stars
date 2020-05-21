@@ -105,11 +105,11 @@ export default {
       ],
 
       exams: [
-        { name: "Midterm I", dueDate: "20/5/2020", course: "CS 101" },
-        { name: "Final", dueDate: "25/5/2020", course: "MATH 102" },
-        { name: "Midterm II", dueDate: "30/5/2020", course: "CS 342" },
-        { name: "Midterm II", dueDate: "5/6/2020", course: "CS 224" },
-        { name: "Final", dueDate: "20/6/2020", course: "CS 201" }
+        // { name: "Midterm I", dueDate: "20/5/2020", course: "CS 101" },
+        // { name: "Final", dueDate: "25/5/2020", course: "MATH 102" },
+        // { name: "Midterm II", dueDate: "30/5/2020", course: "CS 342" },
+        // { name: "Midterm II", dueDate: "5/6/2020", course: "CS 224" },
+        // { name: "Final", dueDate: "20/6/2020", course: "CS 201" }
       ],
 
       assignments: [
@@ -121,42 +121,42 @@ export default {
       ],
 
       availableCareers: [
-        {
-          id: "Java Developer",
-          description: "Do nothing",
-          type: "Full-Time",
-          salary: "2000"
-        },
-        {
-          id: "Vue Developer",
-          description: "Develop Cool UIs",
-          type: "Internship",
-          salary: "500"
-        },
-        {
-          id: "Undergrad Researcher",
-          description: "Research Corona Virus and find a cure",
-          type: "Part-Time",
-          salary: "20000"
-        },
-        {
-          id: "Animator",
-          description: "Animate some characters for Pixar",
-          type: "Full-Time",
-          salary: "9999"
-        },
-        {
-          id: "Game Developer",
-          description: "Develop cool games with Unity",
-          type: "Full-Time",
-          salary: "200"
-        },
-        {
-          id: "Office Assistant",
-          description: "Help with the office in Sports International",
-          type: "Internship",
-          salary: "0"
-        }
+        // {
+        //   id: "Java Developer",
+        //   description: "Do nothing",
+        //   type: "Full-Time",
+        //   salary: "2000"
+        // },
+        // {
+        //   id: "Vue Developer",
+        //   description: "Develop Cool UIs",
+        //   type: "Internship",
+        //   salary: "500"
+        // },
+        // {
+        //   id: "Undergrad Researcher",
+        //   description: "Research Corona Virus and find a cure",
+        //   type: "Part-Time",
+        //   salary: "20000"
+        // },
+        // {
+        //   id: "Animator",
+        //   description: "Animate some characters for Pixar",
+        //   type: "Full-Time",
+        //   salary: "9999"
+        // },
+        // {
+        //   id: "Game Developer",
+        //   description: "Develop cool games with Unity",
+        //   type: "Full-Time",
+        //   salary: "200"
+        // },
+        // {
+        //   id: "Office Assistant",
+        //   description: "Help with the office in Sports International",
+        //   type: "Internship",
+        //   salary: "0"
+        // }
       ],
 
       details: {
@@ -238,65 +238,115 @@ export default {
     //console.log("getting registerable courses");
     //var student_id = 1217017
 
-    const settings = {
-        method: "get",
-        headers: {
-            "content-Type": "application/json"
-        },
-        // body: JSON.stringify(data)
-    };
+        const settings = {
+            method: "get",
+            headers: {
+                "content-Type": "application/json"
+            },
+            // body: JSON.stringify(data)
+        };
 
-    var url = 'http://localhost:8079/student/' + this.myId.toString(10) + '/regCourseApply'
+        var url = 'http://localhost:8079/student/' + this.myId.toString(10) + '/regCourseApply'
 
-    const res = await fetch(url, settings)
-        .then(response => response.json())
-        .then(async function(text){
-            return text;
-        })
-        .catch(e => {
-            return e;
-        });
+        const res = await fetch(url, settings)
+            .then(response => response.json())
+            .then(async function(text){
+                return text;
+            })
+            .catch(e => {
+                return e;
+            });
 
-    console.log(res.rows);
-    this.registerableCourses = res.rows;
+        console.log(res.rows);
+        this.registerableCourses = res.rows;
     },
 
     fetchAssignments: async function (){
 
-    const settings = {
-        method: "get",
-        headers: {
-            "content-Type": "application/json"
-        },
-    };
+        const settings = {
+            method: "get",
+            headers: {
+                "content-Type": "application/json"
+            },
+        };
 
-    var url = 'http://localhost:8079/student/' + this.myId.toString(10) + '/assignments/display'
+        var url = 'http://localhost:8079/student/' + this.myId.toString(10) + '/assignments/display'
 
-    const res = await fetch(url, settings)
-        .then(response => response.json())
-        .then(async function(text){
-            return text;
-        })
-        .catch(e => {
-            return e;
-        });
+        const res = await fetch(url, settings)
+            .then(response => response.json())
+            .then(async function(text){
+                return text;
+            })
+            .catch(e => {
+                return e;
+            });
 
-    console.log(res.rows)
+        console.log(res.rows)
     this.assignments = res.rows;
-}
+    },
+
+
+    fetchAvailableCareers: async function (){
+
+        const settings = {
+            method: "get",
+            headers: {
+                "content-Type": "application/json"
+            },
+        };
+
+        var url = 'http://localhost:8079/student/' + this.myId.toString(10) + '/careers/display'
+
+        const res = await fetch(url, settings)
+            .then(response => response.json())
+            .then(async function(text){
+                return text;
+            })
+            .catch(e => {
+                return e;
+            });
+
+        console.log(res.rows)
+        this.availableCareers = res.rows;
+    },
+    fethDetails: async function (){
+
+        const settings = {
+            method: "get",
+            headers: {
+                "content-Type": "application/json"
+            },
+        };
+
+        var url = 'http://localhost:8079/student/' + this.myId.toString(10) + '/details/display'
+
+        const res = await fetch(url, settings)
+            .then(response => response.json())
+            .then(async function(text){
+                return text;
+            })
+            .catch(e => {
+                return e;
+            });
+
+        console.log(res.rows[0])
+        this.details = res.rows[0];
+    }
 
 
 
   }, //life cycle hooks
 
-  beforeCreate: function() {
-    this.myId = this.$route.params.id;
-  },
+//   beforeCreate: function() {
+//     this.myId = this.$route.params.id;
+//   },
   created: function(){
     this.myId = this.$route.params.id;
     this.fetchCourses();
     this.fetchRegCourses();
     this.fetchAssignments();
+    this.fetchAvailableCareers();
+    this.fethDetails();
 
   }
 };

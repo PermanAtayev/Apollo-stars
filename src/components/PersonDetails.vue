@@ -12,7 +12,7 @@
             <div class="heading black--text">Name</div>
           </v-flex>
           <v-flex md4>
-            <div class="heading black--text text-end">{{details.name}}</div>
+            <div class="heading black--text text-end">{{details.name}} {{details.surname}}</div>
           </v-flex>
         </v-layout>
         <v-layout row wrap align-center justify-space-around pa-3>
@@ -49,29 +49,34 @@
         </v-layout>
         <v-layout row wrap align-center justify-space-around px-2>
           <v-flex md4>
-            <div class="heading black--text">Phone Number(s)</div>
+            <div class="heading black--text pb-2">Phone Number</div>
           </v-flex>
           <v-flex md4>
-            <v-text-field v-for="phone in details.phone" :key="phone" :value="phone" solo rounded append-icon="create"></v-text-field>
-          </v-flex>
-        </v-layout>
-        <v-layout row wrap align-center justify-space-around pa-3>
-          <v-flex md4>
-            <div class="heading black--text">Date Joined</div>
-          </v-flex>
-          <v-flex md4>
-            <div class="heading black--text text-end">{{details.year}}</div>
+            <v-text-field :value="details.phone_no" solo rounded append-icon="create"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row wrap align-center justify-space-around pa-3>
           <v-flex md4>
-            <div class="heading black--text">Dorm</div>
+            <div class="heading black--text">Enrolled On</div>
           </v-flex>
           <v-flex md4>
-            <div class="heading black--text text-end">{{details.dorm}}</div>
+            <div class="heading black--text text-end">{{refinedEnrollDate}}</div>
+          </v-flex>
+        </v-layout>
+        <v-layout row wrap align-center justify-space-around pa-3>
+          <v-flex md4>
+            <div class="heading black--text">Tution Fee</div>
+          </v-flex>
+          <v-flex md4>
+            <div class="heading black--text text-end">{{details.tuition_fee}}</div>
           </v-flex>
         </v-layout>
       </v-card>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn rounded large outlined @click="updateDetails()" color="success">UPDATE DETAILS</v-btn>
+        <v-spacer></v-spacer>
+      </v-card-actions>
     </v-container>
 </template>
 
@@ -82,15 +87,26 @@ export default {
   },
 
   computed: {
+
+    refinedEnrollDate: function(){
+
+      var newDate = this.details.date_enrolled.substr(0,10);
+      var outDate = '';
+      outDate += newDate.substr(8,10) + '/';
+      outDate += newDate.substr(5,2) + '/';
+      outDate += newDate.substr(0,4);
+      return outDate;
+    },
+
     initials: function() {
-      return this.details.name
+      return (this.details.name + this.details.surname)
         .split(" ")
         .map(n => n[0])
         .join(" "); //Just shows the initials of a Name
     },
-    totalPhoneNumbers: function(){
-      return this.details.phone.length;
-    },
+    // totalPhoneNumbers: function(){
+    //   return this.details.phone.length;
+    // },
   },
 
   methods: {
