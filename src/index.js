@@ -109,12 +109,15 @@ app.post('/student/:id/register', (req,res)=>{
 // list all registered courses of a student
 // TESTED
 app.get('/student/:id/regCourseView', (req,res)=>{
-  q = `SELECT
-    course.name
-  FROM Course as course,
-    Courses_Registered
+  q = `SELECT course.name as course_id,course.credits,section.section_id,i.name as instructor_name, i.surname as instructor_surname
+  FROM Course as course, Section as section, Courses_Registered, Teaches, Instructor as i
   WHERE Courses_Registered.student_id = $1 AND
-    Course.course_id = Courses_Registered.course_id;`;
+    Course.course_id = Courses_Registered.course_id AND
+    Course.course_id = section.course_id AND
+    Courses_Registered.student_id = $1 AND 
+    Courses_Registered.sec_id = section.section_id AND
+    Teaches.instructor_id = i.id AND
+    Teaches.section_id = section.section_id`;
   client.query(q,[req.params.id], (err,result)=>{
     if (err){
       console.log(err);
