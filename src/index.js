@@ -12,6 +12,13 @@ var bodyParser = require('body-parser');
 // create express app
 const app = express();
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+
 app.use(express.json())
 
 let server = require('http').Server(app);
@@ -21,7 +28,7 @@ server.listen(port, () => console.log('listening on port ' + port));
 
 // home router
 app.get('/', function(req, res){
-    res.send("Apollo Stars");
+    return res.status(200).send("Apollo Stars");
 });
 
 // connect to heroku database
@@ -35,9 +42,9 @@ client.connect();
 // ---------------------------------- Authentication Routes ---------------------------------- //
 // Login
 //TESTED
-app.get('/login', (req,res,next)=>{
+app.post('/login', (req,res,next)=>{
   // res.send("At login");
-    q = `SELECT password FROM Person WHERE id=$1`
+    q = `SELECT * FROM Person WHERE id=$1`
 
     client.query(q, [req.body.id], (err, result)=>{
         if (err){
@@ -46,7 +53,7 @@ app.get('/login', (req,res,next)=>{
         else{
             // res.send(result);
             if(result.rows[0].password === req.body.password){
-                return res.status(200).send('Logged in')
+                return res.status(200).send(result.rows[0])
             }
             else{
                 return res.status(404).send('Not found')

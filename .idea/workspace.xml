@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d56a08ef-b48f-44a5-955e-95e7e46f8697" name="Default Changelist" comment="Merge branch 'backend' of github.com:PermanAtayev/stars-2.0 into backend&#10;&#10;# Please enter a commit message to explain why this merge is necessary,&#10;# especially if it merges an updated upstream into a topic branch.&#10;#&#10;# Lines starting with '#' will be ignored, and an empty message aborts&#10;# the commit.">
-      <change afterPath="$PROJECT_DIR$/src/postgres_setup/del.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,6 +56,7 @@
       <workItem from="1589977182091" duration="12008000" />
       <workItem from="1589998455083" duration="5012000" />
       <workItem from="1590003540251" duration="295000" />
+      <workItem from="1590048911242" duration="1898000" />
     </task>
     <task id="LOCAL-00001" summary="tas dummy data">
       <created>1589973009370</created>
@@ -135,10 +136,10 @@
       <screen x="67" y="27" width="1299" height="741" />
     </state>
     <state x="174" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1299.741@67.27.1299.741" timestamp="1589973600052" />
-    <state x="264" y="29" width="912" height="739" key="CommitChangelistDialog2" timestamp="1590003864449">
+    <state x="264" y="29" width="912" height="739" key="CommitChangelistDialog2" timestamp="1590049443909">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
-    <state x="264" y="29" width="912" height="739" key="CommitChangelistDialog2/67.27.1299.741@67.27.1299.741" timestamp="1590003864449" />
+    <state x="264" y="29" width="912" height="739" key="CommitChangelistDialog2/67.27.1299.741@67.27.1299.741" timestamp="1590049443909" />
     <state x="94" y="158" width="1099" height="541" key="DiffContextDialog" timestamp="1589918628983">
       <screen x="67" y="27" width="1299" height="741" />
     </state>
