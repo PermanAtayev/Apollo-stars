@@ -13,6 +13,8 @@
 import Navbar from "@/components/Navbar";
 import Foot from "@/components/Foot";
 import InstructorReport from "@/components/InstructorReport";
+import SalaryInstructorReport from "@/components/SalaryInstructorReport";
+import RangeReport from "@/components/RangeReport";
 import GradeReport from "@/components/GradeReport";
 
 export default {
@@ -24,7 +26,10 @@ export default {
       actions: [
         //will add the route later
         { title: "Instructor Report", icon: "assignment_ind" },
-        { title: "Grade Report", icon: "assessment" }
+        { title: "Grade Report", icon: "assessment" },
+        { title: "Salary Report", icon: "assignment" },
+        { title: "Salary Range", icon: "assignment" },
+
       ],
 
       instructorData: [
@@ -87,15 +92,16 @@ export default {
 
       exams: [
         //will add the route later
-        { name: "CS 224 Mid 1", avgGrade: 24 },
-        { name: "CS 224 Mid 2", avgGrade: 16 },
-        { name: "CS 321 Mid 1", avgGrade: 22 },
-        { name: "CS 552 Final", avgGrade: 90 },
-        { name: "CS 445 Final", avgGrade: 12 },
-        { name: "CS 112 Mid 2", avgGrade: 66 },
-        { name: "CS 101 Mid 1", avgGrade: 87 },
-        { name: "CS 101 Mid 2", avgGrade: 6 }
-      ]
+        // { name: "CS 224 Mid 1", avgGrade: 24 },
+        // { name: "CS 224 Mid 2", avgGrade: 16 },
+        // { name: "CS 321 Mid 1", avgGrade: 22 },
+        // { name: "CS 552 Final", avgGrade: 90 },
+        // { name: "CS 445 Final", avgGrade: 12 },
+        // { name: "CS 112 Mid 2", avgGrade: 66 },
+        // { name: "CS 101 Mid 1", avgGrade: 87 },
+        // { name: "CS 101 Mid 2", avgGrade: 6 }
+      ],
+      rankings: [],
     };
   },
 
@@ -103,16 +109,25 @@ export default {
     Navbar,
     Foot,
     "Instructor Report": InstructorReport,
-    "Grade Report": GradeReport
+    "Grade Report": GradeReport, "Salary Report": SalaryInstructorReport, "Salary Range": RangeReport,
   },
 
   computed: {
     currentProperties: function() {
       if (this.currentPage === "Instructor Report") {
         return { instructors: this.instructorData };
-      } else if (this.currentPage === "Grade Report") {
+      } 
+      else if (this.currentPage === "Grade Report") {
         return { exams: this.exams };
-      } else return {};
+      }
+      else if (this.currentPage === "Salary Report") {
+        return { rankings: this.rankings };
+      }
+      else if (this.currentPage === "SSalary Range") {
+        return {  };
+      }
+       
+      else return {};
     }
   },
 
@@ -142,11 +157,61 @@ export default {
 
       console.log(res.rows);
       this.instructorData = res.rows;
-    }
+    },
+    fetchGradeReport: async function() {
+      const settings = {
+        method: "get",
+        headers: {
+          "content-Type": "application/json"
+        }
+      };
+
+      var url =
+        "http://localhost:8079/report/second";
+      const res = await fetch(url, settings)
+        .then(response => response.json())
+        .then(async function(text) {
+          return text;
+        })
+        .catch(e => {
+          return e;
+        });
+
+      console.log(res.rows);
+      this.exams = res.rows;
+    },
+     fetchRankings: async function() {
+      const settings = {
+        method: "get",
+        headers: {
+          "content-Type": "application/json"
+        }
+      };
+
+      var url =
+        "http://localhost:8079/rankings/view/";
+      const res = await fetch(url, settings)
+        .then(response => response.json())
+        .then(async function(text) {
+          return text;
+        })
+        .catch(e => {
+          return e;
+        });
+
+      console.log(res.rows);
+      this.rankings = res.rows;
+    },
+    
+    
+
   },
   created: function(){
-    this.fethDetails();
+    this.fethchInstructorReport();
+    this.fetchGradeReport();
+    this.fetchRankings();
 
+    
   },
   //life cycle hooks
 };
