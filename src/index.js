@@ -35,7 +35,7 @@ client.connect();
 // ---------------------------------- Authentication Routes ---------------------------------- //
 // Login
 //TESTED
-app.get('/login', (req,res,next)=>{
+app.post('/login', (req,res,next)=>{
   // res.send("At login");
     q = `SELECT password FROM Person WHERE id=$1`
 
