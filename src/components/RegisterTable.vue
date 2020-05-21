@@ -3,7 +3,7 @@
     <v-card flat>
       <v-row justify-space-between>
         <v-col cols="6" class="px-5">
-					<h4 class="headline text--primary font-italic font-weight-medium pb-5">Registered Courses</h4>
+					<h4 class="headline text--primary font-italic font-weight-light pb-5">Registered Courses</h4>
 					<v-card raised="2">
           <v-layout row wrap v-for="course in courses" :key="course.code" px-5>
             <v-flex xs12 md4>
@@ -42,7 +42,7 @@
 
         <v-col cols="6" class="px-5">
 
-					<h4 class="headline text--primary font-italic font-weight-medium pb-5" >Available Courses</h4>
+					<h4 class="headline text--primary font-italic font-weight-light pb-5" >Available Courses</h4>
           <v-card raised="3">
 					<v-layout row wrap v-for="regCourse in regCourses" :key="regCourse.code" px-5>
             <v-flex xs12 md4>

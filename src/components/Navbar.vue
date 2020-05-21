@@ -1,17 +1,17 @@
 <template>
   <nav>
-    <v-toolbar flat color="primary" app>
+    <v-app-bar flat color="primary" app>
       <v-app-bar-nav-icon dark @click="drawer = !drawer" ></v-app-bar-nav-icon>
       <v-toolbar-title class="text uppercase white--text">
         <span class="font-weight-light">Apollo</span>
         <span>Stars</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn router to="/" flat color="white">
+      <v-btn router to="/" text color="white">
         <span>Log out</span>
         <v-icon right>exit_to_app</v-icon>
       </v-btn>
-    </v-toolbar>
+    </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" app color="grey lighten-3">
       <v-list-item>
@@ -46,7 +46,7 @@ import RGroupPopup from '@/components/RGroupPopup'
 export default {
   name: "Navbar",
   props: {
-    drawerItems: Object,
+    drawerItems: Array,
     isStudent: { default: false, type: Boolean},
     hasGroups: { default: true, type: Boolean}
   },

@@ -44,7 +44,7 @@
             <div class="heading black--text">Passowrd</div>
           </v-flex>
           <v-flex md4>
-            <v-text-field v-on:input="updateDetails()" :value="details.password" type="password" solo rounded append-icon="create"></v-text-field>
+            <v-text-field v-on:input="updateDetails" :value="details.password" type="password" solo rounded append-icon="create"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row wrap align-center justify-space-around px-2>
@@ -57,7 +57,7 @@
         </v-layout>
         <v-layout row wrap align-center justify-space-around pa-3>
           <v-flex md4>
-            <div class="heading black--text">Year</div>
+            <div class="heading black--text">Date Joined</div>
           </v-flex>
           <v-flex md4>
             <div class="heading black--text text-end">{{details.year}}</div>

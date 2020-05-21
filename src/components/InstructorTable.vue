@@ -1,8 +1,8 @@
 <template>
     <v-container class="my-5">
         <v-layout row wrap mb-3>
-            <ExamPopup label= "Assigned Exams" />
-            <AssignmentsPopup label= "Given Assignments" />
+            <ExamPopup :items = this.exams label= "Assigned Exams" />
+            <AssignmentsPopup :items = this.assignments label= "Given Assignments" />
         </v-layout>
             <v-card flat >
                 <v-layout row wrap v-for="course in courses" :key="course.code" class="py-2">
@@ -55,7 +55,9 @@ import CreateAssignmentPopup from "@/components/CreateAssignmentPopup"
 
 export default {
     props: {
-        courses: Array
+        courses: Array,
+        exams: Array,
+        assignments: Array,
     },
 
     components: { ExamPopup, AssignmentsPopup, TaskPopup, CreateExamPopup, CreateAssignmentPopup

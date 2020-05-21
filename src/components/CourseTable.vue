@@ -57,10 +57,9 @@ import AssignmentsPopup from "@/components/AssignmentsPopup"
 import ExamPopup from "@/components/ExamPopup"
 export default {
     props: {
-        courses: Object,
-        exams: Object,
-        assignments: Object,
-
+        courses: Array,
+        exams: Array,
+        assignments: Array,
     },
 
     components: { GradesPopup, AssignmentsPopup, ExamPopup, AssessPopup,
