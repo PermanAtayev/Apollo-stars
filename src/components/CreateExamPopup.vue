@@ -49,7 +49,7 @@
         </v-container>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn large text color="primary" @click="dialog = false">Submit</v-btn>
+          <v-btn large text color="primary" @click="dialog = false; console.log(date)">Create</v-btn>
           <v-btn large text color="error" @click="dialog = false">Close</v-btn>
         </v-card-actions>
       </v-card>
@@ -69,6 +69,17 @@ export default {
       menu: false,
       score: 0
     };
-  }
+  },
+    computed: {
+      //use the fixed date
+    fixedDate: function(){
+      var newDate ="";
+      newDate += this.date.substr(8,10) + '/';
+      newDate += this.date.substr(5,2) + '/';
+      newDate += this.date.substr(0,4);
+      return newDate;
+    },
+
+  },
 };
 </script>

@@ -10,7 +10,7 @@
             <h5 class="title">Creating Assignment For {{ this.courseCode }}</h5>
           </v-layout>
           <v-layout row wrap px-3 justify-space-around>
-            <v-text-field label="Assignment Name"></v-text-field>
+            <v-text-field required v-model="assignmentName" label="Assignment Name"></v-text-field>
           </v-layout>
           <!-- <v-layout row wrap px-3 justify-space-around>
             <v-text-field label="Due Date"></v-text-field>
@@ -46,7 +46,7 @@
         </v-container>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn large text color="primary" @click="dialog = false">Submit</v-btn>
+          <v-btn large text color="primary" @click="dialog = false; create()">Create</v-btn>
           <v-btn large text color="error" @click="dialog = false">Close</v-btn>
         </v-card-actions>
       </v-card>
@@ -66,8 +66,27 @@ export default {
       dialog: false,
       date: new Date().toISOString().substr(0, 10),
       menu: false,
-      score: 0
+      score: 0,
+      assignmentName: '',
     };
+  },
+  //2020-05-20
+  computed: {
+    fixedDate: function(){
+      var newDate ="";
+      newDate += this.date.substr(8,10) + '/';
+      newDate += this.date.substr(5,2) + '/';
+      newDate += this.date.substr(0,4);
+      return newDate;
+    },
+
+  },
+
+  methods: {
+    create: function(){
+      console.log('Assignment ' + this.assignmentName + ' Due on ' + this.fixedDate);
+    }
+
   }
 };
 </script>

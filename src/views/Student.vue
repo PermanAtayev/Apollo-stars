@@ -39,6 +39,7 @@
                     {name: "Computer Organization", code: "CS 224", instructor: "Albert Einstein", section: "10", credits: "6"},
                     {name: "Operating Systems", code: "CS 342", instructor: "Selim Aksoy", section: "1", credits: "1"},
                 ],
+
                 registerableCourses: [
                     {name: "Algorithms and Programming II", code: "CS 102", instructor: "David Mavenhoarde", section: "5", credits: "3"},
                     {name: "Linear Math", code: "MATH 225", instructor: "Bilgen Milgen", section: "1", credits: "2"},
@@ -52,7 +53,6 @@
                     { name: "Midterm II", dueDate: "30/5/2020" , course: "CS 342" },
                     { name: "Midterm II", dueDate: "5/6/2020" , course: "CS 224" },
                     { name: "Final", dueDate: "20/6/2020" , course: "CS 201" },
-
                 ],
 
                 assignments: [
@@ -70,10 +70,9 @@
                     {id: "Animator", description: "Animate some characters for Pixar", type: "Full-Time", salary: "9999"},
                     {id: "Game Developer", description: "Develop cool games with Unity", type: "Full-Time", salary: "200"},
                     {id: "Office Assistant", description: "Help with the office in Sports International", type: "Internship", salary: "0"},
-
                 ],
 
-                details: {name: "Balaj Saleem", id: 21701041, gpa: 3.2, email:"balaj.saleem@ug.bilkent.edu.tr", password: "12345678", year: "Third Year", dorm: "77", phone: ["+90 553 169 5037", "+90 500 100 5000"]},
+                details: {name: "Balaj Saleem", id: 21701041, gpa: 3.2, email:"balaj.saleem@ug.bilkent.edu.tr", password: "12345678", year: "10/10/2020", dorm: "77", phone: ["+90 553 169 5037", "+90 500 100 5000"]},
 
             };
         },
@@ -104,12 +103,11 @@
             onNavBarSelect(value){
                 this.currentPage = value
             }
-
-
-
-
         }
+
         //life cycle hooks
+
+
     }
 
 

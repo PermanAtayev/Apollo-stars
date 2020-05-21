@@ -10,7 +10,7 @@
                <h5 class="title"> Assesing {{ this.instructorName }} </h5>
           </v-layout>
           <v-layout row wrap px-3 justify-space-around>
-              <v-slider v-model="score" label="Instructor Score" min="0" max="10" thumb-label class="pa-1"></v-slider>
+              <v-slider v-model="score" label="Instructor Score" min="0" max="5" thumb-label class="pa-1"></v-slider>
           </v-layout>
           <v-layout row wrap px-3 justify-space-around>
               <v-text-field v-model="comment" label="Comment"></v-text-field>

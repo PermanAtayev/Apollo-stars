@@ -52,9 +52,9 @@
 import CreateTaskPopup from "@/components/CreateTaskPopup"
 export default {
   props: {
-    courses: Object,
-    tasks: Object,
-    availableTAs: Object,
+    courses: Array,
+    tasks: Array,
+    availableTAs: Array,
   },
 
     data() {
@@ -96,19 +96,5 @@ export default {
 
   components: { CreateTaskPopup },
 
-  //   computed: {
-  //       tasksForCourses: function(){
-  //           courseTasks = {}
-  //           for(course in courses){
-  //               courseTasks.
-  //               for(task in tasks){
-  //                   if(task.code == course.code){
-
-  //                   }
-  //               }
-
-  //           }
-  //       }
-  //   }
 };
 </script>
