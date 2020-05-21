@@ -105,6 +105,9 @@
                 this.currentPage = value
             }
 
+
+
+
         }
         //life cycle hooks
     }
