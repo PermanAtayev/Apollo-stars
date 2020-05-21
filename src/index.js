@@ -28,7 +28,7 @@ server.listen(port, () => console.log('listening on port ' + port));
 
 // home router
 app.get('/', function(req, res){
-    res.send("Apollo Stars");
+    return res.status(200).send("Apollo Stars");
 });
 
 // connect to heroku database
@@ -44,7 +44,7 @@ client.connect();
 //TESTED
 app.post('/login', (req,res,next)=>{
   // res.send("At login");
-    q = `SELECT password FROM Person WHERE id=$1`
+    q = `SELECT * FROM Person WHERE id=$1`
 
     client.query(q, [req.body.id], (err, result)=>{
         if (err){
@@ -53,7 +53,7 @@ app.post('/login', (req,res,next)=>{
         else{
             // res.send(result);
             if(result.rows[0].password === req.body.password){
-                return res.status(200).send('Logged in')
+                return res.status(200).send(result.rows[0])
             }
             else{
                 return res.status(404).send('Not found')
