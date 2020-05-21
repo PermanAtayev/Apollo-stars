@@ -16,17 +16,17 @@ Vue.use(VueRouter);
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: "/instructor",
+    path: "/instructor:id",
     name: "Instructor",
     component: () => import('../views/Instructor')
   },
   {
-    path: '/student',
+    path: '/student:id',
     name: 'Student',
     component: () => import('../views/Student')
   },
   {
-    path: '/ta',
+    path: '/ta:id',
     name: 'TA',
     component: () => import('../views/TA'),
   },

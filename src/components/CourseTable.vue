@@ -5,22 +5,22 @@
             <AssignmentsPopup :items = this.assignments label="Upcoming Assignments" />
         </v-layout>
             <v-card flat >
-                <v-layout row wrap v-for="course in courses" :key="course.code" class="py-3">
-                    <v-flex xs12 md2>
+                <v-layout row wrap v-for="course in courses" :key="course.course_id" class="py-3">
+                    <v-flex xs12 md3>
                         <div class="caption grey--text">Name</div>
-                        <div>{{ course.name }}</div>
+                        <div>{{ course.course_id }}</div>
                     </v-flex>
-                    <v-flex xs6 sm3 md2>
+                    <!-- <v-flex xs6 sm3 md2>
                         <div class="caption grey--text">Code</div>
                         <div>{{ course.code }}</div>
-                    </v-flex>
+                    </v-flex> -->
                     <v-flex xs6 sm3 md2>
                         <div class="caption grey--text">Instructor</div>
-                        <div>{{ course.instructor }}</div>
+                        <div>{{ course.instructor_name }} {{ course.instructor_surname }}</div>
                     </v-flex>
                     <v-flex xs6 sm3 md1>
                         <div class="caption grey--text">Section</div>
-                        <div>{{ course.section }}</div>
+                        <div>{{ course.section_id }}</div>
                     </v-flex>
                     <v-flex xs6 sm3 md1>
                         <div class="caption grey--text">Credits</div>

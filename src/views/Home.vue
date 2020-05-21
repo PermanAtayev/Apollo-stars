@@ -36,9 +36,9 @@
                       <v-layout justify-center>
                         <v-card-actions>
                           <v-radio-group row v-model="role" class="justify-center">
-                            <v-radio label="Teacher" :value="teacher" color="teal"></v-radio>
-                            <v-radio label="Student" :value="student" color="teal"></v-radio>
-                            <v-radio label="Teaching Assistant" :value="ta" color="teal"></v-radio>
+                            <v-radio label="Teacher" color="teal"></v-radio>
+                            <v-radio label="Student" color="teal"></v-radio>
+                            <v-radio label="Teaching Assistant" color="teal"></v-radio>
                           </v-radio-group>
                         </v-card-actions>
                       </v-layout>
@@ -103,9 +103,9 @@
                         <v-layout justify-center>
                           <v-card-actions>
                             <v-radio-group row v-model="role" class="justify-center">
-                              <v-radio label="Teacher" :value="teacher" color="teal"></v-radio>
-                              <v-radio label="Student" :value="student" color="teal"></v-radio>
-                              <v-radio label="Teaching Assistant" :value="ta" color="teal"></v-radio>
+                              <v-radio label="Teacher"  color="teal"></v-radio>
+                              <v-radio label="Student" color="teal"></v-radio>
+                              <v-radio label="Teaching Assistant" color="teal"></v-radio>
                             </v-radio-group>
                           </v-card-actions>
                         </v-layout>
@@ -130,13 +130,18 @@ export default {
     step: 1,
     role: "",
     id: "",
-    password: ""
+    password: "",
+
+    //baseUrl: "https://intense-river-78098.herokuapp.com/"
+    baseUrl: "http://localhost:8079"
+
   }),
   props: {
     source: String
   },
   methods: {
     login: async function() {
+      var userIsValid = true;
       console.log("logging in with id: " + parseInt(this.id), " pass:" +  this.password);
       let data = { id: parseInt(this.id), password: this.password };
 
@@ -148,18 +153,48 @@ export default {
         body: JSON.stringify(data)
       };
 
-      const res = await fetch("http://localhost:8079/login", settings)
+
+      //const recievedJson = await res.json;
+
+      const res = await fetch(this.baseUrl+"/login", settings)
         .then(response => response.json())
         .then(async function(text){
           return text;
         })
         .catch(e => {
+           userIsValid = false;
           return e;
         });
-
       console.log(res)
+      //take them to the route
+      if(userIsValid){
+      console.log(this.role)
+        let person_id = res.id;
+
+        if(person_id.toString().substr(0,1) == "2" && this.role == '0'){
+          this.$router.push( {name: 'Instructor', params:{id: person_id} } )
+        }
+
+        else if(person_id.toString().substr(0,1) == "1" && this.role == '1'){
+          console.log("IM IN")
+          this.$router.push({name: 'Student', params:{id: person_id} })
+        }
+
+        else if(person_id.toString().substr(0,1) == "1" && this.role == '2'){
+          this.$router.push({name: 'TA', params:{id: person_id} })
+        }
+        else{
+          alert("Please enter valid details");
+        }
+
+
+      }
+
+      //teacher
+      //2217034
 
     }
+
   }
 };
 

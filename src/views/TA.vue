@@ -24,7 +24,8 @@
             return {
                 
                 currentPage: "Courses",
-                
+                myId: '',
+
                 actions: [ //will add the route later
                     {title: "Courses", icon: "class"},
                     {title: "Register", icon: "add_box"},
@@ -78,7 +79,7 @@
                     {code: "MATH 103", task: "Grade Midterm", deadline: '1/5/2020' },
 
                 ],
-                details: {name: "Balaj Saleem", id: 21701041, gpa: 3.2, email:"balaj.saleem@ug.bilkent.edu.tr", password: "12345678", year: "Third Year", dorm: "77", phone: ["+90 553 169 5037", "+90 500 100 5000"]},
+                details: {name: "Balaj Saleem", id: this.myId, gpa: 3.2, email:"balaj.saleem@ug.bilkent.edu.tr", password: "12345678", year: "Third Year", dorm: "77", phone: ["+90 553 169 5037", "+90 500 100 5000"]},
 
             };
         },
@@ -111,7 +112,10 @@
                 this.currentPage = value
             }
 
-        }
+        },
+        beforeCreate: function() {
+            this.myId= this.$route.params.id;
+        },
 
         //life cycle hooks
     }

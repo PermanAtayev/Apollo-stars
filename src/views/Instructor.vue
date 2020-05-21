@@ -22,6 +22,7 @@ export default {
     return {
       drawer: false,
       currentPage: "Courses",
+      myId: "",
 
       actions: [
         { title: "Courses", icon: "class", owner: "instructor" },
@@ -99,6 +100,10 @@ export default {
       this.currentPage = value;
     }
     //FETCH METHODS
+  },
+
+  beforeCreate: function() {
+    this.myId = this.$route.params.id;
   }
 };
 </script>
