@@ -129,7 +129,6 @@ CREATE TABLE Research_Group (
 
 CREATE TABLE Study_Group (
   group_id INT PRIMARY KEY,
-  id INT REFERENCES Student(id) ON DELETE CASCADE,
   group_name VARCHAR (100),
   purpose VARCHAR (100)
 );
