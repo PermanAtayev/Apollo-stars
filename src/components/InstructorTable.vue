@@ -6,25 +6,23 @@
         </v-layout>
             <v-card flat >
                 <v-layout row wrap v-for="course in courses" :key="course.code" class="py-2">
-                    <v-flex xs12 md2>
+                    <v-flex xs12 md3>
                         <div class="caption grey--text">Name</div>
                         <div>{{ course.name }}</div>
                     </v-flex>
-                    <v-flex xs6 sm3 md2>
-                        <div class="caption grey--text">Code</div>
-                        <div>{{ course.code }}</div>
-                    </v-flex>
-                    <v-flex xs6 sm3 md1>
+<!--                    <v-flex xs6 sm3 md2>-->
+<!--                        <div class="caption grey&#45;&#45;text">Code</div>-->
+<!--                        <div>{{ course.code }}</div>-->
+<!--                    </v-flex>-->
+                    <v-flex xs6 sm3 md3>
                         <div class="caption grey--text">Section</div>
-                        <div>{{ course.section }}</div>
+                        <div>{{ course.section_id }}</div>
                     </v-flex>
-                    <v-flex xs6 sm3 md2>
+                    <!-- <v-flex xs6 sm3 md2>
                         <div>
-                            <!-- onClick: Delete course from the courses of student -->
-                            <!-- <v-btn small rounded outlined class="my-3" color="warning">Withdraw</v-btn> -->
                             <TaskPopup label="Grade Students"/>
                         </div>
-                    </v-flex>
+                    </v-flex> -->
                     <v-flex xs6 sm3 md2>
                         <div>
                             <!-- onClick: Delete course from the courses of student -->
@@ -47,7 +45,7 @@
 <script>
 import AssignmentsPopup from "@/components/AssignmentsPopup"
 import ExamPopup from "@/components/ExamPopup"
-import TaskPopup from "@/components/TaskPopup"
+//import TaskPopup from "@/components/TaskPopup"
 import CreateExamPopup from "@/components/CreateExamPopup"
 import CreateAssignmentPopup from "@/components/CreateAssignmentPopup"
 
@@ -60,7 +58,7 @@ export default {
         assignments: Array,
     },
 
-    components: { ExamPopup, AssignmentsPopup, TaskPopup, CreateExamPopup, CreateAssignmentPopup
+    components: { ExamPopup, AssignmentsPopup,  CreateExamPopup, CreateAssignmentPopup, //TaskPopup,
     }
 
 }

@@ -30,9 +30,9 @@ export default {
       ],
 
       courses: [
-        { name: "Algorithms and Programming I", code: "CS 101", section: "2" },
-        { name: "Machine Learning", code: "CS 408", section: "1" },
-        { name: "Programming Languages", code: "CS 315", section: "5" }
+        // { name: "Algorithms and Programming I", code: "CS 101", section: "2" },
+        // { name: "Machine Learning", code: "CS 408", section: "1" },
+        // { name: "Programming Languages", code: "CS 315", section: "5" }
       ],
 
       taTasks: [
@@ -45,19 +45,19 @@ export default {
       ],
 
       exams: [
-        { name: "Midterm I", dueDate: "20/5/2020", course: "CS 101" },
-        { name: "Final", dueDate: "25/5/2020", course: "MATH 102" },
-        { name: "Midterm II", dueDate: "30/5/2020", course: "CS 342" },
-        { name: "Midterm II", dueDate: "5/6/2020", course: "CS 224" },
-        { name: "Final", dueDate: "20/6/2020", course: "CS 201" }
+        // { name: "Midterm I", dueDate: "20/5/2020", course: "CS 101" },
+        // { name: "Final", dueDate: "25/5/2020", course: "MATH 102" },
+        // { name: "Midterm II", dueDate: "30/5/2020", course: "CS 342" },
+        // { name: "Midterm II", dueDate: "5/6/2020", course: "CS 224" },
+        // { name: "Final", dueDate: "20/6/2020", course: "CS 201" }
       ],
 
       assignments: [
-        { name: "Lab 1", dueDate: "20/5/2020", course: "CS 101" },
-        { name: "Quiz 1", dueDate: "25/5/2020", course: "MATH 102" },
-        { name: "Homework 3", dueDate: "30/5/2020", course: "CS 342" },
-        { name: "Project 2", dueDate: "5/6/2020", course: "CS 224" },
-        { name: "Demo", dueDate: "8/6/2020", course: "CS 201" }
+        // { name: "Lab 1", dueDate: "20/5/2020", course: "CS 101" },
+        // { name: "Quiz 1", dueDate: "25/5/2020", course: "MATH 102" },
+        // { name: "Homework 3", dueDate: "30/5/2020", course: "CS 342" },
+        // { name: "Project 2", dueDate: "5/6/2020", course: "CS 224" },
+        // { name: "Demo", dueDate: "8/6/2020", course: "CS 201" }
       ],
 
       availableTAs: [
@@ -98,12 +98,92 @@ export default {
   methods: {
     onNavBarSelect(value) {
       this.currentPage = value;
-    }
+    },
+
+    fetchInstructorCourses: async function() {
+      let settings = {
+        method: "get",
+        headers: {
+          "content-Type": "application/json"
+        }
+      };
+      let url =
+              "http://localhost:8079/instructor/" +
+              this.myId.toString(10) +
+              "/courses/display";
+
+      let res = await fetch(url, settings)
+              .then(response => response.json())
+              .then(async function(text) {
+                return text;
+              })
+              .catch(e => {
+                return e;
+              });
+    this.courses = res.rows
     //FETCH METHODS
   },
+    fetchAllExams: async function(){
+      let settings = {
+        method: "get",
+        headers: {
+          "content-Type": "application/json"
+        }
+      };
+
+      let url =
+              "http://localhost:8079/instructor/" +
+              this.myId.toString(10) +
+              "/exams/display";
+
+      let res = await fetch(url, settings)
+              .then(response => response.json())
+              .then(async function(text) {
+                return text;
+              })
+              .catch(e => {
+                return e;
+              });
+
+      console.log(res.rows)
+      this.exams = res.rows
+    },
+
+    fetchAllAssignments: async function(){
+      let settings = {
+        method: "get",
+        headers: {
+          "content-Type": "application/json"
+        }
+      };
+      let url =
+              "http://localhost:8079/instructor/" +
+              this.myId.toString(10) +
+              "/assignments";
+
+      let res = await fetch(url, settings)
+              .then(response => response.json())
+              .then(async function(text) {
+                return text;
+              })
+              .catch(e => {
+                return e;
+              });
+
+      console.log(res.rows)
+      this.assignments = res.rows
+    },
+
 
   beforeCreate: function() {
     this.myId = this.$route.params.id;
+  },
+  },
+  created: function(){
+    this.myId = this.$route.params.id;
+    this.fetchInstructorCourses();
+    this.fetchAllExams();
+    this.fetchAllAssignments();
   }
 };
 </script>

@@ -10,47 +10,27 @@
             <h5 class="title">Creating Exam For {{ this.courseCode }}</h5>
           </v-layout>
           <v-layout row wrap px-3 justify-space-around>
-            <v-text-field label="Exam Name"></v-text-field>
+            <v-text-field label="Exam Name" v-model="exam_name1"></v-text-field>
           </v-layout>
           <v-layout row wrap px-3 justify-space-around>
-            <v-text-field label="Start Time"></v-text-field>
+            <v-text-field label="Course ID" v-model="course_id"></v-text-field>
           </v-layout>
           <v-layout row wrap px-3 justify-space-around>
-            <v-text-field label="End Time"></v-text-field>
+            <v-text-field label="Start Date" v-model="start_date"></v-text-field>
+          </v-layout>
+          <v-layout row wrap px-3 justify-space-around>
+            <v-text-field label="End Date" v-model="end_date"></v-text-field>
           </v-layout>
           <v-layout row wrap px-3 justify-space-around>
             <v-col cols="12" sm="6" md="4">
-              <v-menu
-                ref="menu"
-                v-model="menu"
-                :close-on-content-click="false"
-                :return-value.sync="date"
-                transition="scale-transition"
-                offset-y
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="date"
-                    label="Date"
-                    prepend-icon="event"
-                    readonly
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker v-model="date" no-title scrollable>
-                  <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                  <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-                </v-date-picker>
-              </v-menu>
+
             </v-col>
           </v-layout>
         </v-container>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn large text color="primary" @click="dialog = false; console.log(date)">Create</v-btn>
-          <v-btn large text color="error" @click="dialog = false">Close</v-btn>
+          <v-btn large text color="primary" @click="dialog = false, createAnExam()">Create</v-btn>
+          <v-btn large text color="error" @click="dialog = false;">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -64,6 +44,10 @@ export default {
   },
   data() {
     return {
+      course_id: -1,
+      exam_name1: "",
+      start_date: "",
+      end_date: "",
       dialog: false,
       date: new Date().toISOString().substr(0, 10),
       menu: false,
@@ -73,7 +57,7 @@ export default {
     computed: {
       //use the fixed date
     fixedDate: function(){
-      var newDate ="";
+      let newDate ="";
       newDate += this.date.substr(8,10) + '/';
       newDate += this.date.substr(5,2) + '/';
       newDate += this.date.substr(0,4);
@@ -81,5 +65,43 @@ export default {
     },
 
   },
+  methods: {
+    createAnExam: async function(){
+      let exam_id = Math.ceil(Math.random() * 100000);
+      let data = {exam_id, exam_name: this.exam_name1, start_time: this.start_date, end_time: this.end_date, course_id: this.course_id}
+
+      // console.log(this.exam_name1, this.start_date, this.end_date, this.myId)
+
+      console.log(JSON.stringify(data))
+
+      let settings = {
+        method: "post",
+        headers: {
+          "content-Type": "text/plain"
+        },
+        body: JSON.stringify(data)
+      };
+
+      let url =
+              "http://localhost:8079/instructor/" +
+              this.myId.toString(10) +
+              "/create/exam";
+
+      let res = await fetch(url, settings)
+              .then(response => response.json())
+              .then(async function(text) {
+                return text;
+              })
+              .catch(e => {
+                return e;
+              });
+
+      console.log(res)
+      // console.log(res + "why am I not getting anything at all")
+    }
+  },
+  created: function(){
+    this.myId = this.$route.params.id;
+  }
 };
 </script>

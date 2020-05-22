@@ -9,12 +9,12 @@
       </template>
     <v-card color="grey lighten-3">
       <p class="headline text--secondary pa-5">{{ label  }}</p>
-    <v-col v-for="item in items" :key="item.name" cols="12">
+    <v-col v-for="item in items" :key="item.exam_name" cols="12">
       <v-card >
         <div class="d-flex flex-no-wrap justify-space-between">
           <div>
-            <v-card-title class="headline" v-text="item.name + ' - ' + item.course"></v-card-title>
-            <v-card-subtitle class="subheading" v-text="item.dueDate"></v-card-subtitle>
+            <v-card-title class="headline" v-text="item.exam_name"></v-card-title>
+<!--            <v-card-subtitle class="subheading" v-text="item.dueDate"></v-card-subtitle>-->
           </div>
         </div>
       </v-card>
