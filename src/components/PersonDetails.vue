@@ -36,15 +36,15 @@
             <div class="heading black--text">Email</div>
           </v-flex>
           <v-flex md4>
-            <v-text-field :value="details.email" solo rounded append-icon="create"></v-text-field>
+            <v-text-field v-model="emailInput" :value="details.email" solo rounded append-icon="create"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row wrap align-center justify-space-around px-2>
           <v-flex md4>
-            <div class="heading black--text">Passowrd</div>
+            <div class="heading black--text">Password</div>
           </v-flex>
           <v-flex md4>
-            <v-text-field v-on:input="updateDetails" :value="details.password" type="password" solo rounded append-icon="create"></v-text-field>
+            <v-text-field v-model="passwordInput" :value="details.password" type="password" solo rounded append-icon="create"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row wrap align-center justify-space-around px-2>
@@ -52,7 +52,7 @@
             <div class="heading black--text pb-2">Phone Number</div>
           </v-flex>
           <v-flex md4>
-            <v-text-field :value="details.phone_no" solo rounded append-icon="create"></v-text-field>
+            <v-text-field v-model="phoneNumberInput" :value="details.phone_no" solo rounded append-icon="create"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row wrap align-center justify-space-around pa-3>
@@ -82,6 +82,15 @@
 
 <script>
 export default {
+  data(){
+    return{
+      emailInput: this.details.email,
+      passwordInput: this.details.password,
+      phoneNumberInput: this.details.phone_no,
+
+      
+    };
+  },
   props: {
     details: Object
   },
@@ -110,10 +119,30 @@ export default {
   },
 
   methods: {
-    updateDetails: function(){
-      console.log("Number updated: ");
+    updateDetails: async function(){
+      let data = { email: this.emailInput, password: this.passwordInput, phone_no: this.phoneNumberInput};
+      console.log("Updating details: ");
+      const settings = {
+        method: "post",
+        headers: {
+          "content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      };
+      //const recievedJson = await res.json;
+       var url = 'http://localhost:8079/student/' + this.$route.params.id.toString(10) + '/details/update'
+      const res = await fetch(url, settings)
+        .then(response => {response.text;  console.log(response); })
+        .then(async function(text){
+          return text;
+        })
+        .catch(e => {
+          return e;
+        });
 
-    }
+      console.log(res);
+
+    },
     
   }
 };

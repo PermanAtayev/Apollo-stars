@@ -42,12 +42,8 @@ export default {
 
   methods: {
     submitAssesment: async function(){
-      //SAVE THE COMMENT AND THE SCORE FOR THIS INSTRUCTOR
-      //var newID = await this.fetchInstructorID().then( async () => {
-      //var instructorID = this.fetchInstructorID(); //fetch it from the other function
-      //console.log("creating group for: "+ this.$route.params.id.toString(10)+ " with id: " + group_id, " name:" +  this.group_name + "purpose " + this.comment);
-      let data = { instructor_id: this.instructorID, points: this.score, comments: this.comment };
-      console.log("ID of the instructor IS: " + this.instructorID);
+      let data = { name: this.instructorName, surname: this.instructorSurname, points: this.score, comments: this.comment };
+      console.log("ID of the instructor IS: " + this.instructorName);
       const settings = {
         method: "post",
         headers: {
@@ -68,36 +64,9 @@ export default {
 
       console.log(res);
     },
-    
-    fetchInstructorID: async function (){
-        console.log("getting instructor id for " + this.instructorName + ' ' + this.instructorSurname);
-        let data = { name: this.instructorName , surname: this.instructorSurname };
-        const settings = {
-            method: "post",
-            headers: {
-                "content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        };
-
-        var url = 'http://localhost:8079/student/' + this.$route.params.id.toString(10) + '/assess/instructor/getID'
-
-        const res = await fetch(url, settings)
-            .then(response => response.json())
-            .then(async function(text){
-                return text;
-            })
-            .catch(e => {
-                return e;
-            });
-
-        console.log(res.rows[0]);
-        this.instructorID = res.rows[0];
-        return res.rows[0];
-    }
   },
   mounted: function(){
-    this.fetchInstructorID();
+    //this.fetchInstructorID();
   }
 };
 </script>

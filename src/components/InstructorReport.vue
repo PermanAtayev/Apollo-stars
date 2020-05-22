@@ -12,7 +12,7 @@
         </v-flex>
         <v-flex xs6 sm3 md3>
           <div class="caption grey--text pl-2">Date Joined</div>
-          <div><v-chip color="primary">{{ instructor.date_joined }}</v-chip></div>
+          <div><v-chip color="primary">{{ instructor.date_joined.substring(0,10) }}</v-chip></div>
         </v-flex>
         <v-flex xs6 sm3 md3>
           <div class="caption grey--text pl-2">Grant</div>

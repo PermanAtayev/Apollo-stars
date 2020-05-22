@@ -15,6 +15,7 @@ import Foot from "@/components/Foot";
 import InstructorReport from "@/components/InstructorReport";
 import SalaryInstructorReport from "@/components/SalaryInstructorReport";
 import RangeReport from "@/components/RangeReport";
+import CourseReport from "@/components/CourseReport";
 import GradeReport from "@/components/GradeReport";
 
 export default {
@@ -27,8 +28,9 @@ export default {
         //will add the route later
         { title: "Instructor Report", icon: "assignment_ind" },
         { title: "Grade Report", icon: "assessment" },
-        { title: "Salary Report", icon: "assignment" },
-        { title: "Salary Range", icon: "assignment" },
+        { title: "Salary Report", icon: "money" },
+        { title: "Salary Range", icon: "attach_money" },
+        { title: "Course Search", icon: "book" },
 
       ],
 
@@ -109,7 +111,7 @@ export default {
     Navbar,
     Foot,
     "Instructor Report": InstructorReport,
-    "Grade Report": GradeReport, "Salary Report": SalaryInstructorReport, "Salary Range": RangeReport,
+    "Grade Report": GradeReport, "Salary Report": SalaryInstructorReport, "Salary Range": RangeReport, "Course Search": CourseReport,
   },
 
   computed: {
@@ -123,7 +125,10 @@ export default {
       else if (this.currentPage === "Salary Report") {
         return { rankings: this.rankings };
       }
-      else if (this.currentPage === "SSalary Range") {
+      else if (this.currentPage === "Salary Range") {
+        return {  };
+      }
+      else if (this.currentPage === "Course Search") {
         return {  };
       }
        

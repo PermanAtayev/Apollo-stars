@@ -316,7 +316,7 @@ export default {
         });
       console.log("taCourses: ");
       console.log( res.rows);
-      this.taTasks = res.rows;
+      this.taCourses = res.rows;
     },
   },
   created: function() {
@@ -328,8 +328,6 @@ export default {
     this.fethDetails();
     this.fetchTaTasks();
     this.fetchTaCourses();
-
-
   }
 
   //life cycle hooks
