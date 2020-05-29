@@ -6,7 +6,7 @@ Spring 2019
     Hanzallah Azim Burney         
     Abdul Hamid Dabboussi               
     Perman Atayev   
-    Balaj Saleeem            
+    Balaj Saleem            
 
 ### Course Instructor
 Ugur Gudukbay
