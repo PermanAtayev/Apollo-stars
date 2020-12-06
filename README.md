@@ -1,5 +1,5 @@
 ### Apollo STARS
-CS-353 Database Project
+Database Project
 Spring 2019
 
 ### Group Members
@@ -7,9 +7,6 @@ Spring 2019
     Abdul Hamid Dabboussi               
     Perman Atayev   
     Balaj Saleem            
-
-### Course Instructor
-Ugur Gudukbay
 
 ### Project Website
 [Apollo Stars v1.0](http://hanzallah.github.io)
